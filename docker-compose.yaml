@@ -46,6 +46,9 @@ services:
     ports:
       - '8545:8545'
     restart: always
+    volumes:
+      - ./hardhat/contracts:/app/contracts
+      - ./hardhat/scripts:/app/scripts
 
 volumes:
   postgres_volume:
