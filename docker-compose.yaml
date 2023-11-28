@@ -5,29 +5,30 @@ services:
     container_name: xyz
     build:
       context: .
+    image: xyz
     environment:
       NODE_ENV: production
       PORT: 3000
       LOG_LEVEL: log
-      DB_HOST: xyz-db
+      DB_HOST: postgres
       DB_PORT: 5432
-      DB_NAME: xyz-db-name
-      DB_USER: xyz-user
-      DB_PASSWORD: xyz-password
+      DB_NAME: postgres-db
+      DB_USER: postgres-user
+      DB_PASSWORD: postgres-password
     ports:
       - '3000:3000'
     depends_on:
-      - xyz-db
+      - postgres
 
-  xyz-db:
-    container_name: xyz-db
-    image: postgres:latest
+  postgres:
+    container_name: postgres
+    image: postgres:16.1
     environment:
-      - POSTGRES_DB=xyz-db-name
-      - POSTGRES_USER=xyz-user
-      - POSTGRES_PASSWORD=xyz-password
+      - POSTGRES_DB=postgres-db
+      - POSTGRES_USER=postgres-user
+      - POSTGRES_PASSWORD=postgres-password
     volumes:
-      - xyz-db:/var/lib/postgresql/data
+      - postgres_volume:/var/lib/postgresql/data
 
 volumes:
-  xyz-db:
+  postgres_volume:
