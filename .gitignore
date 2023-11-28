@@ -40,9 +40,5 @@ lerna-debug.log*
 /cache
 /artifacts
 
-# TypeChain files
-/typechain
-/typechain-types
-
 # solidity-coverage files
 /coverage.json
