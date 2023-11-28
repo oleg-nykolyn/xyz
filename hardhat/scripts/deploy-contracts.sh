@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "⏳ Deploying contracts ..."
+echo "👀 Deploying contracts..."
 
 npx hardhat run scripts/deploy.js --network localhost
 
-echo "✅ Contracts deployed"
+echo "🚀 Contracts deployed"
