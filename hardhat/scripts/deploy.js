@@ -1,10 +1,10 @@
 const hre = require('hardhat');
 
 async function main() {
-  const simpleMdAcl = await hre.ethers.deployContract(
-    'XYZMetadataAccessControlERC721',
+  const mdAclErc721OnlyOwner = await hre.ethers.deployContract(
+    'XYZMetadataAccessControlERC721OnlyOwner',
   );
-  await simpleMdAcl.waitForDeployment();
+  await mdAclErc721OnlyOwner.waitForDeployment();
 }
 
 // We recommend this pattern to be able to use async/await everywhere
