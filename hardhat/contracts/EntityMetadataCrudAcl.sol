@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.2;
 
-interface XYZMetadataAccessControl {
-    function canReadMetadata(
+interface EntityMetadataCrudAcl {
+    function canReadEntityMetadata(
         address account,
         uint256 entityId
     ) external view returns (bool);
 
-    function canCreateMetadata(
+    function canCreateEntityMetadata(
         address account,
         uint256 entityId
     ) external view returns (bool);
 
-    function canUpdateMetadata(
+    function canUpdateEntityMetadata(
         address account,
         uint256 entityId
     ) external view returns (bool);
 
-    function canDeleteMetadata(
+    function canDeleteEntityMetadata(
         address account,
         uint256 entityId
     ) external view returns (bool);

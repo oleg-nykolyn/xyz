@@ -13,7 +13,7 @@
                     "type": "uint256"
                 }
             ],
-            "name": "canCreateMetadata",
+            "name": "canCreateEntityMetadata",
             "outputs": [
                 {
                     "internalType": "bool",
@@ -37,7 +37,7 @@
                     "type": "uint256"
                 }
             ],
-            "name": "canDeleteMetadata",
+            "name": "canDeleteEntityMetadata",
             "outputs": [
                 {
                     "internalType": "bool",
@@ -61,7 +61,7 @@
                     "type": "uint256"
                 }
             ],
-            "name": "canReadMetadata",
+            "name": "canReadEntityMetadata",
             "outputs": [
                 {
                     "internalType": "bool",
@@ -85,7 +85,7 @@
                     "type": "uint256"
                 }
             ],
-            "name": "canUpdateMetadata",
+            "name": "canUpdateEntityMetadata",
             "outputs": [
                 {
                     "internalType": "bool",

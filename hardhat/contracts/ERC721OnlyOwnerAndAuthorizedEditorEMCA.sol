@@ -2,37 +2,40 @@
 pragma solidity ^0.8.2;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import './XYZMetadataAccessControl.sol';
+import './EntityMetadataCrudAcl.sol';
 
-contract XYZMetadataAccessControlERC721OnlyOwner is ERC721, XYZMetadataAccessControl {
+contract ERC721OnlyOwnerAndAuthorizedEditorEMCA is
+    ERC721,
+    EntityMetadataCrudAcl
+{
     constructor() ERC721('erc721-name', 'erc721-symbol') {
         for (uint256 i = 1; i <= 10; i++) {
             _mint(msg.sender, i);
         }
     }
 
-    function canReadMetadata(
+    function canReadEntityMetadata(
         address account,
         uint256 entityId
     ) external view override returns (bool) {
         return ownerOf(entityId) == account;
     }
 
-    function canCreateMetadata(
+    function canCreateEntityMetadata(
         address account,
         uint256 entityId
     ) external view override returns (bool) {
         return ownerOf(entityId) == account;
     }
 
-    function canUpdateMetadata(
+    function canUpdateEntityMetadata(
         address account,
         uint256 entityId
     ) external view override returns (bool) {
         return ownerOf(entityId) == account;
     }
 
-    function canDeleteMetadata(
+    function canDeleteEntityMetadata(
         address account,
         uint256 entityId
     ) external view override returns (bool) {
