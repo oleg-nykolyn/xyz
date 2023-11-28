@@ -36,9 +36,10 @@ lerna-debug.log*
 
 .env
 
-# Hardhat files
+# Hardhat
 /cache
 /artifacts
-
-# solidity-coverage files
 /coverage.json
+/typechain-types
+/scripts
+/test
