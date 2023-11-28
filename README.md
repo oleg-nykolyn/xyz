@@ -56,5 +56,5 @@ Configure XYZ's behavior using environment variables. Here are the available opt
 | `DB_NAME`    | postgres-db         | any                  |
 | `DB_USER`    | postgres-user       | any                  |
 | `DB_PASSWORD`| postgres-password   | any                  |
-| `JWT_SECRET` | jwt-secret          | any                  |
-| `RPC_URL` | localhost:8545  | any                  |
+| `JWT_SECRET` |           | any                  |
+| `RPC_URL` | <http://localhost:8545>  | any                  |

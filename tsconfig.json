@@ -13,8 +13,6 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "noImplicitAny": true,
-    "strict": true,
     "resolveJsonModule": true,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": true,

@@ -1,14 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { EnvUtils } from './utils/env';
-import { LoggerUtils } from './utils/logger';
+import { Env } from './utils/env';
+import { LogUtils } from './utils/log';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: LoggerUtils.getSupportedLogLevels(),
+    logger: LogUtils.getSupportedLogLevels(),
   });
 
-  await app.listen(EnvUtils.getPort());
+  await app.listen(Env.port());
 }
 
 bootstrap();
