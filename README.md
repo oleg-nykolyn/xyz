@@ -23,7 +23,7 @@ docker-compose up
 Deploy the smart contracts using:
 
 ```bash
-docker compose exec hardhat sh scripts/deploy-contracts.sh
+docker compose exec hardhat sh scripts/deploy.sh
 ```
 
 Access the RESTful API at [http://localhost:3000/api/v1](http://localhost:3000/api/v1) (or another port if you modified the `PORT` environment variable).

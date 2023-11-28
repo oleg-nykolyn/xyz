@@ -2,7 +2,7 @@ const hre = require('hardhat');
 
 async function main() {
   const simpleMdAcl = await hre.ethers.deployContract(
-    'SimpleXYZMetadataAccessControl',
+    'XYZMetadataAccessControlERC721',
   );
   await simpleMdAcl.waitForDeployment();
 }

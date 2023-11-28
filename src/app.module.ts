@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MetadataAclModule } from './modules/metadata-acl/metadata-acl.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { MetadataModule } from './modules/metadata/metadata.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
+  imports: [MetadataAclModule, AuthModule, MetadataModule],
 })
 export class AppModule {}
