@@ -20,7 +20,15 @@ Start the services using Docker Compose:
 docker-compose up
 ```
 
-Access the RESTful API at [http://localhost:3000/api/v1](http://localhost:3000/api/v1) (or another port if you modified the `PORT` environment variable). To stop the services, either press `Ctrl+C` in the terminal where you initiated `docker-compose up` or run:
+Deploy the smart contracts using:
+
+```bash
+docker compose exec hardhat sh scripts/deploy-contracts.sh
+```
+
+Access the RESTful API at [http://localhost:3000/api/v1](http://localhost:3000/api/v1) (or another port if you modified the `PORT` environment variable).
+
+To stop the services, either press `Ctrl+C` in the terminal where you initiated `docker-compose up` or run:
 
 ```bash
 docker-compose down
@@ -57,4 +65,4 @@ Configure XYZ's behavior using environment variables. Here are the available opt
 | `DB_USER`    | postgres-user       | any                  |
 | `DB_PASSWORD`| postgres-password   | any                  |
 | `JWT_SECRET` |           | any                  |
-| `RPC_URL` | <http://localhost:8545>  | any                  |
+| `RPC_URL` | <http://127.0.0.1:8545>  | any                  |

@@ -18,7 +18,7 @@ export class Env {
   }
 
   static rpcUrl(): string {
-    return process.env.RPC_URL || 'http://localhost:8545';
+    return process.env.RPC_URL || 'http://127.0.0.1:8545';
   }
 
   static jwtSecret(): string {

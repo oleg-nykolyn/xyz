@@ -1,0 +1,12 @@
+FROM node:18-alpine
+
+WORKDIR /usr/src/app
+
+COPY hardhat/package*.json .
+RUN npm install
+
+COPY hardhat .
+
+RUN chmod +x ./scripts/*.sh
+
+CMD [ "npx", "hardhat", "node" ]

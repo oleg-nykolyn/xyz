@@ -16,7 +16,7 @@ export class AppService implements OnModuleInit {
 
     this.logger.log(
       await contract.canCreateMetadata(
-        '0x8a791620dd6260079bf849dc5567adc3f2fdc318',
+        '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
         123,
       ),
     );
