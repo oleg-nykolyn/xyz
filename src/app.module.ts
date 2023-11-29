@@ -4,6 +4,7 @@ import { MetadataModule } from './modules/metadata/metadata.module';
 import { AclModule } from './modules/acl/acl.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Env } from './utils/env';
+import { Account } from './modules/auth/entities/account.entity';
 
 @Module({
   controllers: [],
@@ -16,8 +17,8 @@ import { Env } from './utils/env';
       username: Env.dbUser(),
       password: Env.dbPassword(),
       database: Env.dbName(),
-      entities: [],
-      synchronize: true,
+      entities: [Account],
+      synchronize: Env.environmentType() === 'development',
     }),
     AuthModule,
     MetadataModule,

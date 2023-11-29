@@ -29,13 +29,24 @@ services:
     container_name: postgres
     image: postgres:16.1
     environment:
-      - POSTGRES_DB=postgres-db
-      - POSTGRES_USER=postgres-user
-      - POSTGRES_PASSWORD=postgres-password
+      POSTGRES_DB: postgres-db
+      POSTGRES_USER: postgres-user
+      POSTGRES_PASSWORD: postgres-password
     ports:
       - '5432:5432'
     volumes:
       - postgres_volume:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin-password
+    ports:
+      - '5050:80'
+    volumes:
+      - pgadmin_volume:/var/lib/pgadmin
 
   hardhat:
     container_name: hardhat
@@ -50,3 +61,4 @@ services:
 
 volumes:
   postgres_volume:
+  pgadmin_volume:
