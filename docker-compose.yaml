@@ -15,7 +15,9 @@ services:
       DB_NAME: postgres-db
       DB_USER: postgres-user
       DB_PASSWORD: postgres-password
-      RPC_URL: 'http://hardhat:8545'
+      HARDHAT_RPC_URL: 'http://hardhat:8545'
+      ETHEREUM_RPC_URL:
+      POLYGON_RPC_URL:
       JWT_SECRET: jwt-secret
       JWT_ISSUER: xyz
       JWT_EXPIRES_IN: 24h

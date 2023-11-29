@@ -49,7 +49,15 @@ export class Env {
     return process.env.JWT_EXPIRES_IN || '1h';
   }
 
-  static rpcUrl(): string {
-    return process.env.RPC_URL || 'http://127.0.0.1:8545';
+  static hardhatRpcUrl(): string {
+    return process.env.HARDHAT_RPC_URL || 'http://127.0.0.1:8545';
+  }
+
+  static ethereumRpcUrl(): string {
+    return process.env.ETHEREUM_RPC_URL;
+  }
+
+  static polygonRpcUrl(): string {
+    return process.env.POLYGON_RPC_URL;
   }
 }

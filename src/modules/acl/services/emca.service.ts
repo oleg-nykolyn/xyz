@@ -1,4 +1,11 @@
+export enum Chain {
+  Hardhat,
+  Ethereum,
+  Polygon,
+}
+
 export type EntityMetadataCrudAclRequest = {
+  chain: Chain;
   contractAddress: string;
   accountAddress: string;
   entityId: number;
