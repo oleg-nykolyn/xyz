@@ -5,7 +5,7 @@ import {
   EntityMetadataCrudAclService,
 } from './emca.service';
 import { ethers, Contract } from 'ethers';
-import { Env } from 'src/utils/env.utils';
+import { EnvUtils } from 'src/utils/env.utils';
 import { abi } from 'src/modules/acl/abis/EntityMetadataCrudAcl.json';
 
 export class EntityMetadataCrudAclServiceImpl
@@ -72,11 +72,11 @@ export class EntityMetadataCrudAclServiceImpl
   private getRpcUrlByChain(chain: Chain): string {
     switch (chain) {
       case Chain.Hardhat:
-        return Env.hardhatRpcUrl();
+        return EnvUtils.hardhatRpcUrl();
       case Chain.Ethereum:
-        return Env.ethereumRpcUrl();
+        return EnvUtils.ethereumRpcUrl();
       case Chain.Polygon:
-        return Env.polygonRpcUrl();
+        return EnvUtils.polygonRpcUrl();
     }
   }
 }

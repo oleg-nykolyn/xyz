@@ -12,7 +12,7 @@ import {
 import { AuthService } from './services/auth.service';
 import { IssueNonceRequestDto } from './dtos/issue-nonce-request.dto';
 import { AuthenticateRequestDto } from './dtos/authenticate-request.dto';
-import { Env } from 'src/utils/env.utils';
+import { EnvUtils } from 'src/utils/env.utils';
 import { Response } from 'express';
 import { AuthExceptionsFilter } from './auth-exceptions.filter';
 
@@ -44,7 +44,7 @@ export class AuthController {
 
     response.cookie('jwt', jwt, {
       httpOnly: true,
-      secure: Env.environmentType() === 'production',
+      secure: EnvUtils.environmentType() === 'production',
     });
 
     return response.status(HttpStatus.OK).send();

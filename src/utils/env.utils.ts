@@ -1,6 +1,10 @@
 import { LogLevel } from '@nestjs/common';
 
-export class Env {
+export class EnvUtils {
+  static getOrDefault(key: string, defaultValue: string): string {
+    return process.env[key] || defaultValue;
+  }
+
   static environmentType(): 'development' | 'production' {
     if (process.env.NODE_ENV === 'production') {
       return 'production';

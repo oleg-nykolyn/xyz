@@ -1,4 +1,4 @@
-import { Env } from 'src/utils/env.utils';
+import { EnvUtils } from 'src/utils/env.utils';
 import { JwtService } from './jwt.service';
 import { sign, verify } from 'jsonwebtoken';
 import { Injectable, Logger } from '@nestjs/common';
@@ -9,7 +9,7 @@ export class JwtServiceImpl implements JwtService {
 
   isTokenValid(token: string): boolean {
     try {
-      verify(token, Env.jwtSecret());
+      verify(token, EnvUtils.jwtSecret());
       return true;
     } catch (_) {
       return false;
@@ -17,8 +17,12 @@ export class JwtServiceImpl implements JwtService {
   }
 
   issueToken(subject: string): string {
-    return sign({ sub: subject, iss: Env.jwtIssuer() }, Env.jwtSecret(), {
-      expiresIn: Env.jwtExpiresIn(),
-    });
+    return sign(
+      { sub: subject, iss: EnvUtils.jwtIssuer() },
+      EnvUtils.jwtSecret(),
+      {
+        expiresIn: EnvUtils.jwtExpiresIn(),
+      },
+    );
   }
 }

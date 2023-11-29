@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Env } from './utils/env.utils';
+import { EnvUtils } from './utils/env.utils';
 import { LogUtils } from './utils/log.utils';
 import { VersioningType } from '@nestjs/common';
 
@@ -14,7 +14,7 @@ async function bootstrap() {
     prefix: 'api/v',
   });
 
-  await app.listen(Env.port());
+  await app.listen(EnvUtils.port());
 }
 
 bootstrap();

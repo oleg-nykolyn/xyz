@@ -3,7 +3,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MetadataModule } from './modules/metadata/metadata.module';
 import { AclModule } from './modules/acl/acl.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Env } from './utils/env.utils';
+import { EnvUtils } from './utils/env.utils';
 import { Account } from './modules/auth/entities/account.entity';
 
 @Module({
@@ -12,13 +12,13 @@ import { Account } from './modules/auth/entities/account.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: Env.dbHost(),
-      port: Env.dbPort(),
-      username: Env.dbUser(),
-      password: Env.dbPassword(),
-      database: Env.dbName(),
+      host: EnvUtils.dbHost(),
+      port: EnvUtils.dbPort(),
+      username: EnvUtils.dbUser(),
+      password: EnvUtils.dbPassword(),
+      database: EnvUtils.dbName(),
       entities: [Account],
-      synchronize: Env.environmentType() === 'development',
+      synchronize: EnvUtils.environmentType() === 'development',
     }),
     AuthModule,
     MetadataModule,
