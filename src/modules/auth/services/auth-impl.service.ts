@@ -20,17 +20,17 @@ export class AuthServiceImpl implements AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  issueNonce(accountAddress: string): Promise<string> {
+  async issueNonce(accountAddress: string): Promise<string> {
+    const account = await this.accountRepository.findByAddress(
+      this.dataSource.manager,
+      accountAddress,
+    );
+
+    if (account) {
+      return account.nonce;
+    }
+
     return this.dataSource.transaction(async (manager) => {
-      const account = await this.accountRepository.findByAddress(
-        manager,
-        accountAddress,
-      );
-
-      if (account) {
-        return account.nonce;
-      }
-
       const newAccount = new Account();
       newAccount.address = accountAddress;
       newAccount.nonce = uuidv4();
@@ -45,26 +45,26 @@ export class AuthServiceImpl implements AuthService {
     accountAddress: string,
     signedNonce: string,
   ): Promise<string> {
+    const account = await this.accountRepository.findByAddress(
+      this.dataSource.manager,
+      accountAddress,
+    );
+
+    if (!account) {
+      throw new AccountNotFoundException(accountAddress);
+    }
+
+    const isSignatureValid = this.signatureVerifierService.isSignatureValid({
+      accountAddress,
+      message: account.nonce,
+      signedMessage: signedNonce,
+    });
+
+    if (!isSignatureValid) {
+      throw new InvalidSignatureException();
+    }
+
     return this.dataSource.transaction(async (manager) => {
-      const account = await this.accountRepository.findByAddress(
-        manager,
-        accountAddress,
-      );
-
-      if (!account) {
-        throw new AccountNotFoundException(accountAddress);
-      }
-
-      const isSignatureValid = this.signatureVerifierService.isSignatureValid({
-        accountAddress,
-        message: account.nonce,
-        signedMessage: signedNonce,
-      });
-
-      if (!isSignatureValid) {
-        throw new InvalidSignatureException();
-      }
-
       account.nonce = uuidv4();
       await this.accountRepository.saveOrUpdate(manager, account);
 
