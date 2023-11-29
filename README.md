@@ -65,4 +65,6 @@ Configure XYZ's behavior using environment variables. Here are the available opt
 | `DB_USER`    | postgres-user       | any                  |
 | `DB_PASSWORD`| postgres-password   | any                  |
 | `JWT_SECRET` |           | any                  |
+| `JWT_ISSUER` | xyz          | any                  |
+| `JWT_EXPIRES_IN` | 1h         | expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d"                  |
 | `RPC_URL` | <http://127.0.0.1:8545>  | any                  |

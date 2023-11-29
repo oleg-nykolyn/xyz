@@ -24,4 +24,12 @@ export class Env {
   static jwtSecret(): string {
     return process.env.JWT_SECRET || '';
   }
+
+  static jwtIssuer() {
+    return process.env.JWT_ISSUER || 'xyz';
+  }
+
+  static jwtExpiresIn(): string | number {
+    return process.env.JWT_EXPIRES_IN || '1h';
+  }
 }
