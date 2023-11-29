@@ -20,7 +20,7 @@ services:
       POLYGON_RPC_URL:
       JWT_SECRET: jwt-secret
       JWT_ISSUER: xyz
-      JWT_EXPIRES_IN: 24h
+      JWT_EXPIRES_IN: 7d
     ports:
       - '3000:3000'
     depends_on:

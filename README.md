@@ -64,7 +64,7 @@ docker build -t xyz .
 | `DB_PASSWORD`| postgres-password   | any                  |
 | `JWT_SECRET` |           | any                  |
 | `JWT_ISSUER` | xyz          | any                  |
-| `JWT_EXPIRES_IN` | 1h         | expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d"                  |
+| `JWT_EXPIRES_IN` | 7d         | expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d"                  |
 | `HARDHAT_RPC_URL` | <http://127.0.0.1:8545>  | any                  |
 | `ETHEREUM_RPC_URL` |   | any                  |
 | `POLYGON_RPC_URL` |   | any                  |

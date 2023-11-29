@@ -46,7 +46,7 @@ export class Env {
   }
 
   static jwtExpiresIn(): string | number {
-    return process.env.JWT_EXPIRES_IN || '1h';
+    return process.env.JWT_EXPIRES_IN || '7d';
   }
 
   static hardhatRpcUrl(): string {

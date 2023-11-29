@@ -10,7 +10,10 @@ export class AccountRepositoryImpl extends AccountRepository {
     return entityManager.findOneBy(Account, { address: accountAddress });
   }
 
-  save(entityManager: EntityManager, account: Account): Promise<Account> {
+  saveOrUpdate(
+    entityManager: EntityManager,
+    account: Account,
+  ): Promise<Account> {
     return entityManager.save(account);
   }
 }

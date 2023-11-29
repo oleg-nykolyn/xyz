@@ -7,7 +7,7 @@ export abstract class AccountRepository {
     accountAddress: string,
   ): Promise<Account>;
 
-  abstract save(
+  abstract saveOrUpdate(
     entityManager: EntityManager,
     account: Account,
   ): Promise<Account>;
