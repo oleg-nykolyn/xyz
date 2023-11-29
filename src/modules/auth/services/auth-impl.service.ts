@@ -66,6 +66,7 @@ export class AuthServiceImpl implements AuthService {
 
     return this.dataSource.transaction(async (manager) => {
       account.nonce = uuidv4();
+
       await this.accountRepository.saveOrUpdate(manager, account);
 
       return this.jwtService.issueToken(accountAddress);
