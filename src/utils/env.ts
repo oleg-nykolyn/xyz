@@ -9,16 +9,32 @@ export class Env {
     return 'production';
   }
 
+  static port(): number {
+    return parseInt(process.env.PORT || '3000', 10);
+  }
+
   static logLevel(): LogLevel {
     return (process.env.LOG_LEVEL as any) || 'log';
   }
 
-  static port(): string {
-    return process.env.PORT || '3000';
+  static dbHost(): string {
+    return process.env.DB_HOST || 'localhost';
   }
 
-  static rpcUrl(): string {
-    return process.env.RPC_URL || 'http://127.0.0.1:8545';
+  static dbPort(): number {
+    return parseInt(process.env.DB_PORT || '5432', 10);
+  }
+
+  static dbName(): string {
+    return process.env.DB_NAME || 'postgres-db';
+  }
+
+  static dbUser(): string {
+    return process.env.DB_USER || 'postgres-user';
+  }
+
+  static dbPassword(): string {
+    return process.env.DB_PASSWORD || 'postgres-password';
   }
 
   static jwtSecret(): string {
@@ -31,5 +47,9 @@ export class Env {
 
   static jwtExpiresIn(): string | number {
     return process.env.JWT_EXPIRES_IN || '1h';
+  }
+
+  static rpcUrl(): string {
+    return process.env.RPC_URL || 'http://127.0.0.1:8545';
   }
 }
