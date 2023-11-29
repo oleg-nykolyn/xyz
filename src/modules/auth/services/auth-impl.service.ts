@@ -3,11 +3,11 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthServiceImpl implements AuthService {
-  getNonce(accountAddress: string): Promise<string> {
-    return Promise.resolve('nonce');
+  issueNonce(accountAddress: string): Promise<string> {
+    throw new Error('Method not implemented.');
   }
 
   authenticate(accountAddress: string, signedNonce: string): Promise<string> {
-    return Promise.resolve('token');
+    throw new Error('Method not implemented.');
   }
 }

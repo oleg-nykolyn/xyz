@@ -1,5 +1,5 @@
 export abstract class AuthService {
-  abstract getNonce(accountAddress: string): Promise<string>;
+  abstract issueNonce(accountAddress: string): Promise<string>;
 
   abstract authenticate(
     accountAddress: string,
