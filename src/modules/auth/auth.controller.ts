@@ -5,6 +5,7 @@ import {
   HttpStatus,
   Post,
   Res,
+  UseFilters,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -13,13 +14,13 @@ import { IssueNonceDto } from './dtos/issue-nonce.dto';
 import { AuthenticateDto } from './dtos/authenticate.dto';
 import { Env } from 'src/utils/env';
 import { Response } from 'express';
-import { InvalidSignatureException } from './services/exceptions/invalid-signature.exception';
-import { AccountNotFoundException } from './services/exceptions/account-not-found.exception';
+import { AuthExceptionsFilter } from './auth-exceptions.filter';
 
 @Controller({
   version: '1',
   path: 'auth',
 })
+@UseFilters(AuthExceptionsFilter)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -36,32 +37,16 @@ export class AuthController {
     @Body() { accountAddress, signedNonce }: AuthenticateDto,
     @Res() response: Response,
   ) {
-    try {
-      const jwt = await this.authService.authenticate(
-        accountAddress,
-        signedNonce,
-      );
+    const jwt = await this.authService.authenticate(
+      accountAddress,
+      signedNonce,
+    );
 
-      response.cookie('jwt', jwt, {
-        httpOnly: true,
-        secure: Env.environmentType() === 'production',
-      });
+    response.cookie('jwt', jwt, {
+      httpOnly: true,
+      secure: Env.environmentType() === 'production',
+    });
 
-      return response.status(HttpStatus.OK).send();
-    } catch (exception) {
-      if (exception instanceof AccountNotFoundException) {
-        return response.status(HttpStatus.NOT_FOUND).send(exception.message);
-      }
-
-      if (exception instanceof InvalidSignatureException) {
-        return response
-          .status(HttpStatus.PRECONDITION_FAILED)
-          .send(exception.message);
-      }
-
-      return response
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .send(exception.message);
-    }
+    return response.status(HttpStatus.OK).send();
   }
 }
