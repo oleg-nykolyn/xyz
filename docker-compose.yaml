@@ -22,7 +22,6 @@ services:
     depends_on:
       - postgres
       - hardhat
-    restart: always
 
   postgres:
     container_name: postgres
@@ -35,20 +34,17 @@ services:
       - '5432:5432'
     volumes:
       - postgres_volume:/var/lib/postgresql/data
-    restart: always
 
   hardhat:
     container_name: hardhat
     build:
-      dockerfile: Dockerfile.hardhat
-      context: .
+      context: ./hardhat
     image: hardhat
     ports:
       - '8545:8545'
-    restart: always
     volumes:
-      - ./hardhat/contracts:/app/contracts
-      - ./hardhat/scripts:/app/scripts
+      - ./hardhat/contracts:/hardhat/contracts
+      - ./hardhat/scripts:/hardhat/scripts
 
 volumes:
   postgres_volume:

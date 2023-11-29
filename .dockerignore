@@ -9,7 +9,6 @@ README.md
 LICENSE
 
 /node_modules
-/hardhat/node_modules
 /dist
 
 .env
