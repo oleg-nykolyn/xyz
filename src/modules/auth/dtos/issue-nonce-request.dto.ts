@@ -1,10 +1,7 @@
 import { IsNotEmpty, IsEthereumAddress } from 'class-validator';
 
-export class AuthenticateDto {
+export class IssueNonceRequestDto {
   @IsNotEmpty()
   @IsEthereumAddress()
   accountAddress: string;
-
-  @IsNotEmpty()
-  signedNonce: string;
 }

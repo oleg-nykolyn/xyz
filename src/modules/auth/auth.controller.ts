@@ -10,8 +10,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
-import { IssueNonceDto } from './dtos/issue-nonce.dto';
-import { AuthenticateDto } from './dtos/authenticate.dto';
+import { IssueNonceRequestDto } from './dtos/issue-nonce-request.dto';
+import { AuthenticateRequestDto } from './dtos/authenticate-request.dto';
 import { Env } from 'src/utils/env';
 import { Response } from 'express';
 import { AuthExceptionsFilter } from './auth-exceptions.filter';
@@ -27,14 +27,14 @@ export class AuthController {
   @Post('issue-nonce')
   @HttpCode(HttpStatus.OK)
   @UsePipes(ValidationPipe)
-  async issueNonce(@Body() { accountAddress }: IssueNonceDto) {
+  async issueNonce(@Body() { accountAddress }: IssueNonceRequestDto) {
     return this.authService.issueNonce(accountAddress);
   }
 
   @Post('authenticate')
   @UsePipes(ValidationPipe)
   async authenticate(
-    @Body() { accountAddress, signedNonce }: AuthenticateDto,
+    @Body() { accountAddress, signedNonce }: AuthenticateRequestDto,
     @Res() response: Response,
   ) {
     const jwt = await this.authService.authenticate(
