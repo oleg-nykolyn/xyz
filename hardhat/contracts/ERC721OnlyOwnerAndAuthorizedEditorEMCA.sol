@@ -18,7 +18,7 @@ contract ERC721OnlyOwnerAndAuthorizedEditorEMCA is
         for (uint256 i = 0; i < 10; i++) {
             _mint(msg.sender, i);
 
-            // Set owner as authorized editor for all tokens.
+            // Set msg.sender as authorized editor for all tokens.
             _entityMetadataAuthorizedEditors[msg.sender][i] = true;
         }
     }
