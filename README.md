@@ -52,8 +52,6 @@ docker build -t xyz .
 
 ## Environment Variables
 
-Configure XYZ's behavior using environment variables. Here are the available options:
-
 | Variable     | Default             | Allowed              |
 | ------------ | ------------------- | -------------------- |
 | `NODE_ENV`   | production          | production, development |
