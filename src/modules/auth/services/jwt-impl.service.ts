@@ -1,4 +1,4 @@
-import { Env } from 'src/utils/env';
+import { Env } from 'src/utils/env.utils';
 import { JwtService } from './jwt.service';
 import { sign, verify } from 'jsonwebtoken';
 import { Injectable, Logger } from '@nestjs/common';

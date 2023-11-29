@@ -5,7 +5,7 @@ import {
   EntityMetadataCrudAclService,
 } from './emca.service';
 import { ethers, Contract } from 'ethers';
-import { Env } from 'src/utils/env';
+import { Env } from 'src/utils/env.utils';
 import { abi } from 'src/modules/acl/abis/EntityMetadataCrudAcl.json';
 
 export class EntityMetadataCrudAclServiceImpl

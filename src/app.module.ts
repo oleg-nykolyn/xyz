@@ -3,7 +3,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MetadataModule } from './modules/metadata/metadata.module';
 import { AclModule } from './modules/acl/acl.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Env } from './utils/env';
+import { Env } from './utils/env.utils';
 import { Account } from './modules/auth/entities/account.entity';
 
 @Module({

@@ -4,16 +4,22 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { AccountNotFoundException } from './services/exceptions/account-not-found.exception';
 import { InvalidSignatureException } from './services/exceptions/invalid-signature.exception';
+import { ExceptionUtils } from 'src/utils/exception.utils';
 
 @Catch()
 export class AuthExceptionsFilter implements ExceptionFilter {
+  private readonly logger = new Logger(AuthExceptionsFilter.name);
+
   constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
 
   catch(exception: unknown, host: ArgumentsHost): void {
+    this.logger.error(JSON.stringify(exception));
+
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
 
@@ -32,7 +38,7 @@ export class AuthExceptionsFilter implements ExceptionFilter {
 
     const responseBody = {
       statusCode: httpStatus,
-      message: (exception as any).message || 'An unknown error occurred',
+      message: ExceptionUtils.extractExceptionMessage(exception),
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
     };

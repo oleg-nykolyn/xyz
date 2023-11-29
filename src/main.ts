@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Env } from './utils/env';
-import { LogUtils } from './utils/log';
+import { Env } from './utils/env.utils';
+import { LogUtils } from './utils/log.utils';
 import { VersioningType } from '@nestjs/common';
 
 async function bootstrap() {

@@ -12,7 +12,7 @@ import {
 import { AuthService } from './services/auth.service';
 import { IssueNonceRequestDto } from './dtos/issue-nonce-request.dto';
 import { AuthenticateRequestDto } from './dtos/authenticate-request.dto';
-import { Env } from 'src/utils/env';
+import { Env } from 'src/utils/env.utils';
 import { Response } from 'express';
 import { AuthExceptionsFilter } from './auth-exceptions.filter';
 

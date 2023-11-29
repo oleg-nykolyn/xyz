@@ -1,5 +1,5 @@
 import { LogLevel } from '@nestjs/common';
-import { Env } from './env';
+import { Env } from './env.utils';
 
 const logLevels: LogLevel[] = [
   'fatal',
