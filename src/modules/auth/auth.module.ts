@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { JwtService } from './jwt.service';
-import { JwtServiceImpl } from './jwt-impl.service';
+import { JwtService } from './services/jwt.service';
+import { JwtServiceImpl } from './services/jwt-impl.service';
 
 @Module({
   providers: [
