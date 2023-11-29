@@ -13,44 +13,44 @@ export class EntityMetadataCrudAclServiceImpl
   private readonly logger = new Logger(EntityMetadataCrudAclServiceImpl.name);
 
   canReadEntityMetadata({
-    contactAddress,
+    contractAddress,
     accountAddress,
     entityId,
   }: EntityMetadataCrudAclRequest): Promise<boolean> {
-    return this.contractInstanceOf(contactAddress).canReadEntityMetadata(
+    return this.contractInstanceOf(contractAddress).canReadEntityMetadata(
       accountAddress,
       entityId,
     );
   }
 
   canCreateEntityMetadata({
-    contactAddress,
+    contractAddress,
     accountAddress,
     entityId,
   }: EntityMetadataCrudAclRequest): Promise<boolean> {
-    return this.contractInstanceOf(contactAddress).canCreateEntityMetadata(
+    return this.contractInstanceOf(contractAddress).canCreateEntityMetadata(
       accountAddress,
       entityId,
     );
   }
 
   canUpdateEntityMetadata({
-    contactAddress,
+    contractAddress,
     accountAddress,
     entityId,
   }: EntityMetadataCrudAclRequest): Promise<boolean> {
-    return this.contractInstanceOf(contactAddress).canUpdateEntityMetadata(
+    return this.contractInstanceOf(contractAddress).canUpdateEntityMetadata(
       accountAddress,
       entityId,
     );
   }
 
   canDeleteEntityMetadata({
-    contactAddress,
+    contractAddress,
     accountAddress,
     entityId,
   }: EntityMetadataCrudAclRequest): Promise<boolean> {
-    return this.contractInstanceOf(contactAddress).canDeleteEntityMetadata(
+    return this.contractInstanceOf(contractAddress).canDeleteEntityMetadata(
       accountAddress,
       entityId,
     );

@@ -1,5 +1,5 @@
 export type EntityMetadataCrudAclRequest = {
-  contactAddress: string;
+  contractAddress: string;
   accountAddress: string;
   entityId: number;
 };
