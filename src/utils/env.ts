@@ -2,11 +2,11 @@ import { LogLevel } from '@nestjs/common';
 
 export class Env {
   static environmentType(): 'development' | 'production' {
-    if (process.env.NODE_ENV === 'development') {
-      return 'development';
+    if (process.env.NODE_ENV === 'production') {
+      return 'production';
     }
 
-    return 'production';
+    return 'development';
   }
 
   static port(): number {

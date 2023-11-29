@@ -54,7 +54,7 @@ docker build -t xyz .
 
 | Variable     | Default             | Allowed              |
 | ------------ | ------------------- | -------------------- |
-| `NODE_ENV`   | production          | production, development |
+| `NODE_ENV`   | development          | production, development |
 | `PORT`       | 3000                | any                  |
 | `LOG_LEVEL`  | log                 | fatal, error, log, warn, debug, verbose |
 | `DB_HOST`    | localhost            | any                  |
