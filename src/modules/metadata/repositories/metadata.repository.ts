@@ -15,12 +15,14 @@ export abstract class MetadataRepository {
     query: MetadataQuery,
   ): Promise<Metadata[]>;
 
-  abstract findById(
-    entityManager: EntityManager,
-    id: MetadataId,
-  ): Promise<Metadata | null>;
+  abstract get(entityManager: EntityManager, id: MetadataId): Promise<Metadata>;
 
-  abstract saveOrUpdate(
+  abstract save(
+    entityManager: EntityManager,
+    metadata: Metadata,
+  ): Promise<Metadata>;
+
+  abstract update(
     entityManager: EntityManager,
     metadata: Metadata,
   ): Promise<Metadata>;

@@ -17,14 +17,14 @@ export class MetadataEntity {
   entityId: number;
 
   @Column('simple-json')
-  metadata: any;
+  content: any;
 
   static from(metadata: Metadata): MetadataEntity {
     const metadataEntity = new MetadataEntity();
     metadataEntity.chain = metadata.getChain();
     metadataEntity.contractAddress = metadata.getContractAddress();
     metadataEntity.entityId = metadata.getEntityId();
-    metadataEntity.metadata = metadata.getMetadata();
+    metadataEntity.content = metadata.getContent();
 
     return metadataEntity;
   }

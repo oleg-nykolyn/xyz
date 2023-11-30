@@ -9,11 +9,11 @@ export interface MetadataId {
 export class Metadata {
   private constructor(
     private readonly id: MetadataId,
-    private readonly metadata: any,
+    private readonly content: any,
   ) {}
 
-  static of(metadataId: MetadataId, metadata: any): Metadata {
-    return new Metadata(metadataId, metadata);
+  static of(metadataId: MetadataId, content: any): Metadata {
+    return new Metadata(metadataId, content);
   }
 
   getId(): MetadataId {
@@ -32,7 +32,7 @@ export class Metadata {
     return this.id.entityId;
   }
 
-  getMetadata(): any {
-    return this.metadata;
+  getContent(): any {
+    return this.content;
   }
 }

@@ -15,9 +15,7 @@ export class MetadataController {
     console.log(`entityId: ${entityId}`);
 
     return {
-      name: 'NestJS API',
-      description: 'NestJS API',
-      version: '1.0.0',
+      xyz: '🚀',
     };
   }
 }
