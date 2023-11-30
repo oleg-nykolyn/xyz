@@ -22,31 +22,32 @@ export class MetadataExceptionsFilter implements ExceptionFilter {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
 
-    let httpStatus =
+    let statusCode =
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
     if (exception instanceof MetadataAlreadyExistsException) {
-      httpStatus = HttpStatus.CONFLICT;
+      statusCode = HttpStatus.CONFLICT;
     }
 
     if (exception instanceof MetadataNotFoundException) {
-      httpStatus = HttpStatus.NOT_FOUND;
+      statusCode = HttpStatus.NOT_FOUND;
     }
 
     if (exception instanceof MetadataServiceException) {
-      httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+      statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
     const responseBody = {
-      statusCode: httpStatus,
-      error: ExceptionUtils.extractExceptionName(exception),
-      message: ExceptionUtils.extractExceptionMessage(exception),
+      ...ExceptionUtils.buildApiFacingExceptionNameAndMessage(
+        statusCode,
+        exception,
+      ),
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
     };
 
-    httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
+    httpAdapter.reply(ctx.getResponse(), responseBody, statusCode);
   }
 }

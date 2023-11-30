@@ -20,53 +20,63 @@ export class AuthServiceImpl implements AuthService {
   ) {}
 
   async issueNonce(accountAddress: string): Promise<string> {
-    const account = await this.accountRepository.findByAddress(
-      this.dataSource.manager,
-      accountAddress,
-    );
+    try {
+      const account = await this.accountRepository.findByAddress(
+        this.dataSource.manager,
+        accountAddress,
+      );
 
-    if (account) {
-      return account.getNonce();
+      if (account) {
+        return account.getNonce();
+      }
+
+      return await this.dataSource.transaction(async (manager) => {
+        const newAccount = Account.ofAddress(accountAddress);
+
+        await this.accountRepository.saveOrUpdate(manager, newAccount);
+
+        return newAccount.getNonce();
+      });
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
     }
-
-    return this.dataSource.transaction(async (manager) => {
-      const newAccount = Account.ofAddress(accountAddress);
-
-      await this.accountRepository.saveOrUpdate(manager, newAccount);
-
-      return newAccount.getNonce();
-    });
   }
 
   async authenticate(
     accountAddress: string,
     signedNonce: string,
   ): Promise<string> {
-    const account = await this.accountRepository.findByAddress(
-      this.dataSource.manager,
-      accountAddress,
-    );
+    try {
+      const account = await this.accountRepository.findByAddress(
+        this.dataSource.manager,
+        accountAddress,
+      );
 
-    if (!account) {
-      throw new AccountNotFoundException(accountAddress);
+      if (!account) {
+        throw new AccountNotFoundException(accountAddress);
+      }
+
+      const isSignatureValid = this.signatureVerifierService.isSignatureValid({
+        accountAddress,
+        message: account.getNonce(),
+        signedMessage: signedNonce,
+      });
+
+      if (!isSignatureValid) {
+        throw new InvalidSignatureException();
+      }
+
+      return await this.dataSource.transaction(async (manager) => {
+        account.regenerateNonce();
+
+        await this.accountRepository.saveOrUpdate(manager, account);
+
+        return this.jwtService.issueToken(accountAddress);
+      });
+    } catch (error) {
+      this.logger.error(error);
+      throw error;
     }
-
-    const isSignatureValid = this.signatureVerifierService.isSignatureValid({
-      accountAddress,
-      message: account.getNonce(),
-      signedMessage: signedNonce,
-    });
-
-    if (!isSignatureValid) {
-      throw new InvalidSignatureException();
-    }
-
-    return this.dataSource.transaction(async (manager) => {
-      account.regenerateNonce();
-
-      await this.accountRepository.saveOrUpdate(manager, account);
-
-      return this.jwtService.issueToken(accountAddress);
-    });
   }
 }
