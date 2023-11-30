@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   FindMetadataRequest,
-  Metadata,
   MetadataId,
   MetadataService,
 } from './metadata.service';
 import { MetadataRepository } from '../repositories/metadata.repository';
+import { Metadata } from '../domain/metadata';
 
 @Injectable()
 export class MetadataServiceImpl implements MetadataService {
+  private readonly logger = new Logger(MetadataServiceImpl.name);
+
   constructor(private readonly metadataRepository: MetadataRepository) {}
 
   findMetadata(request: FindMetadataRequest): Promise<Metadata[]> {

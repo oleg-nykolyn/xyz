@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { Account } from '../entities/account.entity';
+import { Account } from '../domain/account';
 
 export abstract class AccountRepository {
   abstract findByAddress(

@@ -1,13 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { DataSource } from 'typeorm';
-import { Account } from '../entities/account.entity';
-import { v4 as uuidv4 } from 'uuid';
 import { AccountRepository } from '../repositories/account.repository';
 import { SignatureVerifierService } from './signature-verifier.service';
 import { JwtService } from './jwt.service';
 import { AccountNotFoundException } from './exceptions/account-not-found.exception';
 import { InvalidSignatureException } from './exceptions/invalid-signature.exception';
+import { Account } from '../domain/account';
 
 @Injectable()
 export class AuthServiceImpl implements AuthService {
@@ -27,17 +26,15 @@ export class AuthServiceImpl implements AuthService {
     );
 
     if (account) {
-      return account.nonce;
+      return account.getNonce();
     }
 
     return this.dataSource.transaction(async (manager) => {
-      const newAccount = new Account();
-      newAccount.address = accountAddress;
-      newAccount.nonce = uuidv4();
+      const newAccount = Account.ofAddress(accountAddress);
 
       await this.accountRepository.saveOrUpdate(manager, newAccount);
 
-      return newAccount.nonce;
+      return newAccount.getNonce();
     });
   }
 
@@ -56,7 +53,7 @@ export class AuthServiceImpl implements AuthService {
 
     const isSignatureValid = this.signatureVerifierService.isSignatureValid({
       accountAddress,
-      message: account.nonce,
+      message: account.getNonce(),
       signedMessage: signedNonce,
     });
 
@@ -65,7 +62,7 @@ export class AuthServiceImpl implements AuthService {
     }
 
     return this.dataSource.transaction(async (manager) => {
-      account.nonce = uuidv4();
+      account.regenerateNonce();
 
       await this.accountRepository.saveOrUpdate(manager, account);
 

@@ -1,19 +1,29 @@
 import { EntityManager } from 'typeorm';
-import { Account } from '../entities/account.entity';
+import { AccountEntity } from '../entities/account.entity';
 import { AccountRepository } from './account.repository';
+import { Account } from '../domain/account';
 
 export class AccountRepositoryImpl implements AccountRepository {
-  findByAddress(
+  async findByAddress(
     entityManager: EntityManager,
     accountAddress: string,
   ): Promise<Account> {
-    return entityManager.findOneBy(Account, { address: accountAddress });
+    const accountEntity = await entityManager.findOneBy(AccountEntity, {
+      address: accountAddress,
+    });
+
+    if (!accountEntity) {
+      return null;
+    }
+
+    return Account.of(accountEntity.address, accountEntity.nonce);
   }
 
-  saveOrUpdate(
+  async saveOrUpdate(
     entityManager: EntityManager,
     account: Account,
   ): Promise<Account> {
-    return entityManager.save(account);
+    await entityManager.save(AccountEntity.from(account));
+    return account;
   }
 }

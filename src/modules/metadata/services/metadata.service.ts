@@ -1,14 +1,10 @@
 import { Chain } from 'src/modules/acl/services/emca.service';
+import { Metadata } from '../domain/metadata';
 
 export interface MetadataId {
   chain: Chain;
   contractAddress: string;
   entityId: string;
-}
-
-export interface Metadata {
-  id: MetadataId;
-  metadata: any;
 }
 
 export interface FindMetadataRequest {
