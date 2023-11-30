@@ -2,7 +2,7 @@ import { EntityManager } from 'typeorm';
 import { Account } from '../entities/account.entity';
 import { AccountRepository } from './account.repository';
 
-export class AccountRepositoryImpl extends AccountRepository {
+export class AccountRepositoryImpl implements AccountRepository {
   findByAddress(
     entityManager: EntityManager,
     accountAddress: string,
