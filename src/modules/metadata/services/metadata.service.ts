@@ -30,5 +30,5 @@ export abstract class MetadataService {
   abstract deleteMetadata(
     accountAddress: string,
     id: MetadataId,
-  ): Promise<Metadata>;
+  ): Promise<void>;
 }

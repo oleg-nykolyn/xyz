@@ -9,5 +9,6 @@ import { EntityMetadataCrudAclServiceImpl } from './services/emca-impl.service';
       useClass: EntityMetadataCrudAclServiceImpl,
     },
   ],
+  exports: [EntityMetadataCrudAclService],
 })
 export class AclModule {}
