@@ -7,6 +7,7 @@ import { EnvUtils } from './utils/env.utils';
 import { Account } from './modules/auth/entities/account.entity';
 import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { Metadata } from './modules/metadata/entities/entity-metadata.entity';
 
 @Module({
   controllers: [],
@@ -24,7 +25,7 @@ import { APP_GUARD } from '@nestjs/core';
       username: EnvUtils.dbUser(),
       password: EnvUtils.dbPassword(),
       database: EnvUtils.dbName(),
-      entities: [Account],
+      entities: [Account, Metadata],
       synchronize: EnvUtils.environmentType() === 'development',
     }),
     ThrottlerModule.forRoot([
