@@ -1,4 +1,6 @@
+import { JwtPayload } from 'jsonwebtoken';
+
 export abstract class JwtService {
-  abstract isTokenValid(token: string): boolean;
+  abstract verifyToken(token: string): string | JwtPayload;
   abstract issueToken(subject: string): string;
 }
