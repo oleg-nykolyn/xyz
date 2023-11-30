@@ -53,9 +53,7 @@ export class MetadataServiceImpl implements MetadataService {
       throw new Error('Unauthorized');
     }
 
-    return this.dataSource.transaction(async (manager) => {
-      return await this.metadataRepository.save(manager, metadata);
-    });
+    return this.metadataRepository.save(this.dataSource.manager, metadata);
   }
 
   async updateMetadata(
@@ -75,9 +73,7 @@ export class MetadataServiceImpl implements MetadataService {
       throw new Error('Unauthorized');
     }
 
-    return this.dataSource.transaction(async (manager) => {
-      return await this.metadataRepository.update(manager, metadata);
-    });
+    return this.metadataRepository.update(this.dataSource.manager, metadata);
   }
 
   async deleteMetadata(accountAddress: string, id: MetadataId): Promise<void> {
@@ -94,8 +90,6 @@ export class MetadataServiceImpl implements MetadataService {
       throw new Error('Unauthorized');
     }
 
-    await this.dataSource.transaction(async (manager) => {
-      await this.metadataRepository.delete(manager, id);
-    });
+    return this.metadataRepository.delete(this.dataSource.manager, id);
   }
 }
