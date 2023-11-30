@@ -1,9 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseFilters } from '@nestjs/common';
+import { MetadataExceptionsFilter } from './metadata-exceptions.filter';
 
 @Controller({
   version: '1',
   path: 'metadata',
 })
+@UseFilters(MetadataExceptionsFilter)
 export class MetadataController {
   @Get()
   async getMetadata() {
