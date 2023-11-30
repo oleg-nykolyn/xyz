@@ -7,7 +7,7 @@ export class AccountRepositoryImplTypeOrm implements AccountRepository {
   async findByAddress(
     entityManager: EntityManager,
     accountAddress: string,
-  ): Promise<Account> {
+  ): Promise<Account | null> {
     const accountEntity = await entityManager.findOneBy(AccountEntity, {
       address: accountAddress,
     });

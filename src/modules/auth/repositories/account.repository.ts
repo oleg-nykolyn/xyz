@@ -5,7 +5,7 @@ export abstract class AccountRepository {
   abstract findByAddress(
     entityManager: EntityManager,
     accountAddress: string,
-  ): Promise<Account>;
+  ): Promise<Account | null>;
 
   abstract saveOrUpdate(
     entityManager: EntityManager,
