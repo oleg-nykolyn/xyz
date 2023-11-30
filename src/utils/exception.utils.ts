@@ -10,4 +10,8 @@ export class ExceptionUtils {
 
     return (exception as any).message || 'An unknown error occurred';
   }
+
+  static extractExceptionName(exception: unknown): string {
+    return (exception as any).constructor?.name ?? 'Error';
+  }
 }

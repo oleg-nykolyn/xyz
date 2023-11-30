@@ -36,6 +36,7 @@ export class AuthExceptionsFilter implements ExceptionFilter {
 
     const responseBody = {
       statusCode: httpStatus,
+      error: ExceptionUtils.extractExceptionName(exception),
       message: ExceptionUtils.extractExceptionMessage(exception),
       timestamp: new Date().toISOString(),
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
