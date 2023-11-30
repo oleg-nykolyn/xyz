@@ -3,7 +3,7 @@ import { AccountEntity } from '../entities/account.entity';
 import { AccountRepository } from './account.repository';
 import { Account } from '../domain/account';
 
-export class AccountRepositoryImpl implements AccountRepository {
+export class AccountRepositoryImplTypeOrm implements AccountRepository {
   async findByAddress(
     entityManager: EntityManager,
     accountAddress: string,
@@ -24,6 +24,7 @@ export class AccountRepositoryImpl implements AccountRepository {
     account: Account,
   ): Promise<Account> {
     await entityManager.save(AccountEntity.from(account));
+
     return account;
   }
 }

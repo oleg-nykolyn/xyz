@@ -1,32 +1,35 @@
 import { Chain } from 'src/modules/acl/services/emca.service';
 
+export interface MetadataId {
+  chain: Chain;
+  contractAddress: string;
+  entityId: number;
+}
+
 export class Metadata {
   private constructor(
-    private readonly chain: Chain,
-    private readonly contractAddress: string,
-    private readonly entityId: number,
+    private readonly id: MetadataId,
     private readonly metadata: any,
   ) {}
 
-  static of(
-    chain: Chain,
-    contractAddress: string,
-    entityId: number,
-    metadata: any,
-  ): Metadata {
-    return new Metadata(chain, contractAddress, entityId, metadata);
+  static of(metadataId: MetadataId, metadata: any): Metadata {
+    return new Metadata(metadataId, metadata);
+  }
+
+  getId(): MetadataId {
+    return this.id;
   }
 
   getChain(): Chain {
-    return this.chain;
+    return this.id.chain;
   }
 
   getContractAddress(): string {
-    return this.contractAddress;
+    return this.id.contractAddress;
   }
 
   getEntityId(): number {
-    return this.entityId;
+    return this.id.entityId;
   }
 
   getMetadata(): any {

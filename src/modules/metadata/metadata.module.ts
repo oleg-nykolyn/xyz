@@ -3,7 +3,7 @@ import { MetadataController } from './metadata.controller';
 import { MetadataService } from './services/metadata.service';
 import { MetadataServiceImpl } from './services/metadata-impl.service';
 import { MetadataRepository } from './repositories/metadata.repository';
-import { MetadataRepositoryImpl } from './repositories/metadata-impl.repository';
+import { MetadataRepositoryImplTypeOrm } from './repositories/metadata-impl-typeorm.repository';
 
 @Module({
   controllers: [MetadataController],
@@ -14,7 +14,7 @@ import { MetadataRepositoryImpl } from './repositories/metadata-impl.repository'
     },
     {
       provide: MetadataRepository,
-      useClass: MetadataRepositoryImpl,
+      useClass: MetadataRepositoryImplTypeOrm,
     },
   ],
 })

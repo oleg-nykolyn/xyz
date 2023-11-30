@@ -5,7 +5,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './services/auth.service';
 import { AuthServiceImpl } from './services/auth-impl.service';
 import { AccountRepository } from './repositories/account.repository';
-import { AccountRepositoryImpl } from './repositories/account-impl.repository';
+import { AccountRepositoryImplTypeOrm } from './repositories/account-impl-typeorm.repository';
 import { SignatureVerifierService } from './services/signature-verifier.service';
 import { SignatureVerifierServiceImpl } from './services/signature-verifier-impl.service';
 import { AuthGuard } from './auth.guard';
@@ -20,7 +20,7 @@ import { APP_GUARD } from '@nestjs/core';
     },
     {
       provide: AccountRepository,
-      useClass: AccountRepositoryImpl,
+      useClass: AccountRepositoryImplTypeOrm,
     },
     {
       provide: JwtService,

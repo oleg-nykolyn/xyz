@@ -1,27 +1,34 @@
 import { Chain } from 'src/modules/acl/services/emca.service';
-import { Metadata } from '../domain/metadata';
-
-export interface MetadataId {
-  chain: Chain;
-  contractAddress: string;
-  entityId: string;
-}
+import { Metadata, MetadataId } from '../domain/metadata';
 
 export interface FindMetadataRequest {
-  limit: number;
-  offset: number;
+  accountAddress: string;
   chain?: Chain;
   contractAddress?: string;
+  limit: number;
+  offset: number;
 }
 
 export abstract class MetadataService {
   abstract findMetadata(request: FindMetadataRequest): Promise<Metadata[]>;
 
-  abstract getMetadata(id: MetadataId): Promise<Metadata>;
+  abstract getMetadata(
+    accountAddress: string,
+    id: MetadataId,
+  ): Promise<Metadata>;
 
-  abstract createMetadata(metadata: Metadata): Promise<Metadata>;
+  abstract createMetadata(
+    accountAddress: string,
+    metadata: Metadata,
+  ): Promise<Metadata>;
 
-  abstract updateMetadata(metadata: Metadata): Promise<Metadata>;
+  abstract updateMetadata(
+    accountAddress: string,
+    metadata: Metadata,
+  ): Promise<Metadata>;
 
-  abstract deleteMetadata(id: MetadataId): Promise<Metadata>;
+  abstract deleteMetadata(
+    accountAddress: string,
+    id: MetadataId,
+  ): Promise<Metadata>;
 }
