@@ -7,7 +7,7 @@ import { EnvUtils } from './utils/env.utils';
 import { Account } from './modules/auth/entities/account.entity';
 import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
-import { Metadata } from './modules/metadata/entities/entity-metadata.entity';
+import { Metadata } from './modules/metadata/entities/metadata.entity';
 
 @Module({
   controllers: [],
