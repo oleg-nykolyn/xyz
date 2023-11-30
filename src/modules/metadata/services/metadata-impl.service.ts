@@ -4,6 +4,7 @@ import { MetadataRepository } from '../repositories/metadata.repository';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { EntityMetadataCrudAclService } from 'src/modules/acl/services/emca.service';
 import { DataSource } from 'typeorm';
+import { UnauthorizedException } from './exceptions/unauthorized.exception';
 
 @Injectable()
 export class MetadataServiceImpl implements MetadataService {
@@ -33,7 +34,7 @@ export class MetadataServiceImpl implements MetadataService {
         });
 
       if (!canRead) {
-        throw new Error('Unauthorized');
+        throw new UnauthorizedException();
       }
 
       return await this.metadataRepository.get(this.dataSource.manager, id);
@@ -58,7 +59,7 @@ export class MetadataServiceImpl implements MetadataService {
         });
 
       if (!canCreate) {
-        throw new Error('Unauthorized');
+        throw new UnauthorizedException();
       }
 
       return await this.metadataRepository.save(
@@ -86,7 +87,7 @@ export class MetadataServiceImpl implements MetadataService {
         });
 
       if (!canUpdate) {
-        throw new Error('Unauthorized');
+        throw new UnauthorizedException();
       }
 
       return await this.metadataRepository.update(
@@ -111,7 +112,7 @@ export class MetadataServiceImpl implements MetadataService {
         });
 
       if (!canDelete) {
-        throw new Error('Unauthorized');
+        throw new UnauthorizedException();
       }
 
       await this.metadataRepository.delete(this.dataSource.manager, id);

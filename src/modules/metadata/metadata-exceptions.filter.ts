@@ -11,6 +11,7 @@ import { ExceptionUtils } from 'src/utils/exception.utils';
 import { MetadataAlreadyExistsException } from './repositories/exceptions/metadata-already-exists.exception';
 import { MetadataNotFoundException } from './repositories/exceptions/metadata-not-found.exception';
 import { MetadataServiceException } from './services/exceptions/metadata-service.exception';
+import { UnauthorizedException } from './services/exceptions/unauthorized.exception';
 
 @Catch()
 export class MetadataExceptionsFilter implements ExceptionFilter {
@@ -37,6 +38,10 @@ export class MetadataExceptionsFilter implements ExceptionFilter {
 
     if (exception instanceof MetadataServiceException) {
       statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+
+    if (exception instanceof UnauthorizedException) {
+      statusCode = HttpStatus.UNAUTHORIZED;
     }
 
     const responseBody = {
