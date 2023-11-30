@@ -5,10 +5,17 @@ import { AclModule } from './modules/acl/acl.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvUtils } from './utils/env.utils';
 import { Account } from './modules/auth/entities/account.entity';
+import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -20,6 +27,12 @@ import { Account } from './modules/auth/entities/account.entity';
       entities: [Account],
       synchronize: EnvUtils.environmentType() === 'development',
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: seconds(EnvUtils.throttleTtlSecs()),
+        limit: EnvUtils.throttleLimit(),
+      },
+    ]),
     AuthModule,
     MetadataModule,
     AclModule,

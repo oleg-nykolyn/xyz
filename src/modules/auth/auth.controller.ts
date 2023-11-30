@@ -15,11 +15,13 @@ import { AuthenticateRequestDto } from './dtos/authenticate-request.dto';
 import { EnvUtils } from 'src/utils/env.utils';
 import { Response } from 'express';
 import { AuthExceptionsFilter } from './auth-exceptions.filter';
+import { Public } from './decorators/public.decorator';
 
 @Controller({
   version: '1',
   path: 'auth',
 })
+@Public()
 @UseFilters(AuthExceptionsFilter)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

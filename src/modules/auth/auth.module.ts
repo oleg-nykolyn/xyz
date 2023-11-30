@@ -8,6 +8,8 @@ import { AccountRepository } from './repositories/account.repository';
 import { AccountRepositoryImpl } from './repositories/account-impl.repository';
 import { SignatureVerifierService } from './services/signature-verifier.service';
 import { SignatureVerifierServiceImpl } from './services/signature-verifier-impl.service';
+import { AuthGuard } from './auth.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   controllers: [AuthController],
@@ -27,6 +29,10 @@ import { SignatureVerifierServiceImpl } from './services/signature-verifier-impl
     {
       provide: SignatureVerifierService,
       useClass: SignatureVerifierServiceImpl,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
     },
   ],
 })

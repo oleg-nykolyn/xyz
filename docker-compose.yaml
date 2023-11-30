@@ -21,6 +21,8 @@ services:
       JWT_SECRET: jwt-secret
       JWT_ISSUER: xyz
       JWT_EXPIRES_IN: 7d
+      THROTTLE_TTL_SECS: 1
+      THROTTLE_LIMIT: 5
     ports:
       - '3000:3000'
     depends_on:

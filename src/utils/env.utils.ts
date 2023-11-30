@@ -64,4 +64,12 @@ export class EnvUtils {
   static polygonRpcUrl(): string {
     return process.env.POLYGON_RPC_URL;
   }
+
+  static throttleTtlSecs(): number {
+    return parseInt(process.env.THROTTLE_TTL_SECS || '1', 10);
+  }
+
+  static throttleLimit(): number {
+    return parseInt(process.env.THROTTLE_LIMIT || '5', 10);
+  }
 }

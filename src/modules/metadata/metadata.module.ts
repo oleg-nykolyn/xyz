@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { MetadataController } from './metadata.controller';
 
-@Module({})
+@Module({
+  controllers: [MetadataController],
+})
 export class MetadataModule {}

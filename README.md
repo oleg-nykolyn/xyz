@@ -52,19 +52,21 @@ docker build -t xyz .
 
 ## Environment Variables
 
-| Variable     | Default             | Allowed              |
-| ------------ | ------------------- | -------------------- |
-| `NODE_ENV`   | development          | production, development |
-| `PORT`       | 3000                | any                  |
-| `LOG_LEVEL`  | log                 | fatal, error, log, warn, debug, verbose |
-| `DB_HOST`    | localhost            | any                  |
-| `DB_PORT`    | 5432                | any                  |
-| `DB_NAME`    | postgres-db         | any                  |
-| `DB_USER`    | postgres-user       | any                  |
-| `DB_PASSWORD`| postgres-password   | any                  |
-| `JWT_SECRET` |           | any                  |
-| `JWT_ISSUER` | xyz          | any                  |
-| `JWT_EXPIRES_IN` | 7d         | expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d"                  |
-| `HARDHAT_RPC_URL` | <http://127.0.0.1:8545>  | any                  |
-| `ETHEREUM_RPC_URL` |   | any                  |
-| `POLYGON_RPC_URL` |   | any                  |
+| Variable           | Default                  | Allowed                                      |
+| ------------------ | ------------------------ | -------------------------------------------- |
+| `NODE_ENV`         | development              | production, development                      |
+| `PORT`             | 3000                     | number                                       |
+| `LOG_LEVEL`        | log                      | fatal, error, log, warn, debug, verbose       |
+| `DB_HOST`          | localhost                | any                                          |
+| `DB_PORT`          | 5432                     | number                                       |
+| `DB_NAME`          | postgres-db              | any                                          |
+| `DB_USER`          | postgres-user            | any                                          |
+| `DB_PASSWORD`      | postgres-password        | any                                          |
+| `JWT_SECRET`       |                          | any                                          |
+| `JWT_ISSUER`       | xyz                      | any                                          |
+| `JWT_EXPIRES_IN`   | 7d                       | expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d" |
+| `HARDHAT_RPC_URL`  | <http://127.0.0.1:8545>  | any                                          |
+| `ETHEREUM_RPC_URL` |                          | any                                          |
+| `POLYGON_RPC_URL`  |                          | any                                          |
+| `THROTTLE_TTL_SECS`| 1                         | expressed in seconds                                        |
+| `THROTTLE_LIMIT`   | 5                         | number                                            |
