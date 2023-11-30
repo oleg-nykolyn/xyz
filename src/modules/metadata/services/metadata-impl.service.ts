@@ -37,9 +37,9 @@ export class MetadataServiceImpl implements MetadataService {
       }
 
       return await this.metadataRepository.get(this.dataSource.manager, id);
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
     }
   }
 
@@ -65,9 +65,9 @@ export class MetadataServiceImpl implements MetadataService {
         this.dataSource.manager,
         metadata,
       );
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
     }
   }
 
@@ -93,9 +93,9 @@ export class MetadataServiceImpl implements MetadataService {
         this.dataSource.manager,
         metadata,
       );
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
     }
   }
 
@@ -115,9 +115,9 @@ export class MetadataServiceImpl implements MetadataService {
       }
 
       await this.metadataRepository.delete(this.dataSource.manager, id);
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
     }
   }
 }

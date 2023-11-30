@@ -37,9 +37,9 @@ export class AuthServiceImpl implements AuthService {
 
         return newAccount.getNonce();
       });
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
     }
   }
 
@@ -74,9 +74,9 @@ export class AuthServiceImpl implements AuthService {
 
         return this.jwtService.issueToken(accountAddress);
       });
-    } catch (error) {
-      this.logger.error(error);
-      throw error;
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
     }
   }
 }

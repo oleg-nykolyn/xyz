@@ -23,8 +23,7 @@ export class SignatureVerifierServiceImpl implements SignatureVerifierService {
       const recoveredAddress = bufferToHex(publicToAddress(recoveredPublicKey));
 
       return recoveredAddress.toLowerCase() === accountAddress.toLowerCase();
-    } catch (e) {
-      this.logger.error(e);
+    } catch {
       return false;
     }
   }
