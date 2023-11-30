@@ -10,6 +10,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { ExceptionUtils } from 'src/utils/exception.utils';
 import { MetadataAlreadyExistsException } from './repositories/exceptions/metadata-already-exists.exception';
 import { MetadataNotFoundException } from './repositories/exceptions/metadata-not-found.exception';
+import { MetadataServiceException } from './services/exceptions/metadata-service.exception';
 
 @Catch()
 export class MetadataExceptionsFilter implements ExceptionFilter {
@@ -32,6 +33,10 @@ export class MetadataExceptionsFilter implements ExceptionFilter {
 
     if (exception instanceof MetadataNotFoundException) {
       httpStatus = HttpStatus.NOT_FOUND;
+    }
+
+    if (exception instanceof MetadataServiceException) {
+      httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
     }
 
     const responseBody = {

@@ -36,11 +36,7 @@ export class MetadataServiceImpl implements MetadataService {
         throw new Error('Unauthorized');
       }
 
-      const metadata = await this.metadataRepository.get(
-        this.dataSource.manager,
-        id,
-      );
-      return metadata;
+      return await this.metadataRepository.get(this.dataSource.manager, id);
     } catch (error) {
       // TODO ...
       this.logger.error(error);
@@ -66,8 +62,10 @@ export class MetadataServiceImpl implements MetadataService {
         throw new Error('Unauthorized');
       }
 
-      await this.metadataRepository.save(this.dataSource.manager, metadata);
-      return metadata;
+      return await this.metadataRepository.save(
+        this.dataSource.manager,
+        metadata,
+      );
     } catch (error) {
       // TODO ...
       this.logger.error(error);
@@ -93,8 +91,10 @@ export class MetadataServiceImpl implements MetadataService {
         throw new Error('Unauthorized');
       }
 
-      await this.metadataRepository.update(this.dataSource.manager, metadata);
-      return metadata;
+      return await this.metadataRepository.update(
+        this.dataSource.manager,
+        metadata,
+      );
     } catch (error) {
       // TODO ...
       this.logger.error(error);
