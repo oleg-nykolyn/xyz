@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseFilters,
   UsePipes,
   ValidationPipe,
@@ -57,6 +58,22 @@ export class MetadataController {
   ): Promise<MetadataDto> {
     return MetadataDto.fromDomain(
       await this.metadataService.createMetadata(
+        accountAddress,
+        MetadataIdDto.toDomain(metadataId),
+        metadataContent,
+      ),
+    );
+  }
+
+  @Put()
+  @UsePipes(ValidationPipe)
+  async updateMetadata(
+    @Body()
+    { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
+    @AccountAddress() accountAddress: string,
+  ): Promise<MetadataDto> {
+    return MetadataDto.fromDomain(
+      await this.metadataService.updateMetadata(
         accountAddress,
         MetadataIdDto.toDomain(metadataId),
         metadataContent,

@@ -131,11 +131,13 @@ export class MetadataServiceImpl implements MetadataService {
     id: MetadataId,
     content: any,
   ): Promise<Metadata> {
-    if (!(await this.metadataRepository.exists(this.dataSource.manager, id))) {
-      throw new MetadataNotFoundException(id);
-    }
-
     try {
+      if (
+        !(await this.metadataRepository.exists(this.dataSource.manager, id))
+      ) {
+        throw new MetadataNotFoundException(id);
+      }
+
       const { chain, contractAddress, entityId } = id;
       const canUpdate =
         await this.entityMetadataCrudAclService.canUpdateEntityMetadata({
