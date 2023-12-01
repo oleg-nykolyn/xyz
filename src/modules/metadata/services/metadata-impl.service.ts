@@ -27,7 +27,7 @@ export class MetadataServiceImpl implements MetadataService {
     limit,
     offset,
   }: FindMetadataRequest): Promise<ViewableOrObscuredMetadata[]> {
-    const metadata: Metadata[] = await this.metadataRepository.find(
+    const foundMetadata: Metadata[] = await this.metadataRepository.find(
       this.dataSource.manager,
       {
         chain,
@@ -38,7 +38,7 @@ export class MetadataServiceImpl implements MetadataService {
     );
 
     return Promise.all(
-      metadata.map(async (metadata) => {
+      foundMetadata.map(async (metadata) => {
         try {
           if (
             await this.entityMetadataCrudAclService.canReadEntityMetadata({
@@ -52,7 +52,7 @@ export class MetadataServiceImpl implements MetadataService {
           }
 
           return metadata.getId();
-        } catch {
+        } catch (e) {
           return metadata.getId();
         }
       }),

@@ -66,7 +66,7 @@ docker build -t xyz .
 | `JWT_ISSUER`       | xyz                      | any                                          |
 | `JWT_EXPIRES_IN`   | 7d                       | expressed in seconds or a string describing a time span zeit/ms. Eg: 60, "2 days", "10h", "7d" |
 | `HARDHAT_RPC_URL`  | <http://127.0.0.1:8545>  | any                                          |
-| `ETHEREUM_RPC_URL` |                          | any                                          |
-| `POLYGON_RPC_URL`  |                          | any                                          |
+| `ETHEREUM_RPC_URL` | <https://ethereum.publicnode.com>                         | any                                          |
+| `POLYGON_RPC_URL`  | <https://polygon-rpc.com>                         | any                                          |
 | `THROTTLE_TTL_SECS`| 1                         | expressed in seconds                                        |
 | `THROTTLE_LIMIT`   | 5                         | number                                            |

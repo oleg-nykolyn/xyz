@@ -16,9 +16,9 @@ services:
       DB_USER: postgres-user
       DB_PASSWORD: postgres-password
       HARDHAT_RPC_URL: 'http://hardhat:8545'
-      ETHEREUM_RPC_URL:
-      POLYGON_RPC_URL:
-      JWT_SECRET: jwt-secret
+      ETHEREUM_RPC_URL: 'https://ethereum.publicnode.com'
+      POLYGON_RPC_URL: 'https://polygon-rpc.com'
+      JWT_SECRET: jwt-5ecr3t
       JWT_ISSUER: xyz
       JWT_EXPIRES_IN: 7d
       THROTTLE_TTL_SECS: 1

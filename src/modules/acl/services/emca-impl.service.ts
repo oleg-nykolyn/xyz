@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, OnModuleInit } from '@nestjs/common';
 import {
   Chain,
   EntityMetadataCrudAclRequest,
@@ -9,9 +9,25 @@ import { EnvUtils } from 'src/utils/env.utils';
 import { abi } from 'src/modules/acl/abis/EntityMetadataCrudAcl.json';
 
 export class EntityMetadataCrudAclServiceImpl
-  implements EntityMetadataCrudAclService
+  implements EntityMetadataCrudAclService, OnModuleInit
 {
   private readonly logger = new Logger(EntityMetadataCrudAclServiceImpl.name);
+  private rpcProviders = new Map<Chain, ethers.JsonRpcProvider>();
+
+  onModuleInit() {
+    this.rpcProviders.set(
+      Chain.Hardhat,
+      new ethers.JsonRpcProvider(EnvUtils.hardhatRpcUrl()),
+    );
+    this.rpcProviders.set(
+      Chain.Ethereum,
+      new ethers.JsonRpcProvider(EnvUtils.ethereumRpcUrl()),
+    );
+    this.rpcProviders.set(
+      Chain.Polygon,
+      new ethers.JsonRpcProvider(EnvUtils.polygonRpcUrl()),
+    );
+  }
 
   canReadEntityMetadata({
     chain,
@@ -65,18 +81,7 @@ export class EntityMetadataCrudAclServiceImpl
     return new ethers.Contract(
       contractAddress,
       abi,
-      new ethers.JsonRpcProvider(this.getRpcUrlByChain(chain)),
+      this.rpcProviders.get(chain),
     );
-  }
-
-  private getRpcUrlByChain(chain: Chain): string {
-    switch (chain) {
-      case Chain.Hardhat:
-        return EnvUtils.hardhatRpcUrl();
-      case Chain.Ethereum:
-        return EnvUtils.ethereumRpcUrl();
-      case Chain.Polygon:
-        return EnvUtils.polygonRpcUrl();
-    }
   }
 }

@@ -58,11 +58,11 @@ export class EnvUtils {
   }
 
   static ethereumRpcUrl(): string {
-    return process.env.ETHEREUM_RPC_URL;
+    return process.env.ETHEREUM_RPC_URL || 'https://ethereum.publicnode.com';
   }
 
   static polygonRpcUrl(): string {
-    return process.env.POLYGON_RPC_URL;
+    return process.env.POLYGON_RPC_URL || 'https://polygon-rpc.com';
   }
 
   static throttleTtlSecs(): number {
