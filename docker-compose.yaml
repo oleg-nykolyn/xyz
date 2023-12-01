@@ -18,6 +18,7 @@ services:
       HARDHAT_RPC_URL: 'http://hardhat:8545'
       ETHEREUM_RPC_URL: 'https://ethereum.publicnode.com'
       POLYGON_RPC_URL: 'https://polygon-rpc.com'
+      MULTIVAC_RPC_URL: 'https://rpc.mtv.ac'
       JWT_SECRET: jwt-5ecr3t
       JWT_ISSUER: xyz
       JWT_EXPIRES_IN: 7d
