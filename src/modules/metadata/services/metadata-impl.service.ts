@@ -9,6 +9,8 @@ import { Metadata, MetadataId } from '../domain/metadata';
 import { EntityMetadataCrudAclService } from 'src/modules/acl/services/emca.service';
 import { DataSource } from 'typeorm';
 import { UnauthorizedException } from './exceptions/unauthorized.exception';
+import { MetadataNotFoundException } from '../repositories/exceptions/metadata-not-found.exception';
+import { MetadataAlreadyExistsException } from '../repositories/exceptions/metadata-already-exists.exception';
 
 @Injectable()
 export class MetadataServiceImpl implements MetadataService {
@@ -90,6 +92,10 @@ export class MetadataServiceImpl implements MetadataService {
     content: any,
   ): Promise<Metadata> {
     try {
+      if (await this.metadataRepository.exists(this.dataSource.manager, id)) {
+        throw new MetadataAlreadyExistsException(id);
+      }
+
       const { chain, contractAddress, entityId } = id;
       const canCreate =
         await this.entityMetadataCrudAclService.canCreateEntityMetadata({
@@ -125,6 +131,10 @@ export class MetadataServiceImpl implements MetadataService {
     id: MetadataId,
     content: any,
   ): Promise<Metadata> {
+    if (!(await this.metadataRepository.exists(this.dataSource.manager, id))) {
+      throw new MetadataNotFoundException(id);
+    }
+
     try {
       const { chain, contractAddress, entityId } = id;
       const canUpdate =
@@ -157,6 +167,12 @@ export class MetadataServiceImpl implements MetadataService {
 
   async deleteMetadata(accountAddress: string, id: MetadataId): Promise<void> {
     try {
+      if (
+        !(await this.metadataRepository.exists(this.dataSource.manager, id))
+      ) {
+        throw new MetadataNotFoundException(id);
+      }
+
       const { chain, contractAddress, entityId } = id;
       const canDelete =
         await this.entityMetadataCrudAclService.canDeleteEntityMetadata({

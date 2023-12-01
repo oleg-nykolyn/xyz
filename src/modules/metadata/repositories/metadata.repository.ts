@@ -28,4 +28,9 @@ export abstract class MetadataRepository {
   ): Promise<Metadata>;
 
   abstract delete(entityManager: EntityManager, id: MetadataId): Promise<void>;
+
+  abstract exists(
+    entityManager: EntityManager,
+    id: MetadataId,
+  ): Promise<boolean>;
 }

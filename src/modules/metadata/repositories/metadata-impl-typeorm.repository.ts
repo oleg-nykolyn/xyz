@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { FindQuery, MetadataRepository } from './metadata.repository';
-import { EntityManager, QueryFailedError } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { MetadataEntity } from '../entities/metadata.entity';
-import { MetadataAlreadyExistsException } from './exceptions/metadata-already-exists.exception';
 import { MetadataNotFoundException } from './exceptions/metadata-not-found.exception';
 
 @Injectable()
@@ -67,31 +66,16 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
     entityManager: EntityManager,
     metadata: Metadata,
   ): Promise<Metadata> {
-    try {
-      return (
-        await entityManager.save(MetadataEntity.fromDomain(metadata))
-      ).toDomain();
-    } catch (e) {
-      if (e instanceof QueryFailedError) {
-        throw new MetadataAlreadyExistsException(metadata.getId());
-      }
-
-      throw e;
-    }
+    return (
+      await entityManager.save(MetadataEntity.fromDomain(metadata))
+    ).toDomain();
   }
 
   async delete(entityManager: EntityManager, id: MetadataId): Promise<void> {
-    if (!(await this.exists(entityManager, id))) {
-      throw new MetadataNotFoundException(id);
-    }
-
     await entityManager.delete(MetadataEntity, id);
   }
 
-  private exists(
-    entityManager: EntityManager,
-    id: MetadataId,
-  ): Promise<boolean> {
+  exists(entityManager: EntityManager, id: MetadataId): Promise<boolean> {
     return entityManager.exists(MetadataEntity, {
       where: id,
     });

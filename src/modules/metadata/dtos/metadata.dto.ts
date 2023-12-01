@@ -60,17 +60,6 @@ export class MetadataDto {
 
     return dto;
   }
-
-  toDomain(): Metadata {
-    return Metadata.of({
-      id: MetadataIdDto.toDomain(this.id),
-      content: this.content,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      createdBy: this.createdBy,
-      lastUpdatedBy: this.lastUpdatedBy,
-    });
-  }
 }
 
 export type ViewableOrObscuredMetadataDto = MetadataDto | MetadataIdDto;

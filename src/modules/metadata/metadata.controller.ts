@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Post,
   UseFilters,
   UsePipes,
   ValidationPipe,
@@ -16,10 +17,12 @@ import { ParseChainPipe } from './pipes/parse-chain.pipe';
 import { ParseEthAddressPipe } from './pipes/parse-eth-address.pipe';
 import { ParseEntityIdPipe } from './pipes/parse-entity-id.pipe';
 import {
+  MetadataDto,
   MetadataDtoMappers,
   MetadataIdDto,
   ViewableOrObscuredMetadataDto,
 } from './dtos/metadata.dto';
+import { CreateOrUpdateMetadataRequestDto } from './dtos/create-or-update-metadata-request.dto';
 
 @Controller({
   version: '1',
@@ -34,7 +37,7 @@ export class MetadataController {
     @Param('chain', ParseChainPipe) chain: Chain,
     @Param('contractAddress', ParseEthAddressPipe) contractAddress: string,
     @Param('entityId', ParseEntityIdPipe) entityId: number,
-    @AccountAddress() accountAddress,
+    @AccountAddress() accountAddress: string,
   ): Promise<ViewableOrObscuredMetadataDto> {
     return MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain(
       await this.metadataService.getMetadata(accountAddress, {
@@ -45,11 +48,27 @@ export class MetadataController {
     );
   }
 
+  @Post()
+  @UsePipes(ValidationPipe)
+  async createMetadata(
+    @Body()
+    { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
+    @AccountAddress() accountAddress: string,
+  ): Promise<MetadataDto> {
+    return MetadataDto.fromDomain(
+      await this.metadataService.createMetadata(
+        accountAddress,
+        MetadataIdDto.toDomain(metadataId),
+        metadataContent,
+      ),
+    );
+  }
+
   @Delete()
   @UsePipes(ValidationPipe)
   deleteMetadata(
     @Body() metadataIdDto: MetadataIdDto,
-    @AccountAddress() accountAddress,
+    @AccountAddress() accountAddress: string,
   ): Promise<void> {
     return this.metadataService.deleteMetadata(
       accountAddress,
