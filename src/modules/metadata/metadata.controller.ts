@@ -6,6 +6,10 @@ import { Chain } from '../acl/services/emca.service';
 import { ParseChainPipe } from './pipes/parse-chain.pipe';
 import { ParseEthAddressPipe } from './pipes/parse-eth-address.pipe';
 import { ParseEntityIdPipe } from './pipes/parse-entity-id.pipe';
+import {
+  MetadataDtoMappers,
+  ViewableOrObscuredMetadataDto,
+} from './dtos/metadata.dto';
 
 @Controller({
   version: '1',
@@ -21,12 +25,13 @@ export class MetadataController {
     @Param('contractAddress', ParseEthAddressPipe) contractAddress: string,
     @Param('entityId', ParseEntityIdPipe) entityId: number,
     @AccountAddress() accountAddress,
-  ): Promise<any> {
-    return {
-      chain,
-      contractAddress,
-      entityId,
-      accountAddress,
-    };
+  ): Promise<ViewableOrObscuredMetadataDto> {
+    return MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain(
+      await this.metadataService.getMetadata(accountAddress, {
+        chain,
+        contractAddress,
+        entityId,
+      }),
+    );
   }
 }
