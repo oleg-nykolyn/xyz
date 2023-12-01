@@ -34,7 +34,7 @@ export class MetadataIdDto {
   static toDomain(metadataIdDto: MetadataIdDto): MetadataId {
     return {
       chain: metadataIdDto.chain,
-      contractAddress: metadataIdDto.contractAddress,
+      contractAddress: metadataIdDto.contractAddress.toLowerCase(),
       entityId: metadataIdDto.entityId,
     };
   }
