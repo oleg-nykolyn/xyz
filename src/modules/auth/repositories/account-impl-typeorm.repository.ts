@@ -23,8 +23,8 @@ export class AccountRepositoryImplTypeOrm implements AccountRepository {
     entityManager: EntityManager,
     account: Account,
   ): Promise<Account> {
-    await entityManager.save(AccountEntity.from(account));
-
-    return account;
+    return (
+      await entityManager.save(AccountEntity.fromDomain(account))
+    ).toDomain();
   }
 }

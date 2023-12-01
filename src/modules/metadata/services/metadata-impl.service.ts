@@ -46,10 +46,11 @@ export class MetadataServiceImpl implements MetadataService {
 
   async createMetadata(
     accountAddress: string,
-    metadata: Metadata,
+    id: MetadataId,
+    content: any,
   ): Promise<Metadata> {
     try {
-      const { chain, contractAddress, entityId } = metadata.getId();
+      const { chain, contractAddress, entityId } = id;
       const canCreate =
         await this.entityMetadataCrudAclService.canCreateEntityMetadata({
           chain,
@@ -61,6 +62,13 @@ export class MetadataServiceImpl implements MetadataService {
       if (!canCreate) {
         throw new UnauthorizedException();
       }
+
+      const metadata = Metadata.of({
+        id,
+        content,
+        createdBy: accountAddress,
+        lastUpdatedBy: accountAddress,
+      });
 
       return await this.metadataRepository.save(
         this.dataSource.manager,
@@ -74,10 +82,11 @@ export class MetadataServiceImpl implements MetadataService {
 
   async updateMetadata(
     accountAddress: string,
-    metadata: Metadata,
+    id: MetadataId,
+    content: any,
   ): Promise<Metadata> {
     try {
-      const { chain, contractAddress, entityId } = metadata.getId();
+      const { chain, contractAddress, entityId } = id;
       const canUpdate =
         await this.entityMetadataCrudAclService.canUpdateEntityMetadata({
           chain,
@@ -89,6 +98,12 @@ export class MetadataServiceImpl implements MetadataService {
       if (!canUpdate) {
         throw new UnauthorizedException();
       }
+
+      const metadata = Metadata.of({
+        id,
+        content,
+        lastUpdatedBy: accountAddress,
+      });
 
       return await this.metadataRepository.update(
         this.dataSource.manager,

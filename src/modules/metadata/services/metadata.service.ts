@@ -19,12 +19,14 @@ export abstract class MetadataService {
 
   abstract createMetadata(
     accountAddress: string,
-    metadata: Metadata,
+    id: MetadataId,
+    content: any,
   ): Promise<Metadata>;
 
   abstract updateMetadata(
     accountAddress: string,
-    metadata: Metadata,
+    id: MetadataId,
+    content: any,
   ): Promise<Metadata>;
 
   abstract deleteMetadata(

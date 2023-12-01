@@ -9,11 +9,15 @@ export class AccountEntity {
   @Column()
   nonce: string;
 
-  static from(account: Account): AccountEntity {
+  static fromDomain(account: Account): AccountEntity {
     const accountEntity = new AccountEntity();
     accountEntity.address = account.getAddress();
     accountEntity.nonce = account.getNonce();
 
     return accountEntity;
+  }
+
+  toDomain(): Account {
+    return Account.of(this.address, this.nonce);
   }
 }

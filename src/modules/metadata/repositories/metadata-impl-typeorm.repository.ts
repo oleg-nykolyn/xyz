@@ -28,17 +28,7 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
       skip: offset,
     });
 
-    return metadataEntities.map(
-      ({ chain, contractAddress, entityId, content }) =>
-        Metadata.of(
-          {
-            chain,
-            contractAddress,
-            entityId,
-          },
-          content,
-        ),
-    );
+    return metadataEntities.map((metadataEntity) => metadataEntity.toDomain());
   }
 
   async get(entityManager: EntityManager, id: MetadataId): Promise<Metadata> {
@@ -48,29 +38,26 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
       throw new MetadataNotFoundException(id);
     }
 
-    return Metadata.of(
-      {
-        chain: metadataEntity.chain,
-        contractAddress: metadataEntity.contractAddress,
-        entityId: metadataEntity.entityId,
-      },
-      metadataEntity.content,
-    );
+    return metadataEntity.toDomain();
   }
 
   async update(
     entityManager: EntityManager,
     metadata: Metadata,
   ): Promise<Metadata> {
-    if (!(await this.exists(entityManager, metadata.getId()))) {
+    const metadataEntity = await entityManager.findOneBy(
+      MetadataEntity,
+      metadata.getId(),
+    );
+
+    if (!metadataEntity) {
       throw new MetadataNotFoundException(metadata.getId());
     }
 
-    await entityManager.update(MetadataEntity, metadata.getId(), {
-      content: metadata.getContent(),
-    });
+    metadataEntity.content = metadata.getContent();
+    metadataEntity.lastUpdatedBy = metadata.getLastUpdatedBy();
 
-    return metadata;
+    return (await entityManager.save(metadataEntity)).toDomain();
   }
 
   async save(
@@ -78,7 +65,9 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
     metadata: Metadata,
   ): Promise<Metadata> {
     try {
-      await entityManager.save(MetadataEntity.from(metadata));
+      return (
+        await entityManager.save(MetadataEntity.fromDomain(metadata))
+      ).toDomain();
     } catch (e) {
       if (e instanceof QueryFailedError) {
         throw new MetadataAlreadyExistsException(metadata.getId());
@@ -86,8 +75,6 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
 
       throw e;
     }
-
-    return metadata;
   }
 
   async delete(entityManager: EntityManager, id: MetadataId): Promise<void> {

@@ -8,12 +8,37 @@ export interface MetadataId {
 
 export class Metadata {
   private constructor(
-    private readonly id: MetadataId,
-    private readonly content: any,
+    private id: MetadataId,
+    private content?: any,
+    private createdBy?: string,
+    private lastUpdatedBy?: string,
+    private createdAt?: Date,
+    private updatedAt?: Date,
   ) {}
 
-  static of(metadataId: MetadataId, content: any): Metadata {
-    return new Metadata(metadataId, content);
+  static of({
+    id,
+    content,
+    createdBy,
+    lastUpdatedBy,
+    createdAt,
+    updatedAt,
+  }: {
+    id: MetadataId;
+    content?: any;
+    createdBy?: string;
+    lastUpdatedBy?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }): Metadata {
+    return new Metadata(
+      id,
+      content,
+      createdBy,
+      lastUpdatedBy,
+      createdAt,
+      updatedAt,
+    );
   }
 
   getId(): MetadataId {
@@ -34,5 +59,21 @@ export class Metadata {
 
   getContent(): any {
     return this.content;
+  }
+
+  getCreatedBy(): string {
+    return this.createdBy;
+  }
+
+  getLastUpdatedBy(): string {
+    return this.lastUpdatedBy;
+  }
+
+  getCreatedAt(): Date {
+    return this.createdAt;
+  }
+
+  getUpdatedAt(): Date {
+    return this.updatedAt;
   }
 }
