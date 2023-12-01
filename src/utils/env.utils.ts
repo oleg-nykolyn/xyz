@@ -65,6 +65,10 @@ export class EnvUtils {
     return process.env.POLYGON_RPC_URL || 'https://polygon-rpc.com';
   }
 
+  static multivacRpcUrl(): string {
+    return process.env.MULTIVAC_RPC_URL || 'https://rpc.mtv.ac';
+  }
+
   static throttleTtlSecs(): number {
     return parseInt(process.env.THROTTLE_TTL_SECS || '1', 10);
   }

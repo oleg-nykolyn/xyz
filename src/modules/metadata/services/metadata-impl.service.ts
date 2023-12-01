@@ -66,6 +66,12 @@ export class MetadataServiceImpl implements MetadataService {
     id: MetadataId,
   ): Promise<ViewableOrObscuredMetadata> {
     try {
+      if (
+        !(await this.metadataRepository.exists(this.dataSource.manager, id))
+      ) {
+        throw new MetadataNotFoundException(id);
+      }
+
       const { chain, contractAddress, entityId } = id;
       const canRead =
         await this.entityMetadataCrudAclService.canReadEntityMetadata({

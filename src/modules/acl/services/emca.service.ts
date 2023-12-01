@@ -2,6 +2,7 @@ export enum Chain {
   Hardhat = 'hardhat',
   Ethereum = 'ethereum',
   Polygon = 'polygon',
+  MultiVAC = 'multivac',
 }
 
 export type EntityMetadataCrudAclRequest = {

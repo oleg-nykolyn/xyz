@@ -27,6 +27,10 @@ export class EntityMetadataCrudAclServiceImpl
       Chain.Polygon,
       new ethers.JsonRpcProvider(EnvUtils.polygonRpcUrl()),
     );
+    this.rpcProviders.set(
+      Chain.MultiVAC,
+      new ethers.JsonRpcProvider(EnvUtils.multivacRpcUrl()),
+    );
   }
 
   canReadEntityMetadata({
