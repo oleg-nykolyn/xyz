@@ -1,5 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { FindMetadataRequest, MetadataService } from './metadata.service';
+import {
+  FindMetadataRequest,
+  ViewableOrObscuredMetadata,
+  MetadataService,
+} from './metadata.service';
 import { MetadataRepository } from '../repositories/metadata.repository';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { EntityMetadataCrudAclService } from 'src/modules/acl/services/emca.service';
@@ -16,10 +20,43 @@ export class MetadataServiceImpl implements MetadataService {
     private readonly entityMetadataCrudAclService: EntityMetadataCrudAclService,
   ) {}
 
-  findMetadata(request: FindMetadataRequest): Promise<Metadata[]> {
-    // TODO ...
-    this.logger.log(request);
-    throw new Error('Method not implemented.');
+  async findMetadata({
+    accountAddress,
+    chain,
+    contractAddress,
+    limit,
+    offset,
+  }: FindMetadataRequest): Promise<ViewableOrObscuredMetadata[]> {
+    const metadata: Metadata[] = await this.metadataRepository.find(
+      this.dataSource.manager,
+      {
+        chain,
+        contractAddress,
+        limit,
+        offset,
+      },
+    );
+
+    return Promise.all(
+      metadata.map(async (metadata) => {
+        try {
+          if (
+            await this.entityMetadataCrudAclService.canReadEntityMetadata({
+              chain: metadata.getChain(),
+              contractAddress: metadata.getContractAddress(),
+              accountAddress,
+              entityId: metadata.getEntityId(),
+            })
+          ) {
+            return metadata;
+          }
+
+          return metadata.getId();
+        } catch {
+          return metadata.getId();
+        }
+      }),
+    );
   }
 
   async getMetadata(accountAddress: string, id: MetadataId): Promise<Metadata> {

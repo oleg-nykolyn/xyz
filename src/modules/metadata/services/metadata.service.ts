@@ -9,8 +9,12 @@ export interface FindMetadataRequest {
   offset: number;
 }
 
+export type ViewableOrObscuredMetadata = Metadata | MetadataId;
+
 export abstract class MetadataService {
-  abstract findMetadata(request: FindMetadataRequest): Promise<Metadata[]>;
+  abstract findMetadata(
+    request: FindMetadataRequest,
+  ): Promise<ViewableOrObscuredMetadata[]>;
 
   abstract getMetadata(
     accountAddress: string,
