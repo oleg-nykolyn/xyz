@@ -1,9 +1,10 @@
 const hre = require('hardhat');
 
 async function main() {
-  const erc721OnlyOwnerAndAuthorizedEditorEmca =
-    await hre.ethers.deployContract('ERC721OnlyOwnerAndAuthorizedEditorEMCA');
-  await erc721OnlyOwnerAndAuthorizedEditorEmca.waitForDeployment();
+  const contract = await hre.ethers.deployContract(
+    'ERC721OwnerAuthorizedEditorEMCA',
+  );
+  await contract.waitForDeployment();
 }
 
 // We recommend this pattern to be able to use async/await everywhere

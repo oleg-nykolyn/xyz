@@ -11,7 +11,7 @@ export class ParseEthAddressPipe implements PipeTransform {
     }
 
     throw new BadRequestException(
-      `Address ${address} is not a valid Ethereum-like address.`,
+      `address ${address} is not a valid Ethereum-like address`,
     );
   }
 }

@@ -2,7 +2,11 @@ import { HttpStatus, InternalServerErrorException } from '@nestjs/common';
 
 export class ExceptionUtils {
   static extractExceptionMessage(exception: unknown): string {
-    return (exception as any).message || 'An unknown error occurred';
+    return (
+      (exception as any).response?.message ||
+      (exception as any).message ||
+      'An unknown error occurred'
+    );
   }
 
   static extractExceptionName(exception: unknown): string {

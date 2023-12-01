@@ -11,11 +11,11 @@ export class ParseEntityIdPipe implements PipeTransform {
       }
 
       throw new BadRequestException(
-        `Entity identifier ${value} must be a positive integer.`,
+        `entity identifier ${value} must be a positive integer`,
       );
     } catch {
       throw new BadRequestException(
-        `Entity identifier ${value} is not a valid integer.`,
+        `entity identifier ${value} is not a valid integer`,
       );
     }
   }

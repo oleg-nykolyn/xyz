@@ -1,10 +1,24 @@
 import { Chain } from 'src/modules/acl/services/emca.service';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { ViewableOrObscuredMetadata } from '../services/metadata.service';
+import {
+  IsNotEmpty,
+  IsEthereumAddress,
+  IsEnum,
+  IsNumber,
+} from 'class-validator';
 
 export class MetadataIdDto {
+  @IsNotEmpty()
+  @IsEnum(Chain)
   chain: Chain;
+
+  @IsNotEmpty()
+  @IsEthereumAddress()
   contractAddress: string;
+
+  @IsNotEmpty()
+  @IsNumber()
   entityId: number;
 
   static fromDomain(metadataId: MetadataId): MetadataIdDto {
@@ -15,6 +29,14 @@ export class MetadataIdDto {
     dto.entityId = metadataId.entityId;
 
     return dto;
+  }
+
+  static toDomain(metadataIdDto: MetadataIdDto): MetadataId {
+    return {
+      chain: metadataIdDto.chain,
+      contractAddress: metadataIdDto.contractAddress,
+      entityId: metadataIdDto.entityId,
+    };
   }
 }
 
@@ -37,6 +59,17 @@ export class MetadataDto {
     dto.lastUpdatedBy = metadata.getLastUpdatedBy();
 
     return dto;
+  }
+
+  toDomain(): Metadata {
+    return Metadata.of({
+      id: MetadataIdDto.toDomain(this.id),
+      content: this.content,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      createdBy: this.createdBy,
+      lastUpdatedBy: this.lastUpdatedBy,
+    });
   }
 }
 

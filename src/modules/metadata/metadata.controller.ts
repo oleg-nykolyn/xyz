@@ -1,4 +1,13 @@
-import { Controller, Get, Param, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  UseFilters,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { MetadataExceptionsFilter } from './metadata-exceptions.filter';
 import { MetadataService } from './services/metadata.service';
 import { AccountAddress } from '../auth/decorators/account-address.decorator';
@@ -8,6 +17,7 @@ import { ParseEthAddressPipe } from './pipes/parse-eth-address.pipe';
 import { ParseEntityIdPipe } from './pipes/parse-entity-id.pipe';
 import {
   MetadataDtoMappers,
+  MetadataIdDto,
   ViewableOrObscuredMetadataDto,
 } from './dtos/metadata.dto';
 
@@ -32,6 +42,18 @@ export class MetadataController {
         contractAddress,
         entityId,
       }),
+    );
+  }
+
+  @Delete()
+  @UsePipes(ValidationPipe)
+  deleteMetadata(
+    @Body() metadataIdDto: MetadataIdDto,
+    @AccountAddress() accountAddress,
+  ): Promise<void> {
+    return this.metadataService.deleteMetadata(
+      accountAddress,
+      MetadataIdDto.toDomain(metadataIdDto),
     );
   }
 }

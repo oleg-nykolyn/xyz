@@ -5,7 +5,7 @@ import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 import './EntityMetadataCrudAcl.sol';
 
-contract ERC721OnlyOwnerAndAuthorizedEditorEMCA is
+contract ERC721OwnerAuthorizedEditorEMCA is
     ERC721,
     Ownable,
     EntityMetadataCrudAcl
@@ -42,17 +42,17 @@ contract ERC721OnlyOwnerAndAuthorizedEditorEMCA is
     function canUpdateEntityMetadata(
         address account,
         uint256 entityId
-    ) external pure override returns (bool) {
-        // No one can update token metadata.
-        return false;
+    ) external view override returns (bool) {
+        // Only authorized editor can edit token metadata.
+        return _entityMetadataAuthorizedEditors[account][entityId];
     }
 
     function canDeleteEntityMetadata(
         address account,
         uint256 entityId
-    ) external pure override returns (bool) {
-        // No one can delete token metadata.
-        return false;
+    ) external view override returns (bool) {
+        // Only authorized editor can delete token metadata.
+        return _entityMetadataAuthorizedEditors[account][entityId];
     }
 
     function setEntityMetadataAuthorizedEditor(

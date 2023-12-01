@@ -12,7 +12,7 @@ export class ParseChainPipe implements PipeTransform {
     }
 
     throw new BadRequestException(
-      `Invalid chain ${value}. Chain must be one of [${chains.join(', ')}].`,
+      `chain must be one of the following values: ${chains.join(', ')}`,
     );
   }
 }
