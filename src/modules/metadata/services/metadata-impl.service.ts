@@ -1,11 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
-import {
-  FindMetadataRequest,
-  ViewableOrObscuredMetadata,
-  MetadataService,
-} from './metadata.service';
+import { FindMetadataRequest, MetadataService } from './metadata.service';
 import { MetadataRepository } from '../repositories/metadata.repository';
-import { Metadata, MetadataId } from '../domain/metadata';
+import {
+  Metadata,
+  MetadataId,
+  ViewableOrObscuredMetadata,
+} from '../domain/metadata';
 import { EntityMetadataCrudAclService } from 'src/modules/acl/services/emca.service';
 import { DataSource } from 'typeorm';
 import { UnauthorizedException } from './exceptions/unauthorized.exception';

@@ -103,3 +103,5 @@ export class Metadata {
     return this.updatedAt;
   }
 }
+
+export type ViewableOrObscuredMetadata = Metadata | MetadataId;

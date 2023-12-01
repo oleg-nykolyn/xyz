@@ -1,6 +1,9 @@
 import { Chain } from 'src/modules/acl/services/emca.service';
-import { Metadata, MetadataId } from '../domain/metadata';
-import { ViewableOrObscuredMetadata } from '../services/metadata.service';
+import {
+  Metadata,
+  MetadataId,
+  ViewableOrObscuredMetadata,
+} from '../domain/metadata';
 import {
   IsNotEmpty,
   IsEthereumAddress,

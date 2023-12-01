@@ -1,5 +1,9 @@
 import { Chain } from 'src/modules/acl/services/emca.service';
-import { Metadata, MetadataId } from '../domain/metadata';
+import {
+  Metadata,
+  MetadataId,
+  ViewableOrObscuredMetadata,
+} from '../domain/metadata';
 
 export interface FindMetadataRequest {
   accountAddress: string;
@@ -8,8 +12,6 @@ export interface FindMetadataRequest {
   limit: number;
   offset: number;
 }
-
-export type ViewableOrObscuredMetadata = Metadata | MetadataId;
 
 export abstract class MetadataService {
   abstract findMetadata(
