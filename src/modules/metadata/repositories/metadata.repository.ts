@@ -2,7 +2,7 @@ import { EntityManager } from 'typeorm';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { Chain } from 'src/modules/acl/services/emca.service';
 
-export interface MetadataQuery {
+export interface FindQuery {
   chain?: Chain;
   contractAddress?: string;
   limit: number;
@@ -12,7 +12,7 @@ export interface MetadataQuery {
 export abstract class MetadataRepository {
   abstract find(
     entityManager: EntityManager,
-    query: MetadataQuery,
+    query: FindQuery,
   ): Promise<Metadata[]>;
 
   abstract get(entityManager: EntityManager, id: MetadataId): Promise<Metadata>;

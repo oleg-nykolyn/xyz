@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MetadataQuery, MetadataRepository } from './metadata.repository';
+import { FindQuery, MetadataRepository } from './metadata.repository';
 import { EntityManager, QueryFailedError } from 'typeorm';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { MetadataEntity } from '../entities/metadata.entity';
@@ -10,7 +10,7 @@ import { MetadataNotFoundException } from './exceptions/metadata-not-found.excep
 export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
   async find(
     entityManager: EntityManager,
-    { chain, contractAddress, limit, offset }: MetadataQuery,
+    { chain, contractAddress, limit, offset }: FindQuery,
   ): Promise<Metadata[]> {
     const where = {};
 
@@ -26,6 +26,9 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
       where,
       take: limit,
       skip: offset,
+      order: {
+        updatedAt: 'DESC',
+      },
     });
 
     return metadataEntities.map((metadataEntity) => metadataEntity.toDomain());
