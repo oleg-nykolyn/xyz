@@ -19,7 +19,7 @@ export abstract class MetadataService {
   abstract getMetadata(
     accountAddress: string,
     id: MetadataId,
-  ): Promise<Metadata>;
+  ): Promise<ViewableOrObscuredMetadata>;
 
   abstract createMetadata(
     accountAddress: string,

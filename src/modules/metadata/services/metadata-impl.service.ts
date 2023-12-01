@@ -59,7 +59,10 @@ export class MetadataServiceImpl implements MetadataService {
     );
   }
 
-  async getMetadata(accountAddress: string, id: MetadataId): Promise<Metadata> {
+  async getMetadata(
+    accountAddress: string,
+    id: MetadataId,
+  ): Promise<ViewableOrObscuredMetadata> {
     try {
       const { chain, contractAddress, entityId } = id;
       const canRead =
@@ -71,7 +74,7 @@ export class MetadataServiceImpl implements MetadataService {
         });
 
       if (!canRead) {
-        throw new UnauthorizedException();
+        return id;
       }
 
       return await this.metadataRepository.get(this.dataSource.manager, id);
