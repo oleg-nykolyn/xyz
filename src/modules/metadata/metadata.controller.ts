@@ -24,6 +24,7 @@ import {
   ViewableOrObscuredMetadataDto,
 } from './dtos/metadata.dto';
 import { CreateOrUpdateMetadataRequestDto } from './dtos/create-or-update-metadata-request.dto';
+import { MetadataId } from './domain/metadata';
 
 @Controller({
   version: '1',
@@ -41,11 +42,14 @@ export class MetadataController {
     @AccountAddress() accountAddress: string,
   ): Promise<ViewableOrObscuredMetadataDto> {
     return MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain(
-      await this.metadataService.getMetadata(accountAddress, {
-        chain,
-        contractAddress,
-        entityId,
-      }),
+      await this.metadataService.getMetadata(
+        accountAddress,
+        MetadataId.of({
+          chain,
+          contractAddress,
+          entityId,
+        }),
+      ),
     );
   }
 

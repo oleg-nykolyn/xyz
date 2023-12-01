@@ -6,7 +6,7 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Metadata } from '../domain/metadata';
+import { Metadata, MetadataId } from '../domain/metadata';
 
 @Entity({ name: 'metadata' })
 export class MetadataEntity {
@@ -51,11 +51,11 @@ export class MetadataEntity {
 
   toDomain(): Metadata {
     return Metadata.of({
-      id: {
+      id: MetadataId.of({
         chain: this.chain,
         contractAddress: this.contractAddress,
         entityId: this.entityId,
-      },
+      }),
       content: this.content,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

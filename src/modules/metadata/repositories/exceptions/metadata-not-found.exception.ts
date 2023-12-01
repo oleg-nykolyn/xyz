@@ -1,9 +1,9 @@
 import { MetadataId } from '../../domain/metadata';
 
 export class MetadataNotFoundException extends Error {
-  constructor({ chain, contractAddress, entityId }: MetadataId) {
+  constructor(id: MetadataId) {
     super(
-      `Metadata not found for chain=${chain}, contractAddress=${contractAddress}, entityId=${entityId}`,
+      `Metadata not found for chain=${id.getChain()}, contractAddress=${id.getContractAddress()}, entityId=${id.getEntityId()}`,
     );
   }
 }

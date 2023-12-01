@@ -34,7 +34,11 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
   }
 
   async get(entityManager: EntityManager, id: MetadataId): Promise<Metadata> {
-    const metadataEntity = await entityManager.findOneBy(MetadataEntity, id);
+    const metadataEntity = await entityManager.findOneBy(MetadataEntity, {
+      chain: id.getChain(),
+      contractAddress: id.getContractAddress(),
+      entityId: id.getEntityId(),
+    });
 
     if (!metadataEntity) {
       throw new MetadataNotFoundException(id);
@@ -47,10 +51,12 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
     entityManager: EntityManager,
     metadata: Metadata,
   ): Promise<Metadata> {
-    const metadataEntity = await entityManager.findOneBy(
-      MetadataEntity,
-      metadata.getId(),
-    );
+    const id = metadata.getId();
+    const metadataEntity = await entityManager.findOneBy(MetadataEntity, {
+      chain: id.getChain(),
+      contractAddress: id.getContractAddress(),
+      entityId: id.getEntityId(),
+    });
 
     if (!metadataEntity) {
       throw new MetadataNotFoundException(metadata.getId());
@@ -77,7 +83,11 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
 
   exists(entityManager: EntityManager, id: MetadataId): Promise<boolean> {
     return entityManager.exists(MetadataEntity, {
-      where: id,
+      where: {
+        chain: id.getChain(),
+        contractAddress: id.getContractAddress(),
+        entityId: id.getEntityId(),
+      },
     });
   }
 }

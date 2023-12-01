@@ -29,6 +29,8 @@ export class MetadataServiceImpl implements MetadataService {
     limit,
     offset,
   }: FindMetadataRequest): Promise<ViewableOrObscuredMetadata[]> {
+    contractAddress = contractAddress.toLowerCase();
+
     const foundMetadata: Metadata[] = await this.metadataRepository.find(
       this.dataSource.manager,
       {
@@ -72,13 +74,12 @@ export class MetadataServiceImpl implements MetadataService {
         throw new MetadataNotFoundException(id);
       }
 
-      const { chain, contractAddress, entityId } = id;
       const canRead =
         await this.entityMetadataCrudAclService.canReadEntityMetadata({
-          chain,
-          contractAddress,
+          chain: id.getChain(),
+          contractAddress: id.getContractAddress(),
           accountAddress,
-          entityId,
+          entityId: id.getEntityId(),
         });
 
       if (!canRead) {
@@ -102,13 +103,12 @@ export class MetadataServiceImpl implements MetadataService {
         throw new MetadataAlreadyExistsException(id);
       }
 
-      const { chain, contractAddress, entityId } = id;
       const canCreate =
         await this.entityMetadataCrudAclService.canCreateEntityMetadata({
-          chain,
-          contractAddress,
+          chain: id.getChain(),
+          contractAddress: id.getContractAddress(),
           accountAddress,
-          entityId,
+          entityId: id.getEntityId(),
         });
 
       if (!canCreate) {
@@ -144,13 +144,12 @@ export class MetadataServiceImpl implements MetadataService {
         throw new MetadataNotFoundException(id);
       }
 
-      const { chain, contractAddress, entityId } = id;
       const canUpdate =
         await this.entityMetadataCrudAclService.canUpdateEntityMetadata({
-          chain,
-          contractAddress,
+          chain: id.getChain(),
+          contractAddress: id.getContractAddress(),
           accountAddress,
-          entityId,
+          entityId: id.getEntityId(),
         });
 
       if (!canUpdate) {
@@ -181,13 +180,12 @@ export class MetadataServiceImpl implements MetadataService {
         throw new MetadataNotFoundException(id);
       }
 
-      const { chain, contractAddress, entityId } = id;
       const canDelete =
         await this.entityMetadataCrudAclService.canDeleteEntityMetadata({
-          chain,
-          contractAddress,
+          chain: id.getChain(),
+          contractAddress: id.getContractAddress(),
           accountAddress,
-          entityId,
+          entityId: id.getEntityId(),
         });
 
       if (!canDelete) {

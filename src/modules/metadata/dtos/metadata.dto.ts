@@ -24,19 +24,19 @@ export class MetadataIdDto {
   static fromDomain(metadataId: MetadataId): MetadataIdDto {
     const dto = new MetadataIdDto();
 
-    dto.chain = metadataId.chain;
-    dto.contractAddress = metadataId.contractAddress;
-    dto.entityId = metadataId.entityId;
+    dto.chain = metadataId.getChain();
+    dto.contractAddress = metadataId.getContractAddress();
+    dto.entityId = metadataId.getEntityId();
 
     return dto;
   }
 
   static toDomain(metadataIdDto: MetadataIdDto): MetadataId {
-    return {
+    return MetadataId.of({
       chain: metadataIdDto.chain,
-      contractAddress: metadataIdDto.contractAddress.toLowerCase(),
+      contractAddress: metadataIdDto.contractAddress,
       entityId: metadataIdDto.entityId,
-    };
+    });
   }
 }
 

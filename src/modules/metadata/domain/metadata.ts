@@ -1,9 +1,35 @@
 import { Chain } from 'src/modules/acl/services/emca.service';
 
-export interface MetadataId {
-  chain: Chain;
-  contractAddress: string;
-  entityId: number;
+export class MetadataId {
+  private constructor(
+    private readonly chain: Chain,
+    private readonly contractAddress: string,
+    private readonly entityId: number,
+  ) {}
+
+  static of({
+    chain,
+    contractAddress,
+    entityId,
+  }: {
+    chain: Chain;
+    contractAddress: string;
+    entityId: number;
+  }): MetadataId {
+    return new MetadataId(chain, contractAddress.toLowerCase(), entityId);
+  }
+
+  getChain(): Chain {
+    return this.chain;
+  }
+
+  getContractAddress(): string {
+    return this.contractAddress;
+  }
+
+  getEntityId(): number {
+    return this.entityId;
+  }
 }
 
 export class Metadata {
@@ -46,15 +72,15 @@ export class Metadata {
   }
 
   getChain(): Chain {
-    return this.id.chain;
+    return this.id.getChain();
   }
 
   getContractAddress(): string {
-    return this.id.contractAddress;
+    return this.id.getContractAddress();
   }
 
   getEntityId(): number {
-    return this.id.entityId;
+    return this.id.getEntityId();
   }
 
   getContent(): any {

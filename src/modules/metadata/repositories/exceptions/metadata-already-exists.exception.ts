@@ -1,9 +1,9 @@
 import { MetadataId } from '../../domain/metadata';
 
 export class MetadataAlreadyExistsException extends Error {
-  constructor({ chain, contractAddress, entityId }: MetadataId) {
+  constructor(id: MetadataId) {
     super(
-      `Metadata already exists for chain=${chain}, contractAddress=${contractAddress}, entityId=${entityId}`,
+      `Metadata already exists for chain=${id.getChain()}, contractAddress=${id.getContractAddress()}, entityId=${id.getEntityId()}`,
     );
   }
 }

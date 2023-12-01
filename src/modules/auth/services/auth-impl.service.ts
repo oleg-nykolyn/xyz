@@ -20,6 +20,8 @@ export class AuthServiceImpl implements AuthService {
   ) {}
 
   async issueNonce(accountAddress: string): Promise<string> {
+    accountAddress = accountAddress.toLowerCase();
+
     try {
       const account = await this.accountRepository.findByAddress(
         this.dataSource.manager,
@@ -47,6 +49,8 @@ export class AuthServiceImpl implements AuthService {
     accountAddress: string,
     signedNonce: string,
   ): Promise<string> {
+    accountAddress = accountAddress.toLowerCase();
+
     try {
       const account = await this.accountRepository.findByAddress(
         this.dataSource.manager,
