@@ -30,8 +30,8 @@ import { MetadataEntity } from './modules/metadata/entities/metadata.entity';
     }),
     ThrottlerModule.forRoot([
       {
-        ttl: seconds(EnvUtils.throttleTtlSecs()),
-        limit: EnvUtils.throttleLimit(),
+        ttl: seconds(EnvUtils.rateLimiterThrottleTtlSecs()),
+        limit: EnvUtils.rateLimiterThrottleLimit(),
       },
     ]),
     AuthModule,

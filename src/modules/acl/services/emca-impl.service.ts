@@ -17,19 +17,19 @@ export class EntityMetadataCrudAclServiceImpl
   onModuleInit() {
     this.rpcProviders.set(
       Chain.Hardhat,
-      new ethers.JsonRpcProvider(EnvUtils.hardhatRpcUrl()),
+      new ethers.JsonRpcProvider(EnvUtils.rpcUrlHardhat()),
     );
     this.rpcProviders.set(
       Chain.Ethereum,
-      new ethers.JsonRpcProvider(EnvUtils.ethereumRpcUrl()),
+      new ethers.JsonRpcProvider(EnvUtils.rpcUrlEthereum()),
     );
     this.rpcProviders.set(
       Chain.Polygon,
-      new ethers.JsonRpcProvider(EnvUtils.polygonRpcUrl()),
+      new ethers.JsonRpcProvider(EnvUtils.rpcUrlPolygon()),
     );
     this.rpcProviders.set(
       Chain.MultiVAC,
-      new ethers.JsonRpcProvider(EnvUtils.multivacRpcUrl()),
+      new ethers.JsonRpcProvider(EnvUtils.rpcUrlMultivac()),
     );
   }
 

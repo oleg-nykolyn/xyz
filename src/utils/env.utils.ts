@@ -53,27 +53,27 @@ export class EnvUtils {
     return process.env.JWT_EXPIRES_IN || '7d';
   }
 
-  static hardhatRpcUrl(): string {
+  static rpcUrlHardhat(): string {
     return process.env.HARDHAT_RPC_URL || 'http://127.0.0.1:8545';
   }
 
-  static ethereumRpcUrl(): string {
+  static rpcUrlEthereum(): string {
     return process.env.ETHEREUM_RPC_URL || 'https://ethereum.publicnode.com';
   }
 
-  static polygonRpcUrl(): string {
+  static rpcUrlPolygon(): string {
     return process.env.POLYGON_RPC_URL || 'https://polygon-rpc.com';
   }
 
-  static multivacRpcUrl(): string {
+  static rpcUrlMultivac(): string {
     return process.env.MULTIVAC_RPC_URL || 'https://rpc.mtv.ac';
   }
 
-  static throttleTtlSecs(): number {
+  static rateLimiterThrottleTtlSecs(): number {
     return parseInt(process.env.THROTTLE_TTL_SECS || '1', 10);
   }
 
-  static throttleLimit(): number {
+  static rateLimiterThrottleLimit(): number {
     return parseInt(process.env.THROTTLE_LIMIT || '5', 10);
   }
 }
