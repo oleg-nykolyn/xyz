@@ -57,6 +57,7 @@ export class MetadataServiceImpl implements MetadataService {
 
           return metadata.getId();
         } catch (e) {
+          this.logger.error(e);
           return metadata.getId();
         }
       }),
