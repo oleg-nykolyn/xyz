@@ -3,15 +3,27 @@ import { isValidAddress } from 'ethereumjs-util';
 
 @Injectable()
 export class ParseEthAddressPipe implements PipeTransform {
-  transform(value: any) {
-    const address = value?.toLowerCase?.();
+  private isOptional: boolean = false;
 
-    if (isValidAddress(address)) {
-      return address;
+  static optional() {
+    const pipe = new ParseEthAddressPipe();
+    pipe.isOptional = true;
+    return pipe;
+  }
+
+  transform(value: any) {
+    if (this.isOptional && value === undefined) {
+      return value;
+    }
+
+    const contractAddress = value?.toLowerCase?.();
+
+    if (isValidAddress(contractAddress)) {
+      return contractAddress;
     }
 
     throw new BadRequestException(
-      `address ${address} is not a valid Ethereum-like address`,
+      `contractAddress=${contractAddress} is not a valid eth-like address`,
     );
   }
 }

@@ -3,16 +3,30 @@ import { Chain } from 'src/modules/acl/services/emca.service';
 
 @Injectable()
 export class ParseChainPipe implements PipeTransform {
-  transform(value: any) {
-    const chains = Object.values(Chain);
-    value = value?.toLowerCase?.();
+  private isOptional: boolean = false;
 
-    if (chains.includes(value)) {
-      return value;
+  static optional() {
+    const pipe = new ParseChainPipe();
+    pipe.isOptional = true;
+    return pipe;
+  }
+
+  transform(chainValue: any) {
+    if (this.isOptional && chainValue === undefined) {
+      return chainValue;
+    }
+
+    const chains = Object.values(Chain);
+    chainValue = chainValue?.toLowerCase?.();
+
+    if (chains.includes(chainValue)) {
+      return chainValue;
     }
 
     throw new BadRequestException(
-      `chain must be one of the following values: ${chains.join(', ')}`,
+      `chain=${chainValue} must be one of the following values: ${chains.join(
+        ', ',
+      )}`,
     );
   }
 }

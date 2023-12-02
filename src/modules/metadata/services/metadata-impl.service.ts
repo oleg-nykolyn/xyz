@@ -29,39 +29,44 @@ export class MetadataServiceImpl implements MetadataService {
     limit,
     offset,
   }: FindMetadataRequest): Promise<ViewableOrObscuredMetadata[]> {
-    contractAddress = contractAddress.toLowerCase();
+    try {
+      contractAddress = contractAddress?.toLowerCase();
 
-    const foundMetadata: Metadata[] = await this.metadataRepository.find(
-      this.dataSource.manager,
-      {
-        chain,
-        contractAddress,
-        limit,
-        offset,
-      },
-    );
+      const foundMetadata: Metadata[] = await this.metadataRepository.find(
+        this.dataSource.manager,
+        {
+          chain,
+          contractAddress,
+          limit,
+          offset,
+        },
+      );
 
-    return Promise.all(
-      foundMetadata.map(async (metadata) => {
-        try {
-          if (
-            await this.entityMetadataCrudAclService.canReadEntityMetadata({
-              chain: metadata.getChain(),
-              contractAddress: metadata.getContractAddress(),
-              accountAddress,
-              entityId: metadata.getEntityId(),
-            })
-          ) {
-            return metadata;
+      return Promise.all(
+        foundMetadata.map(async (metadata) => {
+          try {
+            if (
+              await this.entityMetadataCrudAclService.canReadEntityMetadata({
+                chain: metadata.getChain(),
+                contractAddress: metadata.getContractAddress(),
+                accountAddress,
+                entityId: metadata.getEntityId(),
+              })
+            ) {
+              return metadata;
+            }
+
+            return metadata.getId();
+          } catch (e) {
+            this.logger.error(e);
+            return metadata.getId();
           }
-
-          return metadata.getId();
-        } catch (e) {
-          this.logger.error(e);
-          return metadata.getId();
-        }
-      }),
-    );
+        }),
+      );
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
   }
 
   async getMetadata(

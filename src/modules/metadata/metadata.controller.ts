@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseFilters,
   UsePipes,
   ValidationPipe,
@@ -16,7 +17,7 @@ import { AccountAddress } from '../auth/decorators/account-address.decorator';
 import { Chain } from '../acl/services/emca.service';
 import { ParseChainPipe } from './pipes/parse-chain.pipe';
 import { ParseEthAddressPipe } from './pipes/parse-eth-address.pipe';
-import { ParseEntityIdPipe } from './pipes/parse-entity-id.pipe';
+import { ParsePositiveOrZeroIntegerPipe } from './pipes/parse-zero-or-positive-integer.pipe';
 import {
   MetadataDto,
   MetadataDtoMappers,
@@ -34,11 +35,43 @@ import { MetadataId } from './domain/metadata';
 export class MetadataController {
   constructor(private readonly metadataService: MetadataService) {}
 
+  @Get()
+  async findMetadata(
+    @AccountAddress() accountAddress: string,
+    @Query(
+      'limit',
+      ParsePositiveOrZeroIntegerPipe.of({
+        fieldName: 'limit',
+      }),
+    )
+    limit: number,
+    @Query(
+      'offset',
+      ParsePositiveOrZeroIntegerPipe.of({
+        fieldName: 'offset',
+      }),
+    )
+    offset: number,
+    @Query('chain', ParseChainPipe.optional()) chain?: Chain,
+    @Query('contract-address', ParseEthAddressPipe.optional())
+    contractAddress?: string,
+  ): Promise<ViewableOrObscuredMetadataDto[]> {
+    return (
+      await this.metadataService.findMetadata({
+        accountAddress,
+        chain,
+        contractAddress,
+        limit,
+        offset,
+      })
+    ).map(MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain);
+  }
+
   @Get(':chain/:contractAddress/:entityId')
   async getMetadata(
     @Param('chain', ParseChainPipe) chain: Chain,
     @Param('contractAddress', ParseEthAddressPipe) contractAddress: string,
-    @Param('entityId', ParseEntityIdPipe) entityId: number,
+    @Param('entityId', ParsePositiveOrZeroIntegerPipe) entityId: number,
     @AccountAddress() accountAddress: string,
   ): Promise<ViewableOrObscuredMetadataDto> {
     return MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain(
