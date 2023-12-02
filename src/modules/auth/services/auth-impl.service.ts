@@ -33,7 +33,7 @@ export class AuthServiceImpl implements AuthService {
       }
 
       return await this.dataSource.transaction(async (manager) => {
-        const newAccount = Account.ofAddress(accountAddress);
+        const newAccount = Account.of({ address: accountAddress });
 
         await this.accountRepository.saveOrUpdate(manager, newAccount);
 

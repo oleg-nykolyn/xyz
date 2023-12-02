@@ -16,7 +16,7 @@ export class AccountRepositoryImplTypeOrm implements AccountRepository {
       return null;
     }
 
-    return Account.of(accountEntity.address, accountEntity.nonce);
+    return accountEntity.toDomain();
   }
 
   async saveOrUpdate(
