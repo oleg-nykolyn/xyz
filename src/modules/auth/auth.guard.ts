@@ -29,16 +29,28 @@ export class AuthGuard implements CanActivate {
     const jwt = request.cookies?.jwt;
 
     if (!jwt) {
-      throw new UnauthorizedException();
+      throw new TokenRequiredException();
     }
 
     try {
       const payload = this.jwtService.verifyToken(jwt);
       request.accountAddress = payload.sub;
     } catch {
-      throw new UnauthorizedException();
+      throw new InvalidOrExpiredTokenException();
     }
 
     return true;
+  }
+}
+
+class InvalidOrExpiredTokenException extends UnauthorizedException {
+  constructor() {
+    super();
+  }
+}
+
+class TokenRequiredException extends UnauthorizedException {
+  constructor() {
+    super();
   }
 }
