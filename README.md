@@ -56,7 +56,7 @@ docker build -t xyz .
 | ------------------ | ------------------------ | -------------------------------------------- |
 | `NODE_ENV`         | development              | production, development                      |
 | `PORT`             | 3000                     | number                                       |
-| `LOG_LEVEL`        | log                      | fatal, error, log, warn, debug, verbose       |
+| `LOG_LEVEL`        | log                      | fatal, error, warn, log, debug, verbose       |
 | `DB_HOST`          | localhost                | any                                          |
 | `DB_PORT`          | 5432                     | number                                       |
 | `DB_NAME`          | postgres-db              | any                                          |

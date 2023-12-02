@@ -4,8 +4,8 @@ import { EnvUtils } from './env.utils';
 const logLevels: LogLevel[] = [
   'fatal',
   'error',
-  'log',
   'warn',
+  'log',
   'debug',
   'verbose',
 ];
