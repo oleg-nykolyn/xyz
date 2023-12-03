@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { FindQuery, MetadataRepository } from './metadata.repository';
+import {
+  FindQuery,
+  GetMetadataCountPerContractByChainQuery,
+  MetadataRepository,
+} from './metadata.repository';
 import { EntityManager } from 'typeorm';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { MetadataEntity } from '../entities/metadata.entity';
 import { MetadataNotFoundException } from './exceptions/metadata-not-found.exception';
+import { MetadataCountPerContract } from '../services/metadata.service';
 
 @Injectable()
 export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
@@ -89,5 +94,29 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
         entityId: id.getEntityId(),
       },
     });
+  }
+
+  async getMetadataCountPerContractByChain(
+    entityManager: EntityManager,
+    { chain, limit, offset }: GetMetadataCountPerContractByChainQuery,
+  ): Promise<MetadataCountPerContract[]> {
+    const metadataCountGroups = await entityManager
+      .createQueryBuilder(MetadataEntity, 'metadata')
+      .select('metadata.contract_address')
+      .addSelect('count(*) as metadata_entries')
+      .where('metadata.chain = :chain', { chain })
+      .groupBy('metadata.contract_address')
+      .orderBy('metadata_entries', 'DESC')
+      .limit(limit)
+      .offset(offset)
+      .getRawMany();
+
+    return metadataCountGroups.map(
+      ({ contract_address, metadata_entries }) => ({
+        chain,
+        contractAddress: contract_address,
+        metadataCount: metadata_entries,
+      }),
+    );
   }
 }

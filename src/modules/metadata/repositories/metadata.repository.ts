@@ -1,10 +1,17 @@
 import { EntityManager } from 'typeorm';
 import { Metadata, MetadataId } from '../domain/metadata';
 import { Chain } from 'src/modules/acl/services/emca.service';
+import { MetadataCountPerContract } from '../services/metadata.service';
 
 export interface FindQuery {
   chain?: Chain;
   contractAddress?: string;
+  limit: number;
+  offset: number;
+}
+
+export interface GetMetadataCountPerContractByChainQuery {
+  chain: Chain;
   limit: number;
   offset: number;
 }
@@ -33,4 +40,9 @@ export abstract class MetadataRepository {
     entityManager: EntityManager,
     id: MetadataId,
   ): Promise<boolean>;
+
+  abstract getMetadataCountPerContractByChain(
+    entityManager: EntityManager,
+    query: GetMetadataCountPerContractByChainQuery,
+  ): Promise<MetadataCountPerContract[]>;
 }

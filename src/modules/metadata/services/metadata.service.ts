@@ -13,6 +13,18 @@ export interface FindMetadataRequest {
   offset: number;
 }
 
+export interface GetMetadataCountPerContractByChainRequest {
+  chain: Chain;
+  limit: number;
+  offset: number;
+}
+
+export interface MetadataCountPerContract {
+  chain: Chain;
+  contractAddress: string;
+  metadataCount: number;
+}
+
 export abstract class MetadataService {
   abstract findMetadata(
     request: FindMetadataRequest,
@@ -21,7 +33,7 @@ export abstract class MetadataService {
   abstract getMetadata(
     accountAddress: string,
     id: MetadataId,
-  ): Promise<ViewableOrObscuredMetadata>;
+  ): Promise<Metadata>;
 
   abstract createMetadata(
     accountAddress: string,
@@ -39,4 +51,8 @@ export abstract class MetadataService {
     accountAddress: string,
     id: MetadataId,
   ): Promise<void>;
+
+  abstract getMetadataCountPerContractByChain(
+    request: GetMetadataCountPerContractByChainRequest,
+  ): Promise<MetadataCountPerContract[]>;
 }

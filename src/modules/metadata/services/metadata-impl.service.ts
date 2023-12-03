@@ -1,5 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { FindMetadataRequest, MetadataService } from './metadata.service';
+import {
+  FindMetadataRequest,
+  GetMetadataCountPerContractByChainRequest,
+  MetadataCountPerContract,
+  MetadataService,
+} from './metadata.service';
 import { MetadataRepository } from '../repositories/metadata.repository';
 import {
   Metadata,
@@ -69,10 +74,29 @@ export class MetadataServiceImpl implements MetadataService {
     }
   }
 
-  async getMetadata(
-    accountAddress: string,
-    id: MetadataId,
-  ): Promise<ViewableOrObscuredMetadata> {
+  async getMetadataCountPerContractByChain({
+    chain,
+    limit,
+    offset,
+  }: GetMetadataCountPerContractByChainRequest): Promise<
+    MetadataCountPerContract[]
+  > {
+    try {
+      return await this.metadataRepository.getMetadataCountPerContractByChain(
+        this.dataSource.manager,
+        {
+          chain,
+          limit,
+          offset,
+        },
+      );
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  async getMetadata(accountAddress: string, id: MetadataId): Promise<Metadata> {
     try {
       if (
         !(await this.metadataRepository.exists(this.dataSource.manager, id))

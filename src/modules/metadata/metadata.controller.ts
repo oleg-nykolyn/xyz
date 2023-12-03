@@ -26,6 +26,7 @@ import {
 } from './dtos/metadata.dto';
 import { CreateOrUpdateMetadataRequestDto } from './dtos/create-or-update-metadata-request.dto';
 import { MetadataId } from './domain/metadata';
+import { MetadataCountPerContractDto } from './dtos/metadata-count-per-contract.dto';
 
 @Controller({
   version: '1',
@@ -69,12 +70,12 @@ export class MetadataController {
 
   @Get(':chain/:contractAddress/:entityId')
   async getMetadata(
+    @AccountAddress() accountAddress: string,
     @Param('chain', ParseChainPipe) chain: Chain,
     @Param('contractAddress', ParseEthAddressPipe) contractAddress: string,
     @Param('entityId', ParsePositiveOrZeroIntegerPipe) entityId: number,
-    @AccountAddress() accountAddress: string,
-  ): Promise<ViewableOrObscuredMetadataDto> {
-    return MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain(
+  ): Promise<MetadataDto> {
+    return MetadataDto.fromDomain(
       await this.metadataService.getMetadata(
         accountAddress,
         MetadataId.of({
@@ -86,12 +87,38 @@ export class MetadataController {
     );
   }
 
+  @Get(':chain')
+  async getMetadataCountPerContractByChain(
+    @Param('chain', ParseChainPipe) chain: Chain,
+    @Query(
+      'limit',
+      ParsePositiveOrZeroIntegerPipe.of({
+        fieldName: 'limit',
+      }),
+    )
+    limit: number,
+    @Query(
+      'offset',
+      ParsePositiveOrZeroIntegerPipe.of({
+        fieldName: 'offset',
+      }),
+    )
+    offset: number,
+  ): Promise<MetadataCountPerContractDto[]> {
+    return this.metadataService.getMetadataCountPerContractByChain({
+      chain,
+      limit,
+      offset,
+    });
+  }
+
   @Post()
   @UsePipes(ValidationPipe)
   async createMetadata(
     @Body()
+    @AccountAddress()
+    accountAddress: string,
     { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
-    @AccountAddress() accountAddress: string,
   ): Promise<MetadataDto> {
     return MetadataDto.fromDomain(
       await this.metadataService.createMetadata(
@@ -106,8 +133,9 @@ export class MetadataController {
   @UsePipes(ValidationPipe)
   async updateMetadata(
     @Body()
+    @AccountAddress()
+    accountAddress: string,
     { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
-    @AccountAddress() accountAddress: string,
   ): Promise<MetadataDto> {
     return MetadataDto.fromDomain(
       await this.metadataService.updateMetadata(
@@ -121,8 +149,8 @@ export class MetadataController {
   @Delete()
   @UsePipes(ValidationPipe)
   deleteMetadata(
-    @Body() metadataIdDto: MetadataIdDto,
     @AccountAddress() accountAddress: string,
+    @Body() metadataIdDto: MetadataIdDto,
   ): Promise<void> {
     return this.metadataService.deleteMetadata(
       accountAddress,
