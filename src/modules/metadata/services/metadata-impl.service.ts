@@ -89,7 +89,7 @@ export class MetadataServiceImpl implements MetadataService {
         });
 
       if (!canRead) {
-        return id;
+        throw new UnauthorizedException();
       }
 
       return await this.metadataRepository.get(this.dataSource.manager, id);
