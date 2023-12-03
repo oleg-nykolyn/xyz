@@ -1,6 +1,6 @@
 # XYZ
 
-XYZ operates as a monolithic system, functioning as a gateway to confidential metadata linked with identifiable entities on Ethereum.
+XYZ operates as a monolithic system, functioning as a gateway to confidential metadata linked with identifiable entities on EVM-compatible blockchains.
 
 Employing signed nonces, it verifies MetaMask wallet signatures, facilitating the issuance of a JSON Web Token (JWT) used for secured actions within protected routes.
 
