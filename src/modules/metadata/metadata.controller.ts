@@ -115,10 +115,8 @@ export class MetadataController {
   @Post()
   @UsePipes(ValidationPipe)
   async createMetadata(
-    @Body()
-    @AccountAddress()
-    accountAddress: string,
-    { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
+    @AccountAddress() accountAddress: string,
+    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
   ): Promise<MetadataDto> {
     return MetadataDto.fromDomain(
       await this.metadataService.createMetadata(
@@ -132,10 +130,8 @@ export class MetadataController {
   @Put()
   @UsePipes(ValidationPipe)
   async updateMetadata(
-    @Body()
-    @AccountAddress()
-    accountAddress: string,
-    { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
+    @AccountAddress() accountAddress: string,
+    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
   ): Promise<MetadataDto> {
     return MetadataDto.fromDomain(
       await this.metadataService.updateMetadata(
