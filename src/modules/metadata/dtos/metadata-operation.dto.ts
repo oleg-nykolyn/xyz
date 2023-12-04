@@ -1,3 +1,4 @@
+import { NullUtils } from 'src/utils/null.utils';
 import {
   MetadataOperation,
   MetadataOperationType,
@@ -19,7 +20,9 @@ export class MetadataOperationDto {
     dto.type = metadataOperation.getType();
     dto.executedAt = metadataOperation.getExecutedAt();
     dto.executedBy = metadataOperation.getExecutedBy();
-    dto.metadataContent = metadataOperation.getMetadataContent();
+    dto.metadataContent = NullUtils.mapToUndefinedIfAbsent(
+      metadataOperation.getMetadataContent(),
+    );
 
     return dto;
   }
