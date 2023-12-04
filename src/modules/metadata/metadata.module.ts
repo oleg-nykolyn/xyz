@@ -5,6 +5,8 @@ import { MetadataServiceImpl } from './services/metadata-impl.service';
 import { MetadataRepository } from './repositories/metadata.repository';
 import { MetadataRepositoryImplTypeOrm } from './repositories/metadata-impl-typeorm.repository';
 import { AclModule } from '../acl/acl.module';
+import { MetadataOperationRepository } from './repositories/metadata-operation.repository';
+import { MetadataOperationRepositoryImplTypeOrm } from './repositories/metadata-operation-impl-typeorm.repository';
 
 @Module({
   imports: [AclModule],
@@ -17,6 +19,10 @@ import { AclModule } from '../acl/acl.module';
     {
       provide: MetadataRepository,
       useClass: MetadataRepositoryImplTypeOrm,
+    },
+    {
+      provide: MetadataOperationRepository,
+      useClass: MetadataOperationRepositoryImplTypeOrm,
     },
   ],
 })

@@ -16,6 +16,11 @@ import { DataSource } from 'typeorm';
 import { UnauthorizedException } from './exceptions/unauthorized.exception';
 import { MetadataNotFoundException } from '../repositories/exceptions/metadata-not-found.exception';
 import { MetadataAlreadyExistsException } from '../repositories/exceptions/metadata-already-exists.exception';
+import { MetadataOperationRepository } from '../repositories/metadata-operation.repository';
+import {
+  MetadataOperation,
+  MetadataOperationType,
+} from '../domain/metadata-operation';
 
 @Injectable()
 export class MetadataServiceImpl implements MetadataService {
@@ -24,6 +29,7 @@ export class MetadataServiceImpl implements MetadataService {
   constructor(
     private readonly dataSource: DataSource,
     private readonly metadataRepository: MetadataRepository,
+    private readonly metadataOperationRepository: MetadataOperationRepository,
     private readonly entityMetadataCrudAclService: EntityMetadataCrudAclService,
   ) {}
 
@@ -152,10 +158,24 @@ export class MetadataServiceImpl implements MetadataService {
         lastUpdatedBy: accountAddress,
       });
 
-      return await this.metadataRepository.save(
-        this.dataSource.manager,
-        metadata,
-      );
+      return await this.dataSource.manager.transaction(async (manager) => {
+        const createdMetadata = await this.metadataRepository.save(
+          manager,
+          metadata,
+        );
+
+        await this.metadataOperationRepository.save(
+          manager,
+          MetadataOperation.of({
+            type: MetadataOperationType.Create,
+            executedBy: accountAddress,
+            metadataId: metadata.getId(),
+            metadataContent: metadata.getContent(),
+          }),
+        );
+
+        return createdMetadata;
+      });
     } catch (e) {
       this.logger.error(e);
       throw e;
@@ -192,10 +212,24 @@ export class MetadataServiceImpl implements MetadataService {
         lastUpdatedBy: accountAddress,
       });
 
-      return await this.metadataRepository.update(
-        this.dataSource.manager,
-        metadata,
-      );
+      return await this.dataSource.manager.transaction(async (manager) => {
+        const updatedMetadata = await this.metadataRepository.update(
+          manager,
+          metadata,
+        );
+
+        await this.metadataOperationRepository.save(
+          manager,
+          MetadataOperation.of({
+            type: MetadataOperationType.Update,
+            executedBy: accountAddress,
+            metadataId: updatedMetadata.getId(),
+            metadataContent: updatedMetadata.getContent(),
+          }),
+        );
+
+        return updatedMetadata;
+      });
     } catch (e) {
       this.logger.error(e);
       throw e;
@@ -222,7 +256,18 @@ export class MetadataServiceImpl implements MetadataService {
         throw new UnauthorizedException();
       }
 
-      await this.metadataRepository.delete(this.dataSource.manager, id);
+      await this.dataSource.manager.transaction(async (manager) => {
+        await this.metadataRepository.delete(manager, id);
+        await this.metadataOperationRepository.save(
+          manager,
+          MetadataOperation.of({
+            type: MetadataOperationType.Delete,
+            executedBy: accountAddress,
+            metadataId: id,
+            metadataContent: null,
+          }),
+        );
+      });
     } catch (e) {
       this.logger.error(e);
       throw e;
