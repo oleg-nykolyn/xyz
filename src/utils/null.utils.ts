@@ -1,6 +1,13 @@
 export class NullUtils {
-  static mapToUndefinedIfAbsent<T>(value: T): T | undefined {
-    // == is used to check for both null and undefined
-    return value == null ? undefined : value;
+  static mapToUndefinedIfAbsent(value) {
+    return NullUtils.isAbsent(value) ? undefined : value;
+  }
+
+  static isAbsent(value): boolean {
+    return value == null;
+  }
+
+  static valueOrDefault(value, defaultValue) {
+    return NullUtils.isAbsent(value) ? defaultValue : value;
   }
 }
