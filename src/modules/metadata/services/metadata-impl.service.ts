@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import {
   FindMetadataRequest,
   GetMetadataCountPerContractByChainRequest,
+  GetMetadataHistoryRequest,
   MetadataCountPerContract,
   MetadataService,
 } from './metadata.service';
@@ -268,6 +269,45 @@ export class MetadataServiceImpl implements MetadataService {
           }),
         );
       });
+    } catch (e) {
+      this.logger.error(e);
+      throw e;
+    }
+  }
+
+  async getMetadataHistory({
+    accountAddress,
+    id,
+    limit,
+    offset,
+  }: GetMetadataHistoryRequest): Promise<MetadataOperation[]> {
+    try {
+      if (
+        !(await this.metadataRepository.exists(this.dataSource.manager, id))
+      ) {
+        throw new MetadataNotFoundException(id);
+      }
+
+      const canRead =
+        await this.entityMetadataCrudAclService.canReadEntityMetadata({
+          chain: id.getChain(),
+          contractAddress: id.getContractAddress(),
+          accountAddress,
+          entityId: id.getEntityId(),
+        });
+
+      if (!canRead) {
+        throw new UnauthorizedException();
+      }
+
+      return await this.metadataOperationRepository.getOperationsByMetadataId(
+        this.dataSource.manager,
+        {
+          id,
+          limit,
+          offset,
+        },
+      );
     } catch (e) {
       this.logger.error(e);
       throw e;

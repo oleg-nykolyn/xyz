@@ -4,6 +4,7 @@ import {
   MetadataId,
   ViewableOrObscuredMetadata,
 } from '../domain/metadata';
+import { MetadataOperation } from '../domain/metadata-operation';
 
 export interface FindMetadataRequest {
   accountAddress: string;
@@ -15,6 +16,13 @@ export interface FindMetadataRequest {
 
 export interface GetMetadataCountPerContractByChainRequest {
   chain: Chain;
+  limit: number;
+  offset: number;
+}
+
+export interface GetMetadataHistoryRequest {
+  accountAddress: string;
+  id: MetadataId;
   limit: number;
   offset: number;
 }
@@ -55,4 +63,8 @@ export abstract class MetadataService {
   abstract getMetadataCountPerContractByChain(
     request: GetMetadataCountPerContractByChainRequest,
   ): Promise<MetadataCountPerContract[]>;
+
+  abstract getMetadataHistory(
+    request: GetMetadataHistoryRequest,
+  ): Promise<MetadataOperation[]>;
 }
