@@ -282,15 +282,6 @@ export class MetadataServiceImpl implements MetadataService {
     offset,
   }: GetMetadataHistoryRequest): Promise<MetadataOperation[]> {
     try {
-      if (
-        !(await this.metadataRepository.exists(
-          this.dataSource.manager,
-          metadataId,
-        ))
-      ) {
-        throw new MetadataNotFoundException(metadataId);
-      }
-
       const canRead =
         await this.entityMetadataCrudAclService.canReadEntityMetadata({
           chain: metadataId.getChain(),
