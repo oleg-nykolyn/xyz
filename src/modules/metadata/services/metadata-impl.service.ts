@@ -277,33 +277,36 @@ export class MetadataServiceImpl implements MetadataService {
 
   async getMetadataOperationHistory({
     accountAddress,
-    id,
+    metadataId,
     limit,
     offset,
   }: GetMetadataHistoryRequest): Promise<MetadataOperation[]> {
     try {
       if (
-        !(await this.metadataRepository.exists(this.dataSource.manager, id))
+        !(await this.metadataRepository.exists(
+          this.dataSource.manager,
+          metadataId,
+        ))
       ) {
-        throw new MetadataNotFoundException(id);
+        throw new MetadataNotFoundException(metadataId);
       }
 
       const canRead =
         await this.entityMetadataCrudAclService.canReadEntityMetadata({
-          chain: id.getChain(),
-          contractAddress: id.getContractAddress(),
+          chain: metadataId.getChain(),
+          contractAddress: metadataId.getContractAddress(),
           accountAddress,
-          entityId: id.getEntityId(),
+          entityId: metadataId.getEntityId(),
         });
 
       if (!canRead) {
         throw new UnauthorizedException();
       }
 
-      return await this.metadataOperationRepository.getOperationsByMetadataId(
+      return await this.metadataOperationRepository.getMetadataOperations(
         this.dataSource.manager,
         {
-          id,
+          metadataId,
           limit,
           offset,
         },

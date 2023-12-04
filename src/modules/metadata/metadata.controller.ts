@@ -112,7 +112,7 @@ export class MetadataController {
     return (
       await this.metadataService.getMetadataOperationHistory({
         accountAddress,
-        id: MetadataId.of({
+        metadataId: MetadataId.of({
           chain,
           contractAddress,
           entityId,

@@ -20,17 +20,17 @@ export class MetadataOperationRepositoryImplTypeOrm
     ).toDomain();
   }
 
-  async getOperationsByMetadataId(
+  async getMetadataOperations(
     entityManager: EntityManager,
-    { id, limit, offset }: GetMetadataOperationsQuery,
+    { metadataId, limit, offset }: GetMetadataOperationsQuery,
   ): Promise<MetadataOperation[]> {
     const metadataOperations = await entityManager.find(
       MetadataOperationEntity,
       {
         where: {
-          metadataChain: id.getChain(),
-          metadataContractAddress: id.getContractAddress(),
-          metadataEntityId: id.getEntityId(),
+          metadataChain: metadataId.getChain(),
+          metadataContractAddress: metadataId.getContractAddress(),
+          metadataEntityId: metadataId.getEntityId(),
         },
         take: limit,
         skip: offset,

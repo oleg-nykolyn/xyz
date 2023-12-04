@@ -22,7 +22,7 @@ export interface GetMetadataCountPerContractByChainRequest {
 
 export interface GetMetadataHistoryRequest {
   accountAddress: string;
-  id: MetadataId;
+  metadataId: MetadataId;
   limit: number;
   offset: number;
 }

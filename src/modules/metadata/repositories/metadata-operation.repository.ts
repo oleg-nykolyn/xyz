@@ -3,7 +3,7 @@ import { MetadataId } from '../domain/metadata';
 import { MetadataOperation } from '../domain/metadata-operation';
 
 export interface GetMetadataOperationsQuery {
-  id: MetadataId;
+  metadataId: MetadataId;
   limit: number;
   offset: number;
 }
@@ -14,7 +14,7 @@ export abstract class MetadataOperationRepository {
     operation: MetadataOperation,
   ): Promise<MetadataOperation>;
 
-  abstract getOperationsByMetadataId(
+  abstract getMetadataOperations(
     entityManager: EntityManager,
     query: GetMetadataOperationsQuery,
   ): Promise<MetadataOperation[]>;
