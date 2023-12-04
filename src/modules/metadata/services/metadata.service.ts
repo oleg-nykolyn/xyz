@@ -64,7 +64,7 @@ export abstract class MetadataService {
     request: GetMetadataCountPerContractByChainRequest,
   ): Promise<MetadataCountPerContract[]>;
 
-  abstract getMetadataHistory(
+  abstract getMetadataOperationHistory(
     request: GetMetadataHistoryRequest,
   ): Promise<MetadataOperation[]>;
 }

@@ -27,6 +27,7 @@ import {
 import { CreateOrUpdateMetadataRequestDto } from './dtos/create-or-update-metadata-request.dto';
 import { MetadataId } from './domain/metadata';
 import { MetadataCountPerContractDto } from './dtos/metadata-count-per-contract.dto';
+import { MetadataOperationDto } from './dtos/metadata-operation.dto';
 
 @Controller({
   version: '1',
@@ -85,6 +86,41 @@ export class MetadataController {
         }),
       ),
     );
+  }
+
+  @Get(':chain/:contractAddress/:entityId/history')
+  async getMetadataOperationHistory(
+    @AccountAddress() accountAddress: string,
+    @Param('chain', ParseChainPipe) chain: Chain,
+    @Param('contractAddress', ParseEthAddressPipe) contractAddress: string,
+    @Param('entityId', ParsePositiveOrZeroIntegerPipe) entityId: number,
+    @Query(
+      'limit',
+      ParsePositiveOrZeroIntegerPipe.of({
+        fieldName: 'limit',
+      }),
+    )
+    limit: number,
+    @Query(
+      'offset',
+      ParsePositiveOrZeroIntegerPipe.of({
+        fieldName: 'offset',
+      }),
+    )
+    offset: number,
+  ): Promise<MetadataOperationDto[]> {
+    return (
+      await this.metadataService.getMetadataOperationHistory({
+        accountAddress,
+        id: MetadataId.of({
+          chain,
+          contractAddress,
+          entityId,
+        }),
+        limit,
+        offset,
+      })
+    ).map(MetadataOperationDto.fromDomain);
   }
 
   @Get(':chain')

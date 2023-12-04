@@ -275,7 +275,7 @@ export class MetadataServiceImpl implements MetadataService {
     }
   }
 
-  async getMetadataHistory({
+  async getMetadataOperationHistory({
     accountAddress,
     id,
     limit,
