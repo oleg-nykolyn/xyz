@@ -36,8 +36,8 @@ docker-compose down
 
 The application exposes Swagger documentation for the following modules:
 
-- *Auth*: <http://localhost:{PORT}/swagger/api/v1/auth>
-- *Metadata*: <http://localhost:{PORT}/swagger/api/v1/metadata>
+- *Auth*: [localhost:{PORT}/swagger/api/v1/auth](http://localhost:3000/swagger/api/v1/auth)
+- *Metadata*: [localhost:{PORT}/swagger/api/v1/metadata](http://localhost:3000/swagger/api/v1/metadata)
 
 where `{PORT}` is the value of the `PORT` environment variable.
 
