@@ -34,16 +34,14 @@ docker-compose down
 
 ## Browsing the API
 
-Explore the API through Swagger UI at:
+The application exposes Swagger documentation for the following modules:
 
-- Auth Endpoints: [localhost:{PORT}/swagger/api/v1/auth](http://localhost:3000/swagger/api/v1/auth)
-- Metadata Endpoints: [localhost:{PORT}/swagger/api/v1/metadata](http://localhost:3000/swagger/api/v1/metadata)
+- *Auth*: <http://localhost:{PORT}/swagger/api/v1/auth>
+- *Metadata*: <http://localhost:{PORT}/swagger/api/v1/metadata>
 
 where `{PORT}` is the value of the `PORT` environment variable.
 
-### Note
-
-The Swagger UI is accessible only if `NODE_ENV=development` or `USE_SWAGGER=true`.
+**Note**: Swagger functionality is active under the conditions of either `NODE_ENV=development` or `USE_SWAGGER=true`.
 
 ## Viewing the Logs
 
