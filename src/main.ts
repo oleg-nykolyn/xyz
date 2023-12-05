@@ -31,25 +31,31 @@ async function bootstrap() {
 bootstrap();
 
 function configureSwagger(app) {
+  const swaggerXyzApiV1Prefix = 'swagger/api/v1';
+  const titlePostfix = 'RESTful API';
+  const v1 = '1.0';
+
   const authOptions = new DocumentBuilder()
-    .setTitle('Auth RESTful API')
-    .setVersion('1.0')
+    .setTitle(`Auth ${titlePostfix}`)
+    .setVersion(v1)
     .addTag('auth')
     .build();
-
   const authDocument = SwaggerModule.createDocument(app, authOptions, {
     include: [AuthModule],
   });
-  SwaggerModule.setup('api/v1/auth', app, authDocument);
+  SwaggerModule.setup(`${swaggerXyzApiV1Prefix}/auth`, app, authDocument);
 
   const metadataOptions = new DocumentBuilder()
-    .setTitle('Metadata RESTful API')
-    .setVersion('1.0')
+    .setTitle(`Metadata ${titlePostfix}`)
+    .setVersion(v1)
     .addTag('metadata')
     .build();
-
   const metadataDocument = SwaggerModule.createDocument(app, metadataOptions, {
     include: [MetadataModule],
   });
-  SwaggerModule.setup('api/v1/metadata', app, metadataDocument);
+  SwaggerModule.setup(
+    `${swaggerXyzApiV1Prefix}/metadata`,
+    app,
+    metadataDocument,
+  );
 }

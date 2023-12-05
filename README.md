@@ -36,8 +36,8 @@ docker-compose down
 
 Explore the API using Swagger with the following endpoints:
 
-- Auth Endpoints: [localhost:3000/api/v1/auth](http://localhost:3000/api/v1/auth)
-- Metadata Endpoints: [http://localhost:3000/api/v1/metadata](http://localhost:3000/api/v1/metadata)
+- Auth Endpoints: [localhost:3000/swagger/api/v1/auth](http://localhost:3000/swagger/api/v1/auth)
+- Metadata Endpoints: [http://localhost:3000/swagger/api/v1/metadata](http://localhost:3000/swagger/api/v1/metadata)
 
 ## Viewing the Logs
 
