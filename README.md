@@ -34,10 +34,16 @@ docker-compose down
 
 ## Browsing the API
 
-Explore the API using Swagger with the following endpoints:
+Explore the API through Swagger UI at:
 
-- Auth Endpoints: [localhost:3000/swagger/api/v1/auth](http://localhost:3000/swagger/api/v1/auth)
-- Metadata Endpoints: [http://localhost:3000/swagger/api/v1/metadata](http://localhost:3000/swagger/api/v1/metadata)
+- Auth Endpoints: [localhost:{PORT}/swagger/api/v1/auth](http://localhost:3000/swagger/api/v1/auth)
+- Metadata Endpoints: [localhost:{PORT}/swagger/api/v1/metadata](http://localhost:3000/swagger/api/v1/metadata)
+
+where `{PORT}` is the value of the `PORT` environment variable.
+
+### Note
+
+The Swagger UI is accessible only if `NODE_ENV=development` or `USE_SWAGGER=true`.
 
 ## Viewing the Logs
 
@@ -76,3 +82,4 @@ docker build -t xyz .
 | `MULTIVAC_RPC_URL`  | <https://rpc.mtv.ac>                         | any |
 | `THROTTLE_TTL_SECS`| 1                         | expressed in seconds                                        |
 | `THROTTLE_LIMIT`   | 5                         | number                                            |
+| `USE_SWAGGER`      | false                    | boolean                                      |

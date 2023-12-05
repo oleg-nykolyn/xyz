@@ -76,4 +76,8 @@ export class EnvUtils {
   static rateLimiterThrottleLimit(): number {
     return parseInt(process.env.THROTTLE_LIMIT || '5', 10);
   }
+
+  static useSwagger(): boolean {
+    return process.env.USE_SWAGGER === 'true' || false;
+  }
 }

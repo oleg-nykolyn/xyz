@@ -22,7 +22,7 @@ async function bootstrap() {
   app.enableCors();
   app.use(cookieParser());
 
-  if (EnvUtils.environmentType() === 'development') {
+  if (EnvUtils.environmentType() === 'development' || EnvUtils.useSwagger()) {
     configureSwagger(app);
   }
 
