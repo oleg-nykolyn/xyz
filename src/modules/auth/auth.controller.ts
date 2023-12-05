@@ -16,7 +16,18 @@ import { EnvUtils } from 'src/utils/env.utils';
 import { Response } from 'express';
 import { AuthExceptionsFilter } from './auth-exceptions.filter';
 import { Public } from './decorators/public.decorator';
+import {
+  ApiBadRequestResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiPreconditionFailedResponse,
+  ApiTags,
+  ApiOperation,
+} from '@nestjs/swagger';
+import { NonceDto } from './dtos/nonce.dto';
 
+@ApiTags('auth')
 @Controller({
   version: '1',
   path: 'auth',
@@ -26,13 +37,47 @@ import { Public } from './decorators/public.decorator';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiOperation({
+    description: 'Issues a UUID nonce for the given account address.',
+  })
+  @ApiOkResponse({
+    description: 'The nonce has been successfully issued.',
+    type: NonceDto,
+  })
+  @ApiBadRequestResponse({
+    description: 'The account address is invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
   @Post('issue-nonce')
   @HttpCode(HttpStatus.OK)
   @UsePipes(ValidationPipe)
-  async issueNonce(@Body() { accountAddress }: IssueNonceRequestDto) {
-    return this.authService.issueNonce(accountAddress);
+  async issueNonce(
+    @Body() { accountAddress }: IssueNonceRequestDto,
+  ): Promise<NonceDto> {
+    return NonceDto.of(await this.authService.issueNonce(accountAddress));
   }
 
+  @ApiOperation({
+    description:
+      'Returns a cookie with a JWT that can be used to authenticate the user.',
+  })
+  @ApiOkResponse({
+    description: 'The user has been successfully authenticated.',
+  })
+  @ApiPreconditionFailedResponse({
+    description: 'The signature of the nonce is invalid.',
+  })
+  @ApiNotFoundResponse({
+    description: 'The account address is not found.',
+  })
+  @ApiBadRequestResponse({
+    description: 'The request body is invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
   @Post('authenticate')
   @UsePipes(ValidationPipe)
   async authenticate(
