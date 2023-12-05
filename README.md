@@ -26,13 +26,18 @@ Deploy the smart contracts using:
 docker compose exec hardhat sh scripts/deploy.sh
 ```
 
-Access the RESTful API at [http://localhost:3000/api/v1](http://localhost:3000/api/v1) (or another port if you modified the `PORT` environment variable).
-
 To stop the services, either press `Ctrl+C` in the terminal where you initiated `docker-compose up` or run:
 
 ```bash
 docker-compose down
 ```
+
+## Browsing the API
+
+Explore the API using Swagger with the following endpoints:
+
+- Auth Endpoints: [localhost:3000/api/v1/auth](http://localhost:3000/api/v1/auth)
+- Metadata Endpoints: [http://localhost:3000/api/v1/metadata](http://localhost:3000/api/v1/metadata)
 
 ## Viewing the Logs
 
