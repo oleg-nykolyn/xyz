@@ -39,7 +39,7 @@ The application exposes Swagger documentation for the following modules:
 - *Auth*: [localhost:{PORT}/swagger/api/v1/auth](http://localhost:3000/swagger/api/v1/auth)
 - *Metadata*: [localhost:{PORT}/swagger/api/v1/metadata](http://localhost:3000/swagger/api/v1/metadata)
 
-where `{PORT}` is the value of the `PORT` environment variable.
+where `{PORT}` is the value of the `PORT` environment variable (default: `3000`).
 
 **Note**: Swagger functionality is active under the conditions of either `NODE_ENV=development` or `USE_SWAGGER=true`.
 
