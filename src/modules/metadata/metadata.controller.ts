@@ -57,6 +57,7 @@ export class MetadataController {
       'Returns a list of metadata associated with the given pagination arguments, optional chain, and contract address. Each metadata entry has its content obscured or is fully viewable based on user permissions.',
   })
   @ApiOkResponse({
+    description: 'The search results have been successfully returned.',
     schema: {
       type: 'array',
       items: {
@@ -70,6 +71,15 @@ export class MetadataController {
         ],
       },
     },
+  })
+  @ApiUnauthorizedResponse({
+    description: 'The user is not authenticated',
+  })
+  @ApiBadRequestResponse({
+    description: 'The query parameters are invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
   })
   @ApiParam({
     name: 'chain',
