@@ -17,7 +17,7 @@ export class ParseChainPipe implements PipeTransform {
     }
 
     const chains = Object.values(Chain);
-    chainValue = chainValue?.toLowerCase?.();
+    chainValue = chainValue?.toUpperCase?.();
 
     if (chains.includes(chainValue)) {
       return chainValue;

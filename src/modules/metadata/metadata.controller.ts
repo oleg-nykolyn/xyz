@@ -52,6 +52,34 @@ import {
 export class MetadataController {
   constructor(private readonly metadataService: MetadataService) {}
 
+  @ApiOperation({
+    description:
+      'Returns a list of metadata associated with the given pagination arguments, optional chain, and contract address. Each metadata entry has its content obscured or is fully viewable based on user permissions.',
+  })
+  @ApiOkResponse({
+    schema: {
+      type: 'array',
+      items: {
+        anyOf: [
+          {
+            $ref: '#/components/schemas/MetadataDto',
+          },
+          {
+            $ref: '#/components/schemas/MetadataIdDto',
+          },
+        ],
+      },
+    },
+  })
+  @ApiParam({
+    name: 'chain',
+    enum: Chain,
+    required: false,
+  })
+  @ApiParam({
+    name: 'contract-address',
+    required: false,
+  })
   @Get()
   async findMetadata(
     @AccountAddress() accountAddress: string,

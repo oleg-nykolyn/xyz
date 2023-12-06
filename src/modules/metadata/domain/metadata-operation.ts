@@ -1,9 +1,9 @@
 import { MetadataId } from './metadata';
 
 export enum MetadataOperationType {
-  Create = 'create',
-  Update = 'update',
-  Delete = 'delete',
+  Create = 'CREATE',
+  Update = 'UPDATE',
+  Delete = 'DELETE',
 }
 
 export class MetadataOperation {
