@@ -1,10 +1,11 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { StringUtils } from './string.utils';
+import { StringUtils } from './utils/string.utils';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { MetadataModule } from 'src/modules/metadata/metadata.module';
+import { INestApplication } from '@nestjs/common';
 
-export class SwaggerUtils {
-  static configureSwagger(app) {
+export class Swagger {
+  static setUp(app: INestApplication<any>) {
     const titlePostfix = 'RESTful API';
 
     const swaggerApiV1Prefix = 'swagger/api/v1';
@@ -15,11 +16,12 @@ export class SwaggerUtils {
     };
 
     for (const [moduleName, module] of Object.entries(v1Modules)) {
-      const options = new DocumentBuilder()
+      const optionsBuilder = new DocumentBuilder()
         .setTitle(`${StringUtils.capitalize(moduleName)} ${titlePostfix}`)
         .setVersion(v1)
-        .addTag(moduleName)
-        .build();
+        .addTag(moduleName);
+
+      const options = optionsBuilder.build();
       const document = SwaggerModule.createDocument(app, options, {
         include: [module],
       });

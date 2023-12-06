@@ -28,9 +28,10 @@ import { CreateOrUpdateMetadataRequestDto } from './dtos/create-or-update-metada
 import { MetadataId } from './domain/metadata';
 import { MetadataCountPerContractDto } from './dtos/metadata-count-per-contract.dto';
 import { MetadataOperationDto } from './dtos/metadata-operation.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('metadata')
+@ApiCookieAuth()
 @Controller({
   version: '1',
   path: 'metadata',
