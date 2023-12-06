@@ -138,7 +138,7 @@ export class MetadataController {
       'The user is not authenticated or authorized to view the requested metadata.',
   })
   @ApiBadRequestResponse({
-    description: 'The request parameters are invalid.',
+    description: 'The query parameters are invalid.',
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal server error.',
@@ -166,6 +166,29 @@ export class MetadataController {
     );
   }
 
+  @ApiOperation({
+    description:
+      'Returns the metadata operation history associated with the given chain, contract address and entity ID.',
+  })
+  @ApiOkResponse({
+    description:
+      'The metadata operation history has been successfully returned.',
+    type: [MetadataOperationDto],
+  })
+  @ApiUnauthorizedResponse({
+    description:
+      'The user is not authenticated or authorized to view the requested metadata operation history.',
+  })
+  @ApiBadRequestResponse({
+    description: 'The query parameters are invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
+  @ApiParam({
+    name: 'chain',
+    enum: Chain,
+  })
   @Get(':chain/:contractAddress/:entityId/history')
   async getMetadataOperationHistory(
     @AccountAddress() accountAddress: string,
