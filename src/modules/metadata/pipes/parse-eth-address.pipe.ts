@@ -16,7 +16,7 @@ export class ParseEthAddressPipe implements PipeTransform {
       return value;
     }
 
-    const contractAddress = value?.toLowerCase?.();
+    const contractAddress = value?.toLowerCase?.().trim?.();
 
     if (isValidAddress(contractAddress)) {
       return contractAddress;
