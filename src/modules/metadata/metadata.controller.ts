@@ -73,7 +73,7 @@ export class MetadataController {
     },
   })
   @ApiUnauthorizedResponse({
-    description: 'The user is not authenticated',
+    description: 'The user is not authenticated.',
   })
   @ApiBadRequestResponse({
     description: 'The query parameters are invalid.',
@@ -224,6 +224,28 @@ export class MetadataController {
     ).map(MetadataOperationDto.fromDomain);
   }
 
+  @ApiOperation({
+    description:
+      'Returns a list of contracts and their associated metadata count for the given chain and pagination arguments.',
+  })
+  @ApiOkResponse({
+    description:
+      'The list of contracts and their associated metadata count has been successfully returned.',
+    type: [MetadataCountPerContractDto],
+  })
+  @ApiUnauthorizedResponse({
+    description: 'The user is not authenticated.',
+  })
+  @ApiBadRequestResponse({
+    description: 'The query parameters are invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
+  @ApiParam({
+    name: 'chain',
+    enum: Chain,
+  })
   @Get(':chain')
   async getMetadataCountPerContractByChain(
     @Param('chain', ParseChainPipe) chain: Chain,
