@@ -28,7 +28,17 @@ import { CreateOrUpdateMetadataRequestDto } from './dtos/create-or-update-metada
 import { MetadataId } from './domain/metadata';
 import { MetadataCountPerContractDto } from './dtos/metadata-count-per-contract.dto';
 import { MetadataOperationDto } from './dtos/metadata-operation.dto';
-import { ApiCookieAuth, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCookieAuth,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 @ApiTags('metadata')
 @ApiCookieAuth()
@@ -72,6 +82,31 @@ export class MetadataController {
     ).map(MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain);
   }
 
+  @ApiOperation({
+    description:
+      'Returns the metadata associated with the given chain, contract address and entity ID.',
+  })
+  @ApiOkResponse({
+    description: 'The metadata has been successfully returned.',
+    type: MetadataDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'The metadata is not found.',
+  })
+  @ApiUnauthorizedResponse({
+    description:
+      'The user is not authenticated or authorized to view the requested metadata.',
+  })
+  @ApiBadRequestResponse({
+    description: 'The request parameters are invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
+  @ApiParam({
+    name: 'chain',
+    enum: Chain,
+  })
   @Get(':chain/:contractAddress/:entityId')
   async getMetadata(
     @AccountAddress() accountAddress: string,

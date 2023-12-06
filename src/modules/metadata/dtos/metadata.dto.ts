@@ -10,16 +10,27 @@ import {
   IsEnum,
   IsNumber,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class MetadataIdDto {
+  @ApiProperty({
+    enum: Chain,
+    example: Chain.Ethereum,
+  })
   @IsNotEmpty()
   @IsEnum(Chain)
   chain: Chain;
 
+  @ApiProperty({
+    example: '0x5fbdb2315678afecb367f032d93f642f64180aa3',
+  })
   @IsNotEmpty()
   @IsEthereumAddress()
   contractAddress: string;
 
+  @ApiProperty({
+    example: 1,
+  })
   @IsNotEmpty()
   @IsNumber()
   entityId: number;
@@ -44,11 +55,39 @@ export class MetadataIdDto {
 }
 
 export class MetadataDto {
+  @ApiProperty()
   id: MetadataIdDto;
+
+  @ApiProperty({
+    example: {
+      key: 'value',
+      key2: 'value2',
+      key3: {
+        key4: 'value4',
+        key5: ['value5', 'value6'],
+      },
+    },
+  })
   content: any;
+
+  @ApiProperty({
+    example: '2021-01-01T00:00:00.000Z',
+  })
   createdAt: Date;
+
+  @ApiProperty({
+    example: '2021-01-01T00:00:00.000Z',
+  })
   updatedAt: Date;
+
+  @ApiProperty({
+    example: '0x5fbdb2315678afecb367f032d93f642f64180aa3',
+  })
   createdBy: string;
+
+  @ApiProperty({
+    example: '0x5fbdb2315678afecb367f032d93f642f64180aa3',
+  })
   lastUpdatedBy: string;
 
   static fromDomain(metadata: Metadata): MetadataDto {
