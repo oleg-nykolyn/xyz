@@ -30,7 +30,9 @@ import { MetadataCountPerContractDto } from './dtos/metadata-count-per-contract.
 import { MetadataOperationDto } from './dtos/metadata-operation.dto';
 import {
   ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiCookieAuth,
+  ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -186,6 +188,27 @@ export class MetadataController {
     });
   }
 
+  @ApiOperation({
+    description:
+      'Creates new metadata associated with the given chain, contract address and entity ID.',
+  })
+  @ApiCreatedResponse({
+    description: 'The metadata has been successfully created.',
+    type: MetadataDto,
+  })
+  @ApiConflictResponse({
+    description: 'The metadata associated with the given ID already exists.',
+  })
+  @ApiUnauthorizedResponse({
+    description:
+      'The user is not authenticated or authorized to create the metadata for the given chain, contract address and entity ID.',
+  })
+  @ApiBadRequestResponse({
+    description: 'The request body is invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
   @Post()
   @UsePipes(ValidationPipe)
   async createMetadata(
@@ -201,6 +224,27 @@ export class MetadataController {
     );
   }
 
+  @ApiOperation({
+    description:
+      'Updates the metadata associated with the given chain, contract address and entity ID.',
+  })
+  @ApiOkResponse({
+    description: 'The metadata has been successfully updated.',
+    type: MetadataDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'The metadata is not found.',
+  })
+  @ApiUnauthorizedResponse({
+    description:
+      'The user is not authenticated or authorized to update the metadata for the given chain, contract address and entity ID.',
+  })
+  @ApiBadRequestResponse({
+    description: 'The request body is invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
   @Put()
   @UsePipes(ValidationPipe)
   async updateMetadata(
@@ -216,6 +260,26 @@ export class MetadataController {
     );
   }
 
+  @ApiOperation({
+    description:
+      'Deletes the metadata associated with the given chain, contract address and entity ID.',
+  })
+  @ApiOkResponse({
+    description: 'The metadata has been successfully deleted.',
+  })
+  @ApiNotFoundResponse({
+    description: 'The metadata is not found.',
+  })
+  @ApiUnauthorizedResponse({
+    description:
+      'The user is not authenticated or authorized to delete the metadata for the given chain, contract address and entity ID.',
+  })
+  @ApiBadRequestResponse({
+    description: 'The request body is invalid.',
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error.',
+  })
   @Delete()
   @UsePipes(ValidationPipe)
   deleteMetadata(
