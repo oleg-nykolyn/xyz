@@ -16,7 +16,7 @@ async function bootstrap() {
     prefix: 'api/v',
   });
 
-  // app.enableCors();
+  app.enableCors();
   app.use(cookieParser());
 
   if (EnvUtils.environmentType() === 'development' || EnvUtils.useSwagger()) {
