@@ -3,12 +3,12 @@ pragma solidity ^0.8.2;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
-import './EntityMetadataCrudAcl.sol';
+import './IEntityMetadataCrudAcl.sol';
 
 contract ERC721OwnerAuthorizedEditorEMCA is
     ERC721,
     Ownable,
-    EntityMetadataCrudAcl
+    IEntityMetadataCrudAcl
 {
     mapping(address => mapping(uint256 => bool))
         private _entityMetadataAuthorizedEditors;

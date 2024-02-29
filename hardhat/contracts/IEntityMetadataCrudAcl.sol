@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.2;
 
-interface EntityMetadataCrudAcl {
+interface IEntityMetadataCrudAcl {
     function canReadEntityMetadata(
         address account,
         uint256 entityId
