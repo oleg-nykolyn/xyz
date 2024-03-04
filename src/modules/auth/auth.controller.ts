@@ -61,7 +61,7 @@ export class AuthController {
 
   @ApiOperation({
     description:
-      'Returns a cookie with a JWT that can be used to authenticate the user.',
+      'Returns a cookie that encapsulates a JWT to be used for access to secured API operations.',
   })
   @ApiOkResponse({
     description: 'The user has been successfully authenticated.',
