@@ -64,7 +64,7 @@ export class AuthController {
       'Returns a cookie that encapsulates a JWT to be used for access to secured API operations.',
   })
   @ApiOkResponse({
-    description: 'The user has been successfully authenticated.',
+    description: 'The cookie has been successfully issued.',
   })
   @ApiPreconditionFailedResponse({
     description: 'The signature of the nonce is invalid.',
