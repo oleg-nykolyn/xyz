@@ -4,7 +4,7 @@ import { MetadataModule } from './modules/metadata/metadata.module';
 import { AclModule } from './modules/acl/acl.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvUtils } from './utils/env.utils';
-import { AccountEntity } from './modules/auth/entities/account.entity';
+import { AccountTypeOrmEntity } from './modules/auth/repositories/typeorm/account.typeorm.entity';
 import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { MetadataEntity } from './modules/metadata/entities/metadata.entity';
@@ -26,7 +26,7 @@ import { MetadataOperationEntity } from './modules/metadata/entities/metadata-op
       username: EnvUtils.dbUser(),
       password: EnvUtils.dbPassword(),
       database: EnvUtils.dbName(),
-      entities: [AccountEntity, MetadataEntity, MetadataOperationEntity],
+      entities: [AccountTypeOrmEntity, MetadataEntity, MetadataOperationEntity],
       synchronize: EnvUtils.environmentType() === 'development',
     }),
     ThrottlerModule.forRoot([

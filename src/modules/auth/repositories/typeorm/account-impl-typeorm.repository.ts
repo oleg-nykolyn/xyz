@@ -1,14 +1,14 @@
 import { EntityManager } from 'typeorm';
-import { AccountEntity } from '../entities/account.entity';
-import { AccountRepository } from './account.repository';
-import { Account } from '../domain/account';
+import { AccountTypeOrmEntity } from './account.typeorm.entity';
+import { AccountRepository } from '../account.repository';
+import { Account } from '../../domain/account';
 
 export class AccountRepositoryImplTypeOrm implements AccountRepository {
   async findByAddress(
     entityManager: EntityManager,
     accountAddress: string,
   ): Promise<Account | null> {
-    const accountEntity = await entityManager.findOneBy(AccountEntity, {
+    const accountEntity = await entityManager.findOneBy(AccountTypeOrmEntity, {
       address: accountAddress,
     });
 
@@ -24,7 +24,7 @@ export class AccountRepositoryImplTypeOrm implements AccountRepository {
     account: Account,
   ): Promise<Account> {
     return (
-      await entityManager.save(AccountEntity.fromDomain(account))
+      await entityManager.save(AccountTypeOrmEntity.fromDomain(account))
     ).toDomain();
   }
 }

@@ -5,7 +5,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './services/auth.service';
 import { AuthServiceImpl } from './services/auth-impl.service';
 import { AccountRepository } from './repositories/account.repository';
-import { AccountRepositoryImplTypeOrm } from './repositories/account-impl-typeorm.repository';
+import { AccountRepositoryImplTypeOrm } from './repositories/typeorm/account-impl-typeorm.repository';
 import { SignatureVerifierService } from './services/signature-verifier.service';
 import { SignatureVerifierServiceImpl } from './services/signature-verifier-impl.service';
 import { AuthGuard } from './auth.guard';

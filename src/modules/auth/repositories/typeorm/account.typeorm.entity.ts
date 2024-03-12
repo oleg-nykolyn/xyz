@@ -5,10 +5,10 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Account } from '../domain/account';
+import { Account } from '../../domain/account';
 
 @Entity({ name: 'account' })
-export class AccountEntity {
+export class AccountTypeOrmEntity {
   @PrimaryColumn()
   address: string;
 
@@ -21,8 +21,8 @@ export class AccountEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  static fromDomain(account: Account): AccountEntity {
-    const accountEntity = new AccountEntity();
+  static fromDomain(account: Account): AccountTypeOrmEntity {
+    const accountEntity = new AccountTypeOrmEntity();
     accountEntity.address = account.getAddress();
     accountEntity.nonce = account.getNonce();
     accountEntity.createdAt = account.getCreatedAt();
