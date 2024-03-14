@@ -5,7 +5,7 @@ import {
 } from '../domain/metadata-operation';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class MetadataOperationDto {
+export class MetadataOperationDTO {
   @ApiProperty({
     example: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
   })
@@ -41,8 +41,8 @@ export class MetadataOperationDto {
 
   static fromDomain(
     metadataOperation: MetadataOperation,
-  ): MetadataOperationDto {
-    const dto = new MetadataOperationDto();
+  ): MetadataOperationDTO {
+    const dto = new MetadataOperationDTO();
 
     dto.id = metadataOperation.getId();
     dto.type = metadataOperation.getType();

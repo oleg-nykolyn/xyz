@@ -1,13 +1,13 @@
 import { IsNotEmpty, IsObject, ValidateNested } from 'class-validator';
-import { MetadataIdDto } from './metadata.dto';
+import { MetadataIdDTO } from './metadata.dto';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateOrUpdateMetadataRequestDto {
+export class CreateOrUpdateMetadataRequestDTO {
   @ApiProperty()
   @ValidateNested()
-  @Type(() => MetadataIdDto)
-  metadataId: MetadataIdDto;
+  @Type(() => MetadataIdDTO)
+  metadataId: MetadataIdDTO;
 
   @ApiProperty({
     example: {

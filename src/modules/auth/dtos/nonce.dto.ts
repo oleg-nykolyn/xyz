@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class NonceDto {
+export class NonceDTO {
   @ApiProperty({
     example: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
   })
@@ -10,7 +10,7 @@ export class NonceDto {
     this.nonce = nonce;
   }
 
-  static of(nonce: string): NonceDto {
-    return new NonceDto(nonce);
+  static of(nonce: string): NonceDTO {
+    return new NonceDTO(nonce);
   }
 }

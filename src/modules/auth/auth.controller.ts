@@ -10,8 +10,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
-import { IssueNonceRequestDto } from './dtos/issue-nonce-request.dto';
-import { AuthenticateRequestDto } from './dtos/authenticate-request.dto';
+import { IssueNonceRequestDTO } from './dtos/issue-nonce-request.dto';
+import { AuthenticateRequestDTO } from './dtos/authenticate-request.dto';
 import { EnvUtils } from 'src/utils/env.utils';
 import { Response } from 'express';
 import { AuthExceptionsFilter } from './auth-exceptions.filter';
@@ -25,7 +25,7 @@ import {
   ApiTags,
   ApiOperation,
 } from '@nestjs/swagger';
-import { NonceDto } from './dtos/nonce.dto';
+import { NonceDTO } from './dtos/nonce.dto';
 
 @ApiTags('auth')
 @Controller({
@@ -42,7 +42,7 @@ export class AuthController {
   })
   @ApiOkResponse({
     description: 'The nonce has been successfully issued.',
-    type: NonceDto,
+    type: NonceDTO,
   })
   @ApiBadRequestResponse({
     description: 'The account address is invalid.',
@@ -54,9 +54,9 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UsePipes(ValidationPipe)
   async issueNonce(
-    @Body() { accountAddress }: IssueNonceRequestDto,
-  ): Promise<NonceDto> {
-    return NonceDto.of(await this.authService.issueNonce(accountAddress));
+    @Body() { accountAddress }: IssueNonceRequestDTO,
+  ): Promise<NonceDTO> {
+    return NonceDTO.of(await this.authService.issueNonce(accountAddress));
   }
 
   @ApiOperation({
@@ -81,7 +81,7 @@ export class AuthController {
   @Post('authenticate')
   @UsePipes(ValidationPipe)
   async authenticate(
-    @Body() { accountAddress, signedNonce }: AuthenticateRequestDto,
+    @Body() { accountAddress, signedNonce }: AuthenticateRequestDTO,
     @Res() response: Response,
   ) {
     const jwt = await this.authService.authenticate(

@@ -19,15 +19,15 @@ import { ParseChainPipe } from './pipes/parse-chain.pipe';
 import { ParseEthAddressPipe } from './pipes/parse-eth-address.pipe';
 import { ParsePositiveOrZeroIntegerPipe } from './pipes/parse-zero-or-positive-integer.pipe';
 import {
-  MetadataDto,
-  MetadataDtoMappers,
-  MetadataIdDto,
-  ViewableOrObscuredMetadataDto,
+  MetadataDTO,
+  MetadataDTOMappers,
+  MetadataIdDTO,
+  ViewableOrObscuredMetadataDTO,
 } from './dtos/metadata.dto';
-import { CreateOrUpdateMetadataRequestDto } from './dtos/create-or-update-metadata-request.dto';
+import { CreateOrUpdateMetadataRequestDTO } from './dtos/create-or-update-metadata-request.dto';
 import { MetadataId } from './domain/metadata';
-import { MetadataCountPerContractDto } from './dtos/metadata-count-per-contract.dto';
-import { MetadataOperationDto } from './dtos/metadata-operation.dto';
+import { MetadataCountPerContractDTO } from './dtos/metadata-count-per-contract.dto';
+import { MetadataOperationDTO } from './dtos/metadata-operation.dto';
 import {
   ApiBadRequestResponse,
   ApiConflictResponse,
@@ -63,10 +63,10 @@ export class MetadataController {
       items: {
         anyOf: [
           {
-            $ref: '#/components/schemas/MetadataDto',
+            $ref: '#/components/schemas/MetadataDTO',
           },
           {
-            $ref: '#/components/schemas/MetadataIdDto',
+            $ref: '#/components/schemas/MetadataIdDTO',
           },
         ],
       },
@@ -110,7 +110,7 @@ export class MetadataController {
     @Query('chain', ParseChainPipe.optional()) chain?: Chain,
     @Query('contract-address', ParseEthAddressPipe.optional())
     contractAddress?: string,
-  ): Promise<ViewableOrObscuredMetadataDto[]> {
+  ): Promise<ViewableOrObscuredMetadataDTO[]> {
     return (
       await this.metadataService.findMetadata({
         accountAddress,
@@ -119,7 +119,7 @@ export class MetadataController {
         limit,
         offset,
       })
-    ).map(MetadataDtoMappers.mapViewableOrObscuredMetadataFromDomain);
+    ).map(MetadataDTOMappers.mapViewableOrObscuredMetadataFromDomain);
   }
 
   @ApiOperation({
@@ -128,7 +128,7 @@ export class MetadataController {
   })
   @ApiOkResponse({
     description: 'The metadata has been successfully returned.',
-    type: MetadataDto,
+    type: MetadataDTO,
   })
   @ApiNotFoundResponse({
     description: 'The metadata is not found.',
@@ -153,8 +153,8 @@ export class MetadataController {
     @Param('chain', ParseChainPipe) chain: Chain,
     @Param('contractAddress', ParseEthAddressPipe) contractAddress: string,
     @Param('entityId', ParsePositiveOrZeroIntegerPipe) entityId: number,
-  ): Promise<MetadataDto> {
-    return MetadataDto.fromDomain(
+  ): Promise<MetadataDTO> {
+    return MetadataDTO.fromDomain(
       await this.metadataService.getMetadata(
         accountAddress,
         MetadataId.of({
@@ -173,7 +173,7 @@ export class MetadataController {
   @ApiOkResponse({
     description:
       'The metadata operation history has been successfully returned.',
-    type: [MetadataOperationDto],
+    type: [MetadataOperationDTO],
   })
   @ApiUnauthorizedResponse({
     description:
@@ -209,7 +209,7 @@ export class MetadataController {
       }),
     )
     offset: number,
-  ): Promise<MetadataOperationDto[]> {
+  ): Promise<MetadataOperationDTO[]> {
     return (
       await this.metadataService.getMetadataOperationHistory({
         accountAddress,
@@ -221,7 +221,7 @@ export class MetadataController {
         limit,
         offset,
       })
-    ).map(MetadataOperationDto.fromDomain);
+    ).map(MetadataOperationDTO.fromDomain);
   }
 
   @ApiOperation({
@@ -231,7 +231,7 @@ export class MetadataController {
   @ApiOkResponse({
     description:
       'The list of contracts and their associated metadata count has been successfully returned.',
-    type: [MetadataCountPerContractDto],
+    type: [MetadataCountPerContractDTO],
   })
   @ApiUnauthorizedResponse({
     description: 'The user is not authenticated.',
@@ -263,7 +263,7 @@ export class MetadataController {
       }),
     )
     offset: number,
-  ): Promise<MetadataCountPerContractDto[]> {
+  ): Promise<MetadataCountPerContractDTO[]> {
     return this.metadataService.getMetadataCountPerContractByChain({
       chain,
       limit,
@@ -277,7 +277,7 @@ export class MetadataController {
   })
   @ApiCreatedResponse({
     description: 'The metadata has been successfully created.',
-    type: MetadataDto,
+    type: MetadataDTO,
   })
   @ApiConflictResponse({
     description: 'The metadata associated with the given ID already exists.',
@@ -296,12 +296,12 @@ export class MetadataController {
   @UsePipes(ValidationPipe)
   async createMetadata(
     @AccountAddress() accountAddress: string,
-    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
-  ): Promise<MetadataDto> {
-    return MetadataDto.fromDomain(
+    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDTO,
+  ): Promise<MetadataDTO> {
+    return MetadataDTO.fromDomain(
       await this.metadataService.createMetadata(
         accountAddress,
-        MetadataIdDto.toDomain(metadataId),
+        MetadataIdDTO.toDomain(metadataId),
         metadataContent,
       ),
     );
@@ -313,7 +313,7 @@ export class MetadataController {
   })
   @ApiOkResponse({
     description: 'The metadata has been successfully updated.',
-    type: MetadataDto,
+    type: MetadataDTO,
   })
   @ApiNotFoundResponse({
     description: 'The metadata is not found.',
@@ -332,12 +332,12 @@ export class MetadataController {
   @UsePipes(ValidationPipe)
   async updateMetadata(
     @AccountAddress() accountAddress: string,
-    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDto,
-  ): Promise<MetadataDto> {
-    return MetadataDto.fromDomain(
+    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDTO,
+  ): Promise<MetadataDTO> {
+    return MetadataDTO.fromDomain(
       await this.metadataService.updateMetadata(
         accountAddress,
-        MetadataIdDto.toDomain(metadataId),
+        MetadataIdDTO.toDomain(metadataId),
         metadataContent,
       ),
     );
@@ -367,11 +367,11 @@ export class MetadataController {
   @UsePipes(ValidationPipe)
   deleteMetadata(
     @AccountAddress() accountAddress: string,
-    @Body() metadataIdDto: MetadataIdDto,
+    @Body() metadataIdDTO: MetadataIdDTO,
   ): Promise<void> {
     return this.metadataService.deleteMetadata(
       accountAddress,
-      MetadataIdDto.toDomain(metadataIdDto),
+      MetadataIdDTO.toDomain(metadataIdDTO),
     );
   }
 }

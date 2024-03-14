@@ -12,7 +12,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class MetadataIdDto {
+export class MetadataIdDTO {
   @ApiProperty({
     enum: Chain,
     example: Chain.Ethereum,
@@ -35,8 +35,8 @@ export class MetadataIdDto {
   @IsNumber()
   entityId: number;
 
-  static fromDomain(metadataId: MetadataId): MetadataIdDto {
-    const dto = new MetadataIdDto();
+  static fromDomain(metadataId: MetadataId): MetadataIdDTO {
+    const dto = new MetadataIdDTO();
 
     dto.chain = metadataId.getChain();
     dto.contractAddress = metadataId.getContractAddress();
@@ -45,18 +45,18 @@ export class MetadataIdDto {
     return dto;
   }
 
-  static toDomain(metadataIdDto: MetadataIdDto): MetadataId {
+  static toDomain(metadataIdDTO: MetadataIdDTO): MetadataId {
     return MetadataId.of({
-      chain: metadataIdDto.chain,
-      contractAddress: metadataIdDto.contractAddress,
-      entityId: metadataIdDto.entityId,
+      chain: metadataIdDTO.chain,
+      contractAddress: metadataIdDTO.contractAddress,
+      entityId: metadataIdDTO.entityId,
     });
   }
 }
 
-export class MetadataDto {
+export class MetadataDTO {
   @ApiProperty()
-  id: MetadataIdDto;
+  id: MetadataIdDTO;
 
   @ApiProperty({
     example: {
@@ -90,10 +90,10 @@ export class MetadataDto {
   })
   lastUpdatedBy: string;
 
-  static fromDomain(metadata: Metadata): MetadataDto {
-    const dto = new MetadataDto();
+  static fromDomain(metadata: Metadata): MetadataDTO {
+    const dto = new MetadataDTO();
 
-    dto.id = MetadataIdDto.fromDomain(metadata.getId());
+    dto.id = MetadataIdDTO.fromDomain(metadata.getId());
     dto.content = metadata.getContent();
     dto.createdAt = metadata.getCreatedAt();
     dto.updatedAt = metadata.getUpdatedAt();
@@ -104,16 +104,16 @@ export class MetadataDto {
   }
 }
 
-export type ViewableOrObscuredMetadataDto = MetadataDto | MetadataIdDto;
+export type ViewableOrObscuredMetadataDTO = MetadataDTO | MetadataIdDTO;
 
-export class MetadataDtoMappers {
+export class MetadataDTOMappers {
   static mapViewableOrObscuredMetadataFromDomain(
     viewableOrObscuredMetadata: ViewableOrObscuredMetadata,
-  ): ViewableOrObscuredMetadataDto {
+  ): ViewableOrObscuredMetadataDTO {
     if (viewableOrObscuredMetadata instanceof Metadata) {
-      return MetadataDto.fromDomain(viewableOrObscuredMetadata);
+      return MetadataDTO.fromDomain(viewableOrObscuredMetadata);
     }
 
-    return MetadataIdDto.fromDomain(viewableOrObscuredMetadata);
+    return MetadataIdDTO.fromDomain(viewableOrObscuredMetadata);
   }
 }
