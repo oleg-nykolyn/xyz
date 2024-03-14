@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { DataSource } from 'typeorm';
 import { AccountRepository } from '../repositories/account.repository';
 import { SignatureVerifierService } from './signature-verifier.service';
-import { JwtService } from './jwt.service';
+import { TokenService } from './token.service';
 import { AccountNotFoundException } from './exceptions/account-not-found.exception';
 import { InvalidSignatureException } from './exceptions/invalid-signature.exception';
 import { Account } from '../domain/account';
@@ -16,7 +16,7 @@ export class AuthServiceImpl implements AuthService {
     private readonly dataSource: DataSource,
     private readonly accountRepository: AccountRepository,
     private readonly signatureVerifierService: SignatureVerifierService,
-    private readonly jwtService: JwtService,
+    private readonly tokenService: TokenService,
   ) {}
 
   async issueNonce(accountAddress: string): Promise<string> {
@@ -76,7 +76,7 @@ export class AuthServiceImpl implements AuthService {
 
         await this.accountRepository.saveOrUpdate(manager, account);
 
-        return this.jwtService.issueToken(accountAddress);
+        return this.tokenService.issueToken(accountAddress);
       });
     } catch (e) {
       this.logger.error(e);

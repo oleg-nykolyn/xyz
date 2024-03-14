@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { JwtService } from './services/jwt.service';
-import { JwtServiceImpl } from './services/jwt-impl.service';
+import { TokenService } from './services/token.service';
+import { TokenServiceImplJwt } from './services/token-impl-jwt.service';
 import { AuthController } from './auth.controller';
 import { AuthService } from './services/auth.service';
 import { AuthServiceImpl } from './services/auth-impl.service';
@@ -23,8 +23,8 @@ import { APP_GUARD } from '@nestjs/core';
       useClass: AccountRepositoryImplTypeOrm,
     },
     {
-      provide: JwtService,
-      useClass: JwtServiceImpl,
+      provide: TokenService,
+      useClass: TokenServiceImplJwt,
     },
     {
       provide: SignatureVerifierService,

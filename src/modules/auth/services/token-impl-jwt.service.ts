@@ -1,11 +1,11 @@
 import { EnvUtils } from 'src/utils/env.utils';
-import { JwtService } from './jwt.service';
+import { TokenService } from './token.service';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
 import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
-export class JwtServiceImpl implements JwtService {
-  private readonly logger = new Logger(JwtServiceImpl.name);
+export class TokenServiceImplJwt implements TokenService {
+  private readonly logger = new Logger(TokenServiceImplJwt.name);
 
   verifyToken(token: string): string | JwtPayload {
     return verify(token, EnvUtils.jwtSecret());
