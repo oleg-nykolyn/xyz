@@ -6,10 +6,10 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Metadata, MetadataId } from '../domain/metadata';
+import { Metadata, MetadataId } from '../../../domain/metadata';
 
 @Entity({ name: 'metadata' })
-export class MetadataEntity {
+export class MetadataTypeOrmEntity {
   @PrimaryColumn({
     type: 'enum',
     enum: Chain,
@@ -37,8 +37,8 @@ export class MetadataEntity {
   @Column({ name: 'last_updated_by' })
   lastUpdatedBy: string;
 
-  static fromDomain(metadata: Metadata): MetadataEntity {
-    const metadataEntity = new MetadataEntity();
+  static fromDomain(metadata: Metadata): MetadataTypeOrmEntity {
+    const metadataEntity = new MetadataTypeOrmEntity();
     metadataEntity.chain = metadata.getChain();
     metadataEntity.contractAddress = metadata.getContractAddress();
     metadataEntity.entityId = metadata.getEntityId();

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { EntityManager } from 'typeorm';
-import { MetadataOperation } from '../domain/metadata-operation';
-import { MetadataOperationEntity } from '../entities/metadata-operation.entity';
+import { MetadataOperation } from '../../domain/metadata-operation';
+import { MetadataOperationTypeOrmEntity } from './entities/metadata-operation.typeorm.entity';
 import {
   GetMetadataOperationsQuery,
   MetadataOperationRepository,
-} from './metadata-operation.repository';
+} from '../metadata-operation.repository';
 
 @Injectable()
 export class MetadataOperationRepositoryImplTypeOrm
@@ -16,7 +16,9 @@ export class MetadataOperationRepositoryImplTypeOrm
     operation: MetadataOperation,
   ): Promise<MetadataOperation> {
     return (
-      await entityManager.save(MetadataOperationEntity.fromDomain(operation))
+      await entityManager.save(
+        MetadataOperationTypeOrmEntity.fromDomain(operation),
+      )
     ).toDomain();
   }
 
@@ -25,7 +27,7 @@ export class MetadataOperationRepositoryImplTypeOrm
     { metadataId, limit, offset }: GetMetadataOperationsQuery,
   ): Promise<MetadataOperation[]> {
     const metadataOperations = await entityManager.find(
-      MetadataOperationEntity,
+      MetadataOperationTypeOrmEntity,
       {
         where: {
           metadataChain: metadataId.getChain(),

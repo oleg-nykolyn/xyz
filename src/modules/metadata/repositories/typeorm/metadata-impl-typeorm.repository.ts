@@ -3,12 +3,12 @@ import {
   FindQuery,
   GetMetadataCountPerContractByChainQuery,
   MetadataRepository,
-} from './metadata.repository';
+} from '../metadata.repository';
 import { EntityManager } from 'typeorm';
-import { Metadata, MetadataId } from '../domain/metadata';
-import { MetadataEntity } from '../entities/metadata.entity';
-import { MetadataNotFoundException } from './exceptions/metadata-not-found.exception';
-import { MetadataCountPerContract } from '../services/metadata.service';
+import { Metadata, MetadataId } from '../../domain/metadata';
+import { MetadataTypeOrmEntity } from './entities/metadata.typeorm.entity';
+import { MetadataNotFoundException } from '../exceptions/metadata-not-found.exception';
+import { MetadataCountPerContract } from '../../services/metadata.service';
 
 @Injectable()
 export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
@@ -26,7 +26,7 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
       where['contractAddress'] = contractAddress;
     }
 
-    const metadataEntities = await entityManager.find(MetadataEntity, {
+    const metadataEntities = await entityManager.find(MetadataTypeOrmEntity, {
       where,
       take: limit,
       skip: offset,
@@ -39,11 +39,14 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
   }
 
   async get(entityManager: EntityManager, id: MetadataId): Promise<Metadata> {
-    const metadataEntity = await entityManager.findOneBy(MetadataEntity, {
-      chain: id.getChain(),
-      contractAddress: id.getContractAddress(),
-      entityId: id.getEntityId(),
-    });
+    const metadataEntity = await entityManager.findOneBy(
+      MetadataTypeOrmEntity,
+      {
+        chain: id.getChain(),
+        contractAddress: id.getContractAddress(),
+        entityId: id.getEntityId(),
+      },
+    );
 
     if (!metadataEntity) {
       throw new MetadataNotFoundException(id);
@@ -57,11 +60,14 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
     metadata: Metadata,
   ): Promise<Metadata> {
     const id = metadata.getId();
-    const metadataEntity = await entityManager.findOneBy(MetadataEntity, {
-      chain: id.getChain(),
-      contractAddress: id.getContractAddress(),
-      entityId: id.getEntityId(),
-    });
+    const metadataEntity = await entityManager.findOneBy(
+      MetadataTypeOrmEntity,
+      {
+        chain: id.getChain(),
+        contractAddress: id.getContractAddress(),
+        entityId: id.getEntityId(),
+      },
+    );
 
     if (!metadataEntity) {
       throw new MetadataNotFoundException(metadata.getId());
@@ -78,16 +84,16 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
     metadata: Metadata,
   ): Promise<Metadata> {
     return (
-      await entityManager.save(MetadataEntity.fromDomain(metadata))
+      await entityManager.save(MetadataTypeOrmEntity.fromDomain(metadata))
     ).toDomain();
   }
 
   async delete(entityManager: EntityManager, id: MetadataId): Promise<void> {
-    await entityManager.delete(MetadataEntity, id);
+    await entityManager.delete(MetadataTypeOrmEntity, id);
   }
 
   exists(entityManager: EntityManager, id: MetadataId): Promise<boolean> {
-    return entityManager.exists(MetadataEntity, {
+    return entityManager.exists(MetadataTypeOrmEntity, {
       where: {
         chain: id.getChain(),
         contractAddress: id.getContractAddress(),
@@ -101,7 +107,7 @@ export class MetadataRepositoryImplTypeOrm implements MetadataRepository {
     { chain, limit, offset }: GetMetadataCountPerContractByChainQuery,
   ): Promise<MetadataCountPerContract[]> {
     const metadataCountGroups = await entityManager
-      .createQueryBuilder(MetadataEntity, 'metadata')
+      .createQueryBuilder(MetadataTypeOrmEntity, 'metadata')
       .select('metadata.contract_address')
       .addSelect('count(*) as metadata_entries')
       .where('metadata.chain = :chain', { chain })

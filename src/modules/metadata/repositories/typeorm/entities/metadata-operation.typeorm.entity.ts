@@ -7,12 +7,12 @@ import {
 import {
   MetadataOperation,
   MetadataOperationType,
-} from '../domain/metadata-operation';
+} from '../../../domain/metadata-operation';
 import { Chain } from 'src/modules/acl/services/emca.service';
-import { MetadataId } from '../domain/metadata';
+import { MetadataId } from '../../../domain/metadata';
 
 @Entity({ name: 'metadata_operation' })
-export class MetadataOperationEntity {
+export class MetadataOperationTypeOrmEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id: string;
 
@@ -46,8 +46,8 @@ export class MetadataOperationEntity {
 
   static fromDomain(
     metadataOperation: MetadataOperation,
-  ): MetadataOperationEntity {
-    const metadataOperationEntity = new MetadataOperationEntity();
+  ): MetadataOperationTypeOrmEntity {
+    const metadataOperationEntity = new MetadataOperationTypeOrmEntity();
     metadataOperationEntity.id = metadataOperation.getId();
     metadataOperationEntity.type = metadataOperation.getType();
     metadataOperationEntity.executedAt = metadataOperation.getExecutedAt();
