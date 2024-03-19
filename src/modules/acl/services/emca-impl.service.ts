@@ -1,12 +1,12 @@
 import { Logger, OnModuleInit } from '@nestjs/common';
 import {
-  Chain,
   EntityMetadataCrudAclRequest,
   EntityMetadataCrudAclService,
 } from './emca.service';
 import { ethers, Contract } from 'ethers';
 import { EnvUtils } from 'src/utils/env.utils';
 import { abi } from 'src/modules/acl/abis/EntityMetadataCrudAcl.json';
+import { Chain } from 'src/modules/metadata/domain/chain';
 
 export class EntityMetadataCrudAclServiceImpl
   implements EntityMetadataCrudAclService, OnModuleInit

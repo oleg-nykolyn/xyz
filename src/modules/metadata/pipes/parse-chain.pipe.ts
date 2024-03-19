@@ -1,5 +1,5 @@
 import { PipeTransform, Injectable, BadRequestException } from '@nestjs/common';
-import { Chain } from 'src/modules/acl/services/emca.service';
+import { Chain } from '../domain/chain';
 
 @Injectable()
 export class ParseChainPipe implements PipeTransform {

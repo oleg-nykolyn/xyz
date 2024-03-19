@@ -1,4 +1,3 @@
-import { Chain } from 'src/modules/acl/services/emca.service';
 import {
   Column,
   CreateDateColumn,
@@ -7,6 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Metadata, MetadataId } from '../../../domain/metadata';
+import { Chain } from 'src/modules/metadata/domain/chain';
 
 @Entity({ name: 'metadata' })
 export class MetadataTypeOrmEntity {

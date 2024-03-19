@@ -14,7 +14,6 @@ import {
 import { MetadataExceptionsFilter } from './metadata-exceptions.filter';
 import { MetadataService } from './services/metadata.service';
 import { AccountAddress } from '../auth/decorators/account-address.decorator';
-import { Chain } from '../acl/services/emca.service';
 import { ParseChainPipe } from './pipes/parse-chain.pipe';
 import { ParseEthAddressPipe } from './pipes/parse-eth-address.pipe';
 import { ParsePositiveOrZeroIntegerPipe } from './pipes/parse-zero-or-positive-integer.pipe';
@@ -41,6 +40,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Chain } from './domain/chain';
 
 @ApiTags('metadata')
 @ApiCookieAuth()

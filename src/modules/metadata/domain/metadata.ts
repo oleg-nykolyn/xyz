@@ -1,4 +1,4 @@
-import { Chain } from 'src/modules/acl/services/emca.service';
+import { Chain } from './chain';
 
 export class MetadataId {
   private constructor(

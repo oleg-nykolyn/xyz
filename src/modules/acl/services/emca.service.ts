@@ -1,9 +1,4 @@
-export enum Chain {
-  Hardhat = 'HARDHAT',
-  Ethereum = 'ETHEREUM',
-  Polygon = 'POLYGON',
-  MultiVAC = 'MULTIVAC',
-}
+import { Chain } from 'src/modules/metadata/domain/chain';
 
 export type EntityMetadataCrudAclRequest = {
   chain: Chain;

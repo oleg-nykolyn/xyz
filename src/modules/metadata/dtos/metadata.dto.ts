@@ -1,4 +1,3 @@
-import { Chain } from 'src/modules/acl/services/emca.service';
 import {
   Metadata,
   MetadataId,
@@ -11,6 +10,7 @@ import {
   IsNumber,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Chain } from '../domain/chain';
 
 export class MetadataIdDTO {
   @ApiProperty({

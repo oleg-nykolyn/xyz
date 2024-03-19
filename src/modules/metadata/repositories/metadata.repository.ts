@@ -1,7 +1,7 @@
 import { EntityManager } from 'typeorm';
 import { Metadata, MetadataId } from '../domain/metadata';
-import { Chain } from 'src/modules/acl/services/emca.service';
 import { MetadataCountPerContract } from '../services/metadata.service';
+import { Chain } from '../domain/chain';
 
 export interface FindQuery {
   chain?: Chain;
