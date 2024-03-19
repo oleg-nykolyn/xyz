@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
 import { ExceptionUtils } from 'src/utils/exception.utils';
-import { MetadataAlreadyExistsException } from './repositories/exceptions/metadata-already-exists.exception';
-import { MetadataNotFoundException } from './repositories/exceptions/metadata-not-found.exception';
+import { MetadataAlreadyExistsException } from './services/exceptions/metadata-already-exists.exception';
+import { MetadataNotFoundException } from './services/exceptions/metadata-not-found.exception';
 import { MetadataServiceException } from './services/exceptions/metadata-service.exception';
 import { UnauthorizedException } from './services/exceptions/unauthorized.exception';
 

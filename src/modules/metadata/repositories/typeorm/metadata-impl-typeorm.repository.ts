@@ -7,7 +7,7 @@ import {
 import { EntityManager } from 'typeorm';
 import { Metadata, MetadataId } from '../../domain/metadata';
 import { MetadataTypeOrmEntity } from './entities/metadata.typeorm.entity';
-import { MetadataNotFoundException } from '../exceptions/metadata-not-found.exception';
+import { MetadataNotFoundException } from '../../services/exceptions/metadata-not-found.exception';
 import { MetadataCountPerContract } from '../../services/metadata.service';
 
 @Injectable()

@@ -15,8 +15,8 @@ import {
 import { EntityMetadataCrudAclService } from 'src/modules/acl/services/emca.service';
 import { DataSource } from 'typeorm';
 import { UnauthorizedException } from './exceptions/unauthorized.exception';
-import { MetadataNotFoundException } from '../repositories/exceptions/metadata-not-found.exception';
-import { MetadataAlreadyExistsException } from '../repositories/exceptions/metadata-already-exists.exception';
+import { MetadataNotFoundException } from './exceptions/metadata-not-found.exception';
+import { MetadataAlreadyExistsException } from './exceptions/metadata-already-exists.exception';
 import { MetadataOperationRepository } from '../repositories/metadata-operation.repository';
 import {
   MetadataOperation,
