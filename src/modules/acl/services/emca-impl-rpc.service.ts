@@ -8,10 +8,12 @@ import { EnvUtils } from 'src/utils/env.utils';
 import { abi } from 'src/modules/acl/abis/EntityMetadataCrudAcl.json';
 import { Chain } from 'src/modules/metadata/domain/chain';
 
-export class EntityMetadataCrudAclServiceImpl
+export class EntityMetadataCrudAclServiceImplRpc
   implements EntityMetadataCrudAclService, OnModuleInit
 {
-  private readonly logger = new Logger(EntityMetadataCrudAclServiceImpl.name);
+  private readonly logger = new Logger(
+    EntityMetadataCrudAclServiceImplRpc.name,
+  );
   private rpcProviders = new Map<Chain, ethers.JsonRpcProvider>();
 
   onModuleInit() {

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { EntityMetadataCrudAclService } from './services/emca.service';
-import { EntityMetadataCrudAclServiceImpl } from './services/emca-impl.service';
+import { EntityMetadataCrudAclServiceImplRpc } from './services/emca-impl-rpc.service';
 
 @Module({
   providers: [
     {
       provide: EntityMetadataCrudAclService,
-      useClass: EntityMetadataCrudAclServiceImpl,
+      useClass: EntityMetadataCrudAclServiceImplRpc,
     },
   ],
   exports: [EntityMetadataCrudAclService],
