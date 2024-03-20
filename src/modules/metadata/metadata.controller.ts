@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -364,6 +366,7 @@ export class MetadataController {
     description: 'Internal server error.',
   })
   @Delete()
+  @HttpCode(HttpStatus.NO_CONTENT)
   @UsePipes(ValidationPipe)
   deleteMetadata(
     @AccountAddress() accountAddress: string,
