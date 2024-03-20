@@ -136,7 +136,6 @@ export class MetadataServiceImpl implements MetadataService {
     content: any,
   ): Promise<Metadata> {
     try {
-      
       if (await this.metadataRepository.exists(this.dataSource.manager, id)) {
         throw new MetadataAlreadyExistsException(id);
       }
