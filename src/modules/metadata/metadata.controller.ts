@@ -296,12 +296,16 @@ export class MetadataController {
   @UsePipes(ValidationPipe)
   async createMetadata(
     @AccountAddress() accountAddress: string,
-    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDTO,
+    @Body()
+    {
+      metadataId: metadataIdDTO,
+      metadataContent,
+    }: CreateOrUpdateMetadataRequestDTO,
   ): Promise<MetadataDTO> {
     return MetadataDTO.fromDomain(
       await this.metadataService.createMetadata(
         accountAddress,
-        MetadataIdDTO.toDomain(metadataId),
+        metadataIdDTO.toDomain(),
         metadataContent,
       ),
     );
@@ -332,12 +336,16 @@ export class MetadataController {
   @UsePipes(ValidationPipe)
   async updateMetadata(
     @AccountAddress() accountAddress: string,
-    @Body() { metadataId, metadataContent }: CreateOrUpdateMetadataRequestDTO,
+    @Body()
+    {
+      metadataId: metadataIdDTO,
+      metadataContent,
+    }: CreateOrUpdateMetadataRequestDTO,
   ): Promise<MetadataDTO> {
     return MetadataDTO.fromDomain(
       await this.metadataService.updateMetadata(
         accountAddress,
-        MetadataIdDTO.toDomain(metadataId),
+        metadataIdDTO.toDomain(),
         metadataContent,
       ),
     );
@@ -371,7 +379,7 @@ export class MetadataController {
   ): Promise<void> {
     return this.metadataService.deleteMetadata(
       accountAddress,
-      MetadataIdDTO.toDomain(metadataIdDTO),
+      metadataIdDTO.toDomain(),
     );
   }
 }
