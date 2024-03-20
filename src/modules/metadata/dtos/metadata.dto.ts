@@ -45,11 +45,11 @@ export class MetadataIdDTO {
     return dto;
   }
 
-  static toDomain(metadataIdDTO: MetadataIdDTO): MetadataId {
+  toDomain(): MetadataId {
     return MetadataId.of({
-      chain: metadataIdDTO.chain,
-      contractAddress: metadataIdDTO.contractAddress,
-      entityId: metadataIdDTO.entityId,
+      chain: this.chain,
+      contractAddress: this.contractAddress,
+      entityId: this.entityId,
     });
   }
 }
