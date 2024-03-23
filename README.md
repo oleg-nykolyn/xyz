@@ -1,10 +1,10 @@
 # XYZ
 
-XYZ operates as a monolithic system, functioning as a gateway to confidential metadata linked with identifiable entities on EVM-compatible blockchains.
+XYZ operates as a monolithic system, functioning as a gateway to confidential metadata linked with identifiable entities defined on EVM-compatible blockchains.
 
 ## Installation
 
-To install XYZ and its dependencies, use the following command:
+To install XYZ and its dependencies, use:
 
 ```bash
 npm install
@@ -39,11 +39,11 @@ The application exposes Swagger documentation for the following modules:
 
 where `{PORT}` is the value of the `PORT` environment variable (default: `3000`).
 
-**Note**: Swagger functionality is active under the conditions of either `NODE_ENV=development` or `USE_SWAGGER=true`.
+**Note**: Swagger can be enable with `NODE_ENV=development` or `USE_SWAGGER=true`.
 
 ## Viewing the Logs
 
-For real-time log tracking, use the following command:
+For real-time log tracking, use:
 
 ```bash
 docker-compose logs -f
@@ -51,7 +51,7 @@ docker-compose logs -f
 
 ## Building the Docker Image
 
-Build the Docker image with the specified tag 'xyz':
+Build the Docker image with:
 
 ```bash
 docker build -t xyz .
