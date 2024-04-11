@@ -89,9 +89,11 @@ export class AuthController {
       signedNonce,
     );
 
+    const isEnvProduction = EnvUtils.environmentType() === 'production';
     response.cookie('jwt', jwt, {
       httpOnly: true,
-      secure: EnvUtils.environmentType() === 'production',
+      sameSite: isEnvProduction,
+      secure: isEnvProduction,
     });
 
     return response.status(HttpStatus.OK).send();
