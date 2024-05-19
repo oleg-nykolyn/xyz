@@ -3,7 +3,6 @@ services:
     container_name: xyz
     build:
       context: .
-    image: xyz
     profiles:
       - all
     environment:
@@ -27,6 +26,7 @@ services:
       USE_SWAGGER: true
     ports:
       - '3000:3000'
+    restart: on-failure
     depends_on:
       - postgres
       - hardhat
@@ -36,12 +36,14 @@ services:
     image: postgres:16.1
     profiles:
       - dev
+      - all
     environment:
       POSTGRES_DB: postgres-db
       POSTGRES_USER: postgres-user
       POSTGRES_PASSWORD: postgres-password
     ports:
       - '5432:5432'
+    restart: on-failure
     volumes:
       - postgres_volume:/var/lib/postgresql/data
 
@@ -50,11 +52,14 @@ services:
     image: dpage/pgadmin4
     profiles:
       - dev
+      - all
     environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
       PGADMIN_DEFAULT_PASSWORD: pgadmin-password
     ports:
       - '5050:80'
+    depends_on:
+      - postgres
     volumes:
       - pgadmin_volume:/var/lib/pgadmin
 
@@ -62,11 +67,12 @@ services:
     container_name: hardhat
     build:
       context: ./hardhat
-    image: hardhat
     profiles:
       - dev
+      - all
     ports:
       - '8545:8545'
+    restart: on-failure
     volumes:
       - ./hardhat/contracts:/hardhat/contracts
       - ./hardhat/scripts:/hardhat/scripts
