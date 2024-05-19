@@ -3,7 +3,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MetadataModule } from './modules/metadata/metadata.module';
 import { AclModule } from './modules/acl/acl.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { EnvUtils } from './utils/env.utils';
+import { Env } from './utils/env.utils';
 import { AccountTypeOrmEntity } from './modules/auth/repositories/typeorm/account.typeorm.entity';
 import { ThrottlerGuard, ThrottlerModule, seconds } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
@@ -21,22 +21,22 @@ import { MetadataOperationTypeOrmEntity } from './modules/metadata/repositories/
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: EnvUtils.dbHost(),
-      port: EnvUtils.dbPort(),
-      username: EnvUtils.dbUser(),
-      password: EnvUtils.dbPassword(),
-      database: EnvUtils.dbName(),
+      host: Env.dbHost(),
+      port: Env.dbPort(),
+      username: Env.dbUser(),
+      password: Env.dbPassword(),
+      database: Env.dbName(),
       entities: [
         AccountTypeOrmEntity,
         MetadataTypeOrmEntity,
         MetadataOperationTypeOrmEntity,
       ],
-      synchronize: EnvUtils.environmentType() === 'development',
+      synchronize: Env.environmentType() === 'development',
     }),
     ThrottlerModule.forRoot([
       {
-        ttl: seconds(EnvUtils.rateLimiterThrottleTtlSecs()),
-        limit: EnvUtils.rateLimiterThrottleLimit(),
+        ttl: seconds(Env.rateLimiterThrottleTtlSecs()),
+        limit: Env.rateLimiterThrottleLimit(),
       },
     ]),
     AuthModule,

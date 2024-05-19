@@ -1,5 +1,5 @@
 import { LogLevel } from '@nestjs/common';
-import { EnvUtils } from './env.utils';
+import { Env } from './env.utils';
 
 const logLevels: LogLevel[] = [
   'fatal',
@@ -12,7 +12,7 @@ const logLevels: LogLevel[] = [
 
 export class LogUtils {
   static getSupportedLogLevels(): LogLevel[] {
-    const logLevelIndex = logLevels.indexOf(EnvUtils.logLevel());
+    const logLevelIndex = logLevels.indexOf(Env.logLevel());
 
     if (logLevelIndex === -1) {
       return logLevels;

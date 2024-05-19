@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { EnvUtils } from './utils/env.utils';
+import { Env } from './utils/env.utils';
 import { LogUtils } from './utils/log.utils';
 import { VersioningType } from '@nestjs/common';
 import cookieParser = require('cookie-parser');
@@ -19,11 +19,11 @@ async function bootstrap() {
   app.enableCors();
   app.use(cookieParser());
 
-  if (EnvUtils.environmentType() === 'development' || EnvUtils.useSwagger()) {
+  if (Env.environmentType() === 'development' || Env.useSwagger()) {
     Swagger.setUp(app);
   }
 
-  await app.listen(EnvUtils.port());
+  await app.listen(Env.port());
 }
 
 bootstrap();

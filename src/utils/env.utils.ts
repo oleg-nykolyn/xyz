@@ -1,6 +1,6 @@
 import { LogLevel } from '@nestjs/common';
 
-export class EnvUtils {
+export class Env {
   static getOrDefault(key: string, defaultValue: string): string {
     return process.env[key] || defaultValue;
   }

@@ -12,7 +12,7 @@ import {
 import { AuthService } from './services/auth.service';
 import { IssueNonceRequestDTO } from './dtos/issue-nonce-request.dto';
 import { AuthenticateRequestDTO } from './dtos/authenticate-request.dto';
-import { EnvUtils } from 'src/utils/env.utils';
+import { Env } from 'src/utils/env.utils';
 import { Response } from 'express';
 import { AuthExceptionsFilter } from './auth-exceptions.filter';
 import { Public } from './decorators/public.decorator';
@@ -89,7 +89,7 @@ export class AuthController {
       signedNonce,
     );
 
-    const isEnvProduction = EnvUtils.environmentType() === 'production';
+    const isEnvProduction = Env.environmentType() === 'production';
     response.cookie('jwt', jwt, {
       httpOnly: true,
       sameSite: isEnvProduction,

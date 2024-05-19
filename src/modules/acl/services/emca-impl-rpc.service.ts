@@ -4,7 +4,7 @@ import {
   EntityMetadataCrudAclService,
 } from './emca.service';
 import { ethers, Contract } from 'ethers';
-import { EnvUtils } from 'src/utils/env.utils';
+import { Env } from 'src/utils/env.utils';
 import { abi } from 'src/modules/acl/abis/EntityMetadataCrudAcl.json';
 import { Chain } from 'src/modules/metadata/domain/chain';
 
@@ -19,19 +19,19 @@ export class EntityMetadataCrudAclServiceImplRpc
   onModuleInit() {
     this.rpcProviders.set(
       Chain.Hardhat,
-      new ethers.JsonRpcProvider(EnvUtils.rpcUrlHardhat()),
+      new ethers.JsonRpcProvider(Env.rpcUrlHardhat()),
     );
     this.rpcProviders.set(
       Chain.Ethereum,
-      new ethers.JsonRpcProvider(EnvUtils.rpcUrlEthereum()),
+      new ethers.JsonRpcProvider(Env.rpcUrlEthereum()),
     );
     this.rpcProviders.set(
       Chain.Polygon,
-      new ethers.JsonRpcProvider(EnvUtils.rpcUrlPolygon()),
+      new ethers.JsonRpcProvider(Env.rpcUrlPolygon()),
     );
     this.rpcProviders.set(
       Chain.MultiVAC,
-      new ethers.JsonRpcProvider(EnvUtils.rpcUrlMultivac()),
+      new ethers.JsonRpcProvider(Env.rpcUrlMultivac()),
     );
   }
 
