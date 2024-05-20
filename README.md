@@ -15,7 +15,7 @@ npm install
 Start the services using Docker Compose:
 
 ```bash
-docker-compose up
+docker-compose --profile all up
 ```
 
 Deploy the smart contracts using:
@@ -24,10 +24,10 @@ Deploy the smart contracts using:
 docker compose exec hardhat sh scripts/deploy.sh
 ```
 
-To stop the services, either press `Ctrl+C` in the terminal where you initiated `docker-compose up` or run:
+To stop the services, either press `Ctrl+C` or run:
 
 ```bash
-docker-compose down
+docker-compose --profile all stop
 ```
 
 ## Browsing the API
