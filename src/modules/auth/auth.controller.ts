@@ -92,7 +92,7 @@ export class AuthController {
     const isEnvProduction = Env.environmentType() === 'production';
     response.cookie('jwt', jwt, {
       httpOnly: true,
-      sameSite: isEnvProduction,
+      sameSite: isEnvProduction ? 'lax' : 'none',
       secure: isEnvProduction,
     });
 
